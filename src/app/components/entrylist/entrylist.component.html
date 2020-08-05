@@ -1,0 +1,23 @@
+<div class="entrylist">	
+	<h1>{{timeline.title}}</h1>
+	<p>{{timeline.description}}<br /><br /></p>
+	<div *ngFor="let era of timeline.eras">
+		<h2>{{era.title}}</h2>
+		<p>{{era.description}}</p>
+		<div *ngFor="let year of era.years">
+			
+			<h2 *ngIf="year.exactness=='exact'">{{year.year}}</h2>
+			<h2 *ngIf="year.exactness=='circa'">Ca. {{year.year}}</h2>
+			<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
+			<div *ngFor="let date of year.dates">
+
+				<h3 *ngIf="date.dateType !== 'relative'">{{date.date}}</h3>
+				<h3 *ngIf="date.dateType == 'relative'">{{this.getRelativeDate(date.date, "Christmas")}}</h3> <!-- TODO: Must fix date.relativeDateTitle-->
+				<!--<h3 *ngIf="date.dateType == 'relative'">{{this.getRelativeDate(date.date, date.relativeDateTitle)}}</h3>-->
+
+				<entry *ngFor="let entry of date.entries" [item]="entry" [references]="references" [year]="year.year"></entry>
+			</div>
+		
+		</div>
+	</div>
+</div>

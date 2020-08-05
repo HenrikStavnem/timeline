@@ -1,0 +1,8 @@
+<div class="entry">
+	<div class="entry-icon {{item.type}}"></div>
+	<div class="entry-text">
+		<!--<h2>{{item.title}}<span class="small">{{item.eventType}}</span></h2>-->
+		<!--<p [innerHtml]="item.description"></p>-->
+		<p [outerHTML]="item.description | entryDescription : references : year"></p>
+	</div>
+</div>

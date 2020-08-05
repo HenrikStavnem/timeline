@@ -1,1 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+	font-family: 'Hoefler Text';
+	//src: url('./assets/fonts/HoeflerText.ttf') format('truetype');
+	src: url('../res/fonts/HoeflerText.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Semplicita';
+	src: url('../res/fonts/semplicita-bold.woff2') format('woff2');
+}
+
+body {
+	background-color: #292a2d;
+	//background-size: cover;
+	background-repeat: no-repeat;
+	color: #ffd700;
+	font-family: 'Hoefler Text';
+	margin: 0px;
+}
+
+.shield {
+	position: relative;
+	top: 5px;
+	width: 16px;
+	margin-left: 3px;
+	margin-right: 5px;
+	user-select: none;
+}
+
+a {
+	color: #ffd700;
+
+	&.person {
+		color: #ffd700;
+	}
+
+	&.location {
+		color: yellowgreen !important;
+	}
+}
+
+h1, p {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}

@@ -44,3 +44,17 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+res/images/header-example.png
+res/images/header-example2.jpg
+res/images/header-example3.jpg
+res/images/header-example4.png
+res/images/header-example5.jpg
+res/images/header-example6.jpg
+res/images/header-example7.jpg
+res/images/header-example8.jpg
+res/images/red.png
+res/fonts/Font.otf
+res/fonts/HoeflerText.ttf
+res/fonts/semplicita-bold.woff2
+src/assets/fonts/HoeflerText.ttf
+src/assets/fonts/semplicita-bold.woff2
