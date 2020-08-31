@@ -15,9 +15,15 @@ export class EntryDescriptionPipe implements PipeTransform {
 				case "person": 
 					// TODO: Fix to current year 
 					let age: number = year - reference.birthYear; //me.date - reference.birthYear;
+					let title: string = null
+					
+					if (reference.titles) {
+						title = getTitle(reference.titles, year);
+					}
 
 					if (reference.shield) {html = html + createShield(reference.shield);}
-					if (reference.title) {html = html + reference.title + " ";}
+					//if (reference.title) {html = html + reference.title + " ";}
+					if (title) {html = html + title + " ";}
 					html = html + `<a class='${reference.type}'>`;
 					html = html + reference.firstName + " " + reference.lastName;
 					html = html + "</a>";
@@ -35,6 +41,19 @@ export class EntryDescriptionPipe implements PipeTransform {
 			}
 
 			return html;
+		}
+
+		function getTitle(titles: Array<any>, year: number) {
+			let title = "";
+
+			titles.forEach(date => {
+				if (date.year <= year) {
+					title = date.title;
+					return;
+				}
+			});
+
+			return title;
 		}
 
 		function createShield(shield: string) {

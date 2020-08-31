@@ -6,7 +6,7 @@ import { OnInit, Directive } from '@angular/core';
 @Directive()
 export class Entry implements OnInit {
 	public id: number;
-	public title: string;
+	public titles: Array<any>;
 	public description: string;
 	public type: string;
 	public date: number;
@@ -25,9 +25,10 @@ export class Entry implements OnInit {
 	*/
 	ngOnInit(): void {
 		console.log("Entry onInit");
-		this.description = this.handleDescription(this.description);
+		//this.description = this.handleDescription(this.description);
 	}
 
+	/*
 	private handleDescription(description: string) {
 		let references = [
 				new Person(0, "Ganes", "", "", 9781, 9830),
@@ -46,6 +47,7 @@ export class Entry implements OnInit {
 			text = this.transformReferences(description, references);
 		return text;
 	}
+	*/
 
 	private transformReferences(text: string, references: Array<Reference>) {
 		var me = this;
@@ -58,7 +60,7 @@ export class Entry implements OnInit {
 					let age: number = me.date - reference.birthYear;
 
 					html = html + reference.shield;
-					html = html + reference.title + " ";
+					//html = html + reference.title + " ";
 					html = html + `<a class='${reference.type}'>`;
 					html = html + reference.firstName + " " + reference.lastName;
 					html = html + "</a>";

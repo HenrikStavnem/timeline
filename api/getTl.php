@@ -12,7 +12,7 @@
 		die("Connection failed: " . $connection->connect_error);
 	}
 
-	$sql = "SELECT id, title, image, description FROM tl_timelines LIMIT 1";
+	$sql = "SELECT id, title, description FROM tl_eras";
 	$query = $connection->query($sql);
 
 	$result = new stdClass();
@@ -21,10 +21,12 @@
 		while($row = $query->fetch_assoc()) {
 			$result->title = $row["title"];
 			$result->description = $row["description"];
-			$result->image = $row["image"];
+
+			echo $row["title"]."<br>";
 		}
 	}
 
+	/*
 	$timelineInfo = new stdClass();
 
 	$timelineInfo->title = $result->title;
@@ -32,4 +34,7 @@
 	$timelineInfo->image = $result->image;
 
 	echo json_encode($timelineInfo);
+	*/
+
+	//echo json_encode($result);
 ?>

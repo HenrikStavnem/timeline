@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Test Dialog</h2>
+<mat-dialog-content class="mat-typography">
+	
+	<mat-tab-group mat-align-tabs="center">
+		<mat-tab label="First">
+			<mat-form-field class="example-form-field">
+				<mat-label>Clearable input</mat-label>
+				<input matInput type="text" [formControl]="testFormControl">
+			</mat-form-field>
+		</mat-tab>
+		<mat-tab label="Second">Content 2</mat-tab>
+		<mat-tab label="Third">Content 3</mat-tab>
+	</mat-tab-group>
+	
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+	<button mat-button mat-dialog-close>Cancel</button>
+	<button mat-button cdkFocusInitial (click)="onSaveClick()">Save</button>
+</mat-dialog-actions>

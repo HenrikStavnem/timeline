@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
 import { TimelineService } from '../../services/timeline.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TestDialogComponent } from '../dialogs/test-dialog/test-dialog.component';
 
 @Component({
 	selector: 'menu',
@@ -10,7 +12,7 @@ import { TimelineService } from '../../services/timeline.service';
 export class MenuComponent implements OnInit {
 	public hasConnection: boolean = false;
 
-	constructor(private timelineService: TimelineService, private modalService: ModalService) {
+	constructor(private timelineService: TimelineService, private modalService: ModalService, public dialog: MatDialog) {
 		interface testInfo {
 			statusCode: number
 		}
@@ -32,6 +34,10 @@ export class MenuComponent implements OnInit {
 
 	onClickButton() {
 		this.modalService.toggle();
+	}
+
+	onOpenDialogClick() {
+		const dialogRef = this.dialog.open(TestDialogComponent);
 	}
 
 }

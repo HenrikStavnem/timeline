@@ -15,10 +15,8 @@ export class EntryComponent implements OnInit {
 	@Input() year: number;
 
 	ngOnInit(): void {
-		console.log("Entry.Component onInit");
 	}
 
 	constructor() {
-		console.log("Entry.Component constructor");
 	}
 }

@@ -6,7 +6,7 @@ export abstract class Reference {
 		public type: string,
 		public firstName: string,
 		public lastName: string,
-		public title: string,
+		public titles: Array<any>,
 		public birthYear: number,
 		public deathYear: number
 		) {

@@ -11,6 +11,15 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { WindowComponent } from './components/modal/window/window.component';
 import { EntryDescriptionPipe } from './pipes/entry-description.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatInputModule} from '@angular/material/input';
+
+import {TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -20,12 +29,25 @@ import { EntryDescriptionPipe } from './pipes/entry-description.pipe';
 		MenuComponent,
 		ModalComponent,
 		WindowComponent,
-		EntryDescriptionPipe
+		EntryDescriptionPipe,
+		TestDialogComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
-		HttpClientModule
+		HttpClientModule,
+		BrowserAnimationsModule,
+		MatButtonModule,
+		MatDialogModule,
+		MatTabsModule,
+		MatInputModule,
+		ReactiveFormsModule
+	],
+	exports: [
+		ReactiveFormsModule
+	],
+	entryComponents: [
+		TestDialogComponent
 	],
 	providers: [],
 	bootstrap: [AppComponent]

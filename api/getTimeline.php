@@ -81,12 +81,14 @@
 	array_push($dates2, $dateC);
 	array_push($dates2, $dateD);
 
+	$year5 = new Year("Example", 2009, "exact", $dates1);
 	$year1 = new Year("Decadium", 2010, "decade", $dates1);
 	$year2 = new Year("TESTERIFY", 2015, "exact", $dates2);
 	$year3 = new Year("Example", 2017, "exact", $dates1);
 	$year4 = new Year("Another", 2018, "circa", $dates1);
 
 	$years = array();
+	array_push($years, $year5);
 	array_push($years, $year1);
 	array_push($years, $year2);
 	array_push($years, $year4);
@@ -123,7 +125,17 @@
 			"lastName" => "Nordinger",
 			"type" => "person",
 			"birthYear" => 1999,
-			"shield" => "http://dukendor.com/nadtas/timeline/graphics/shields/red.png"
+			"shield" => "http://dukendor.com/nadtas/timeline/graphics/shields/red.png",
+			"titles" => array(
+				"0" => array(
+					"year" => 2012,
+					"title" => "Lord"
+				),
+				"1" => array(
+					"year" => 2018,
+					"title" => "Farmer"
+				)
+			)
 		),
 		"2" => array(
 			"firstName" => "Tarrosh",
@@ -143,7 +155,8 @@
 			"firstName" => "Minna",
 			"lastName" => "Wallford",
 			"type" => "person",
-			"birthYear" => 2004
+			"birthYear" => 2004,
+			"shield" => "assets/shield.png"
 		),
 		"5" => array(
 			"firstName" => "Dakklon",
