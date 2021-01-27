@@ -20,6 +20,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 
 import {TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
+import { TimelineService } from './services/timeline.service';
 
 @NgModule({
 	declarations: [
@@ -49,7 +50,9 @@ import {TestDialogComponent } from './components/dialogs/test-dialog/test-dialog
 	entryComponents: [
 		TestDialogComponent
 	],
-	providers: [],
+	providers: [
+		TimelineService
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
