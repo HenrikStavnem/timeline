@@ -1,16 +1,25 @@
 <?php
 	header("Access-Control-Allow-Origin: *");
 
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$database = "timeline";
+
 	$eras = array();
 
 	class Date {
-		public $date;
+		public $month;
+		public $day;
 		public $dateType;
 		public $entries = array();
+		public $test = "n/a";
 
-		public function __construct($date, $dateType, $entries) {
-			$this->date = $date;
+		public function __construct($month, $day, $dateType, $entries, $test) {
+			$this->month = $month;
+			$this->day = $day;
 			$this->dateType = $dateType;
+			$this->test = $test;
 
 			foreach($entries as $entry => $val) {
 				array_push($this->entries, $val);
@@ -47,84 +56,124 @@
 		}
 	}
 
-	$entries1 = array();
-	$entry1 = new Entry("-An awesome title-", "-An awesome description-", "combat");
-	$entry2 = new Entry("The Midsummer Festival", "{1} laughed.", "festive");
-	$entry3 = new Entry("The Midsummer Festival", "{2} travels to {3}.", "travel");
-	array_push($entries1, $entry1 );
-	array_push($entries1, $entry2 );
-	array_push($entries1, $entry3 );
+	$connection = new mysqli($servername, $username, $password, $database);
 
-	$entries2 = array();
-	$entryA = new Entry("-An awesome title-", "{4}, under advice of {5}, attacks {3}.", "combat");
-	$entryB = new Entry("The Midsummer Festival", "{2} is killed by {4}.", "death");
-	$entryC = new Entry("The Midsummer Festival", "{4} becomes the Duchess of {3}.", "other");
-	array_push($entries2, $entryA );
-	array_push($entries2, $entryB );
-	array_push($entries2, $entryC );
+	if ($connection->connect_error) {
+		die("Connection failed: " . $connection->connect_error);
+	}
 
-	//print_r($entries1);
+	$sqlEras = "SELECT id, title, description FROM tl_eras WHERE timeline=1";
+	$queryEras = $connection->query($sqlEras);
 
-	$dates1 = array();
-	$date1 = new Date("22 january", "date", $entries1);
-	$date2 = new Date("Winter", "division", $entries1);
-	array_push($dates1, $date1);
-	array_push($dates1, $date2);
+	$eras = array();
 
-	$dates2 = array();
-	$dateA = new Date("16 March", "date", $entries2);
-	$dateB = new Date("-2", "relative", $entries1);
-	$dateC = new Date("0", "relative", $entries1);
-	$dateD = new Date("2", "relative", $entries1);
-	array_push($dates2, $dateA);
-	array_push($dates2, $dateB);
-	array_push($dates2, $dateC);
-	array_push($dates2, $dateD);
+	if ($queryEras->num_rows > 0) {
+		while($row = $queryEras->fetch_assoc()) {
+			$eraId = $row["id"];
+			$era = new stdClass();
+			$era->title = $row["title"];
+			$era->description = $row["description"];
+			$era->years = [];
 
-	$year5 = new Year("Example", 2009, "exact", $dates1);
-	$year1 = new Year("Decadium", 2010, "decade", $dates1);
-	$year2 = new Year("TESTERIFY", 2015, "exact", $dates2);
-	$year3 = new Year("Example", 2017, "exact", $dates1);
-	$year4 = new Year("Another", 2018, "circa", $dates1);
+			$sqlEvents = "SELECT id, year, month, day, description, type FROM tl_events WHERE era=$eraId ORDER BY year, month, day";
+			$queryEvents = $connection->query($sqlEvents);
 
-	$years = array();
-	array_push($years, $year5);
-	array_push($years, $year1);
-	array_push($years, $year2);
-	array_push($years, $year4);
+			$events = array();
+			$currentYear = null;
+			$currentMonth = null;
+			$currentDay = null;
 
-	//print_r($years);
+			$newYear = null;
+			$newMonth = null;
+			$newDay = null;
+
+			$isNewYear = false;
+			$isNewMonth = false;
+			$isNewDay = false;
+			
+			$newYears = array();
+			$newMonths = array();
+			$newDays = array();
+
+			$newDates = array();
+			$newEntries = array();
+			$newDate = null;
+			$newYear = null;
+
+			while($rowEra = $queryEvents->fetch_assoc()) {
+				$testStr = "default";
+
+				$isNewYear = false;
+				$isNewMonth = false;
+				$isNewDay = false;
+
+				$thisYear = $rowEra["year"];
+				$thisMonth = $rowEra["month"];
+				$thisDay = $rowEra["day"];
+
+				$newEntry = new Entry("eventTitle", $rowEra["description"], $rowEra["type"]);
+				array_push($newEntries, $newEntry);
+
+				if ($currentYear != $thisYear) {
+					$isNewYear = true;
+					
+					$newYear = new Year("yearTitle", $thisYear, "exact", $newDates);
+
+					//$newYear->months = $newMonths;
+					array_push($newYears, $newYear);
+
+					// resets
+					$currentMonth = null;
+					$currentDay = null;
+					$newMonths = array();
+					$newEntries = array();
+
+					//$newYear = new Year("yearTitle", $thisYear, "exact", []);
+				}
+
+				if ($thisMonth != $currentMonth || $thisDay != $currentDay) {
+							//$month, $day, $dateType, $entries, $test
+					$newDate = new Date($thisMonth, $thisDay, "exact", $newEntries, "Yabba");
+					array_push($newDates, $newDate);
+
+					$currentMonth = $thisMonth;
+					$currentDay = $thisDay;
+					$newEntries = array();
+				}
+
+				array_push($newEntries, $newEntry);
+
+				$currentYear = $thisYear;
+				$currentMonth = $thisMonth;
+				$currentDay = $thisDay;
+			}
+
+			$newDate->entries = $newEntries;
+			//array_push($newDates, $newDate);
+			$newYear->dates = $newDates;
+			array_push($newYears, $newYear);
+
+			$era->years = $newYears;
+
+			array_push($eras, $era);
+		}
+	}
 
 	$timeline = new stdClass();
 	$timeline->id = 1;
 	$timeline->statusCode = 200;
 	$timeline->title = "Remote Title";
 	$timeline->description = "Remote description";
-	$timeline->eras = array(
-		"0" => array(
-			"title" => "Era 1",
-			"description" => "Era Desc 1",
-			"years" => $years
-			/*
-			"years" => array(
-				$year0,
-				$year1,
-				$year2
-			)
-			*/
-		),
-		"1" => array(
-			"title" => "Era 2",
-			"description" => "Era Desc 2",
-			"years" => []
-		)
-	);
+	//$timeline->$eras;
+	
+	$timeline->eras = $eras;
+	
 	$timeline->actors = array(
 		"1" => array(
 			"firstName" => "Cal",
 			"lastName" => "Nordinger",
 			"type" => "person",
-			"birthYear" => 1999,
+			"birthYear" => 1971,
 			"shield" => "http://dukendor.com/nadtas/timeline/graphics/shields/red.png",
 			"titles" => array(
 				"0" => array(

@@ -16,8 +16,6 @@ export class TimelineService {
 
 		console.log("Before post");
 
-		debugger;
-
 		this.http.post(url, msg);
 	}
 
