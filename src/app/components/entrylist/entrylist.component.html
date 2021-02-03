@@ -9,6 +9,17 @@
 			<h2 *ngIf="year.exactness=='exact'">{{year.year}}</h2>
 			<h2 *ngIf="year.exactness=='circa'">Ca. {{year.year}}</h2>
 			<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
+
+			<div *ngFor="let month of year.months">
+				<b>Month {{month.month}} {{month.name}}</b>
+
+				<div *ngFor="let day of month.days">
+					<i>Day {{day.day}}</i>
+					<entry *ngFor="let entry of day.entries" [item]="entry" [references]="references" [year]="year.year"></entry>
+				</div>
+			</div>
+
+			<!---->
 			<div *ngFor="let date of year.dates">
 
 				<h3 *ngIf="date.dateType !== 'relative'">{{date.date}}</h3>

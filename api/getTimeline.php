@@ -8,15 +8,15 @@
 
 	$eras = array();
 
-	class Date {
-		public $month;
+	class Day {
+		//public $month;
 		public $day;
 		public $dateType;
 		public $entries = array();
 		public $test = "n/a";
 
-		public function __construct($month, $day, $dateType, $entries, $test) {
-			$this->month = $month;
+		public function __construct(/*$month,*/ $day, $dateType, $entries, $test) {
+			//$this->month = $month;
 			$this->day = $day;
 			$this->dateType = $dateType;
 			$this->test = $test;
@@ -27,20 +27,35 @@
 		}
 	}
 
+	class Month {
+		public $month;
+		public $name;
+		public $exactness;
+		public $days = array();
+
+		public function __construct($month, $name, $exactness, $days) {
+			$this->month = $month;
+			$this->exactness = $exactness;
+			$this->name = $name;
+
+			foreach($days as $day => $val) {
+				array_push($this->days, $val);
+			}
+		}
+	}
+
 	class Year {
 		public $title;
 		public $year;
 		public $exactness;
-		public $dates = array();
+		//public $dates = array();
+		public $months = array();
 
-		public function __construct($title, $year, $exactness, $dates) {
+		public function __construct($title, $year, $exactness/*, $dates,*/ /*$months*/) {
 			$this->title = $title;
 			$this->year = $year;
 			$this->exactness = $exactness;
-
-			foreach($dates as $date => $val) {
-				array_push($this->dates, $val);
-			}
+			$this->months = array();
 		}
 	}
 
@@ -53,6 +68,19 @@
 			$this->title = $title;
 			$this->description = $description;
 			$this->type = $type;
+		}
+	}
+
+	class Era {
+		public $era;
+		public $title;
+		public $years;
+		public $description;
+
+		public function __construct($era, $title, $description) {
+			$this->era = $era;
+			$this->title = $title;
+			$this->description = $description;
 		}
 	}
 
@@ -69,13 +97,12 @@
 
 	if ($queryEras->num_rows > 0) {
 		while($row = $queryEras->fetch_assoc()) {
+			
 			$eraId = $row["id"];
-			$era = new stdClass();
-			$era->title = $row["title"];
-			$era->description = $row["description"];
-			$era->years = [];
 
-			$sqlEvents = "SELECT id, year, month, day, description, type FROM tl_events WHERE era=$eraId ORDER BY year, month, day";
+			$newEra = new Era($eraId, $row["title"], $row["description"]);
+
+			$sqlEvents = "SELECT id, year, month, day, description, type FROM tl_events WHERE era=$eraId ORDER BY era, year, month, day";
 			$queryEvents = $connection->query($sqlEvents);
 
 			$events = array();
@@ -112,59 +139,88 @@
 				$thisDay = $rowEra["day"];
 
 				$newEntry = new Entry("eventTitle", $rowEra["description"], $rowEra["type"]);
-				array_push($newEntries, $newEntry);
 
 				if ($currentYear != $thisYear) {
 					$isNewYear = true;
+					$isNewMonth = true;
+					$isNewDay = true;
+					$currentYear = $thisYear;
 					
 					$newYear = new Year("yearTitle", $thisYear, "exact", $newDates);
 
-					//$newYear->months = $newMonths;
-					array_push($newYears, $newYear);
 
 					// resets
 					$currentMonth = null;
 					$currentDay = null;
 					$newMonths = array();
-					$newEntries = array();
-
-					//$newYear = new Year("yearTitle", $thisYear, "exact", []);
+					$newDays = array();
+					//$newEntries = array();
 				}
 
-				if ($thisMonth != $currentMonth || $thisDay != $currentDay) {
-							//$month, $day, $dateType, $entries, $test
-					$newDate = new Date($thisMonth, $thisDay, "exact", $newEntries, "Yabba");
-					array_push($newDates, $newDate);
-
+				if ($currentMonth  != $thisMonth ) {
+					$isNewMonth = true;
+					$isNewDay = true;
 					$currentMonth = $thisMonth;
+					
+					$newMonth = new Month($thisMonth, "Exampluary", "exact", []);
+
+					// resets
+					$currentDay = null;
+					$newDays = array();
+					//$newEntries = array();
+				}
+
+				if ($currentDay != $thisDay) {
+					$isNewDay = true;
 					$currentDay = $thisDay;
+					
+					$newDay = new Day($thisDay, "exact", [], "TODO: Remove");
+
 					$newEntries = array();
 				}
 
 				array_push($newEntries, $newEntry);
 
-				$currentYear = $thisYear;
-				$currentMonth = $thisMonth;
-				$currentDay = $thisDay;
+				$newDay->entries = $newEntries; // here?
+
+				if ($isNewDay) {
+					//$newDay->entries = $newEntries; // or here?
+					array_push($newDays, $newDay);
+				}
+				if ($isNewMonth) {
+					$newMonth->days = $newDays;
+					array_push($newMonths, $newMonth);
+				}
+				if ($isNewYear) {
+					$newYear->months = $newMonths;
+					array_push($newYears, $newYear);
+				}
 			}
 
-			$newDate->entries = $newEntries;
-			//array_push($newDates, $newDate);
-			$newYear->dates = $newDates;
+			$newDay->entries = $newEntries;
+			array_push($newDays, $newDay);
+		
+		
+			$newMonth->days = $newDays;
+			array_push($newMonths, $newMonth);
+		
+		
+			$newYear->months = $newMonths;
 			array_push($newYears, $newYear);
+			
+			$newEra->years = $newYears;
 
-			$era->years = $newYears;
-
-			array_push($eras, $era);
+			array_push($eras, $newEra);
 		}
 	}
+
+	
 
 	$timeline = new stdClass();
 	$timeline->id = 1;
 	$timeline->statusCode = 200;
-	$timeline->title = "Remote Title";
-	$timeline->description = "Remote description";
-	//$timeline->$eras;
+	$timeline->title = "Remote Title (hardcoded)";
+	$timeline->description = "Remote description (hardcoded)";
 	
 	$timeline->eras = $eras;
 	
@@ -215,7 +271,14 @@
 		)
 	);
 
-	echo json_encode($timeline);
+	if (false) {
+		echo "<pre>";
+		print_r($timeline);
+		echo "</pre>";
+	}
+	else {
+		echo json_encode($timeline);
+	}
 
 	//echo json_encode($dates1, JSON_FORCE_OBJECT);
 ?>

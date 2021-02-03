@@ -5,5 +5,5 @@ export interface Year {
 	description: string,
 	year: number,
 	exactness: string,
-	dates: Array<Date>
+	months: Array<any>
 }
