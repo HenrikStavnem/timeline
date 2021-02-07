@@ -13,13 +13,11 @@
 		public $day;
 		public $dateType;
 		public $entries = array();
-		public $test = "n/a";
 
-		public function __construct(/*$month,*/ $day, $dateType, $entries, $test) {
+		public function __construct(/*$month,*/ $day, $dateType, $entries) {
 			//$this->month = $month;
 			$this->day = $day;
 			$this->dateType = $dateType;
-			$this->test = $test;
 
 			foreach($entries as $entry => $val) {
 				array_push($this->entries, $val);
@@ -174,7 +172,7 @@
 					$isNewDay = true;
 					$currentDay = $thisDay;
 					
-					$newDay = new Day($thisDay, "exact", [], "TODO: Remove");
+					$newDay = new Day($thisDay, "exact", []);
 
 					$newEntries = array();
 				}
@@ -198,15 +196,23 @@
 			}
 
 			$newDay->entries = $newEntries;
-			array_push($newDays, $newDay);
-		
+
+			if ($isNewDay) {
+				array_push($newDays, $newDay);
+			}
 		
 			$newMonth->days = $newDays;
-			array_push($newMonths, $newMonth);
+
+			if ($isNewMonth) {
+				array_push($newMonths, $newMonth);
+			}
 		
 		
 			$newYear->months = $newMonths;
-			array_push($newYears, $newYear);
+
+			if ($isNewYear) {
+				array_push($newYears, $newYear);
+			}
 			
 			$newEra->years = $newYears;
 
