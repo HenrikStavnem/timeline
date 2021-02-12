@@ -90,7 +90,7 @@
 		"10" => new Entry(2021, 1, 22, "Tenth", ""),
 		"11" => new Entry(2021, 8, 25, "Eleventh", ""),
 		"12" => new Entry(2021, 8, 25, "Twelfth", "Example"),
-		"12" => new Entry(2038, 4, 1, "Thirtheenth", "What, is this a joke?")
+		"13" => new Entry(2038, 4, 1, "Thirtheenth", "What, is this a joke?")
 	);
 
 	$currentYear = null;
@@ -127,14 +127,17 @@
 
 		if ($currentYear != $thisYear) {
 			$isNewYear = true;
+			$isNewMonth = true;
+			$isNewDay = true;
 
-			$currentMonth = null;
-			$currentDay = null;
+			//$currentMonth = null;
+			//$currentDay = null;
 		}
 
-		if ($currentMonth != $thisMonth) {			
+		if ($currentMonth != $thisMonth) {
 			$isNewMonth = true;
-			$currentDay = null;
+			$isNewDay = true;
+			//$currentDay = null;
 		}
 
 		if ($currentDay != $thisDay) {
@@ -145,6 +148,7 @@
 		if ($isFirstIndex) {
 			$currentMonth = $thisMonth;
 			$currentYear = $thisYear;
+			$currentDay = $thisDay;
 		}
 
 		// $title, $description, $type
@@ -152,18 +156,18 @@
 
 
 		if ($isNewDay && !$isFirstIndex) {
-			$newDay = new Day($currentDay, "exact", $newEvents);
+			$newDay = new Day($currentDay!=null ? $currentDay : "FAILURE", "exact", $newEvents);
 
 			array_push($newDays, $newDay);
 
 			$newEvents = array();
+			$currentDay = $thisDay;
 
 			if ($isNewMonth && !$isFirstIndex) {
-				$newMonth = new Month($currentMonth, "monthName", "exact", $newDays);
+				$newMonth = new Month($currentMonth!=null ? $currentMonth : "FAILURE", "monthName", "exact", $newDays);
 				array_push($newMonths, $newMonth);
 
 				$newDays = array();
-
 				$currentMonth = $thisMonth;
 
 				if ($isNewYear && !$isFirstIndex) {
@@ -189,8 +193,6 @@
 			$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);
 			array_push($newYears, $newYear);
 		}
-
-		$currentDay = $thisDay;
 	}
 
 	$timeline->years = $newYears;

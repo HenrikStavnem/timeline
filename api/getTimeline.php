@@ -8,14 +8,51 @@
 
 	$eras = array();
 
+	class Actors {
+		public $characters = array();
+	}
+
+	class Character {
+		public $id;
+
+		public $firstName;
+		public $lastName;
+		public $birthYear;
+		public $type = "person";
+
+		public $parent1;	// could also be an array
+		public $parent2;
+		public $birth;
+		public $death;
+		public $image;		// character picture
+
+		//arrays?
+		public $symbols;	// shield or symbol infront of name
+		public $genders;	// can change over time
+		public $races;
+		public $subraces;
+
+		//arrays for sure
+		public $names;
+		public $titles;
+	}
+
+	class Event {
+		public $description;
+		public $type;
+
+		public function __construct($description, $type) {
+			$this->description = $description;
+			$this->type = $type;
+		}
+	}
+
 	class Day {
-		//public $month;
 		public $day;
 		public $dateType;
 		public $entries = array();
 
-		public function __construct(/*$month,*/ $day, $dateType, $entries) {
-			//$this->month = $month;
+		public function __construct($day, $dateType, $entries) {
 			$this->day = $day;
 			$this->dateType = $dateType;
 
@@ -49,23 +86,11 @@
 		//public $dates = array();
 		public $months = array();
 
-		public function __construct($title, $year, $exactness/*, $dates,*/ /*$months*/) {
+		public function __construct($title, $year, $exactness/*, $dates,*/, $months) {
 			$this->title = $title;
 			$this->year = $year;
 			$this->exactness = $exactness;
-			$this->months = array();
-		}
-	}
-
-	class Entry {
-		public $title;
-		public $description;
-		public $type;
-
-		public function __construct($title, $description, $type) {
-			$this->title = $title;
-			$this->description = $description;
-			$this->type = $type;
+			$this->months = $months;
 		}
 	}
 
@@ -79,6 +104,65 @@
 			$this->era = $era;
 			$this->title = $title;
 			$this->description = $description;
+		}
+	}
+
+	$charactersIndexList = array();
+	$itemsIndexList = array();
+	$locationsIndexList = array();
+
+	function extractReferences($string) {
+		$needle = "{";
+		$lastPos = 0;
+		$startPositions = array();
+
+		// get all start brackets
+		while (($lastPos = strPos($string, $needle, $lastPos)) !== false) {
+			$startPositions[] = $lastPos;
+			$lastPos = $lastPos + strlen($needle);
+		}
+
+		$lastPos = 0;
+		$endPositions = array();
+		$needle = "}";
+
+		// get all end brackets {
+		while (($lastPos = strpos($string, $needle, $lastPos))!== false) {
+			$endPositions[] = $lastPos;
+			$lastPos = $lastPos + strlen($needle);
+		}
+
+		foreach ($startPositions as $key=>$value) {
+			$endPos = $endPositions[$key]-1 - $startPositions[$key];
+			$substr = substr($string, $startPositions[$key]+1, $endPos);
+			indexReferences($substr);
+		}
+	}
+
+	function indexReferences($string) {
+		global $charactersIndexList, $itemsIndexList, $locationsIndexList;
+		
+		$parts = explode("-", $string);		
+		$type = $parts[0];
+		$index = $parts[1];
+
+		switch ($type) {
+			case "char":
+				if (!in_array($index, $charactersIndexList)) {
+					array_push($charactersIndexList, $index);
+				}
+				break;
+			case "item": 
+				if (!in_array($index, $itemsIndexList)) {
+					array_push($itemsIndexList, $index);
+				}
+				break;
+			case "location": 
+				if (!in_array($index, $locationsIndexList)) {
+					array_push($locationsIndexList, $index);
+				}
+				break;
+			default: echo "Error: Not recognized type '$type'<br />";
 		}
 	}
 
@@ -103,134 +187,158 @@
 			$sqlEvents = "SELECT id, year, month, day, description, type FROM tl_events WHERE era=$eraId ORDER BY era, year, month, day";
 			$queryEvents = $connection->query($sqlEvents);
 
-			$events = array();
+			// NEW START
+
 			$currentYear = null;
 			$currentMonth = null;
 			$currentDay = null;
 
-			$newYear = null;
-			$newMonth = null;
-			$newDay = null;
-
-			$isNewYear = false;
-			$isNewMonth = false;
-			$isNewDay = false;
-			
 			$newYears = array();
 			$newMonths = array();
 			$newDays = array();
+			$newEvents = array();
 
-			$newDates = array();
-			$newEntries = array();
-			$newDate = null;
-			$newYear = null;
+			$i = 0;
+			$lastIndex = $queryEvents->num_rows;
 
 			while($rowEra = $queryEvents->fetch_assoc()) {
-				$testStr = "default";
-
 				$isNewYear = false;
 				$isNewMonth = false;
 				$isNewDay = false;
 
-				$thisYear = $rowEra["year"];
-				$thisMonth = $rowEra["month"];
-				$thisDay = $rowEra["day"];
+				$isFirstIndex = false;
+				$isLastIndex = false;
 
-				$newEntry = new Entry("eventTitle", $rowEra["description"], $rowEra["type"]);
+				$thisYear = $rowEra['year'];
+				$thisMonth = $rowEra['month'];
+				$thisDay = $rowEra['day'];
+
+				if ($i === 0) {
+					$isFirstIndex = true;
+				}
+
+				if (++$i === $lastIndex) {
+					$isLastIndex = true;
+				}
 
 				if ($currentYear != $thisYear) {
 					$isNewYear = true;
 					$isNewMonth = true;
 					$isNewDay = true;
-					$currentYear = $thisYear;
-					
-					$newYear = new Year("yearTitle", $thisYear, "exact", $newDates);
-
-
-					// resets
-					$currentMonth = null;
-					$currentDay = null;
-					$newMonths = array();
-					$newDays = array();
-					//$newEntries = array();
+	
 				}
-
-				if ($currentMonth  != $thisMonth ) {
+		
+				if ($currentMonth != $thisMonth) {
 					$isNewMonth = true;
 					$isNewDay = true;
-					$currentMonth = $thisMonth;
-					
-					$newMonth = new Month($thisMonth, "Exampluary", "exact", []);
-
-					// resets
-					$currentDay = null;
-					$newDays = array();
-					//$newEntries = array();
 				}
-
+		
 				if ($currentDay != $thisDay) {
 					$isNewDay = true;
+				}
+		
+				if ($isFirstIndex) {
+					$currentMonth = $thisMonth;
+					$currentYear = $thisYear;
 					$currentDay = $thisDay;
-					
-					$newDay = new Day($thisDay, "exact", []);
-
-					$newEntries = array();
 				}
 
-				array_push($newEntries, $newEntry);
+				extractReferences($rowEra['description']);
+				$newEvent = new Event($rowEra['description'], "other");
 
-				$newDay->entries = $newEntries; // here?
+				if ($isNewDay && !$isFirstIndex) {
+					$newDay = new Day($currentDay, "exact", $newEvents);
 
-				if ($isNewDay) {
-					//$newDay->entries = $newEntries; // or here?
 					array_push($newDays, $newDay);
+
+					$newEvents = array();
+					$currentDay = $thisDay;
+
+					if ($isNewMonth && !$isFirstIndex) {
+						$newMonth = new Month($currentMonth, "month name", "exact", $newDays);
+						array_push($newMonths, $newMonth);
+
+						$newDays = array();
+
+						$currentMonth = $thisMonth;
+
+						if ($isNewYear && !$isFirstIndex) {
+							$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);
+
+							array_push($newYears, $newYear);
+
+							$newMonths = array();
+							$currentYear = $thisYear;
+						}
+					}
 				}
-				if ($isNewMonth) {
-					$newMonth->days = $newDays;
+
+				array_push($newEvents, $newEvent);
+
+				if ($isLastIndex) {
+					$newDay = new Day($currentDay, "exact", $newEvents);
+					array_push($newDays, $newDay);
+
+					$newMonth = new Month($currentMonth, "monthName", "exact", $newDays);
 					array_push($newMonths, $newMonth);
-				}
-				if ($isNewYear) {
-					$newYear->months = $newMonths;
+
+					$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);
 					array_push($newYears, $newYear);
 				}
 			}
 
-			$newDay->entries = $newEntries;
-
-			if ($isNewDay) {
-				array_push($newDays, $newDay);
-			}
-		
-			$newMonth->days = $newDays;
-
-			if ($isNewMonth) {
-				array_push($newMonths, $newMonth);
-			}
-		
-		
-			$newYear->months = $newMonths;
-
-			if ($isNewYear) {
-				array_push($newYears, $newYear);
-			}
-			
 			$newEra->years = $newYears;
 
 			array_push($eras, $newEra);
 		}
 	}
 
-	
+	$sqlActors = "SELECT id, firstname, lastname, birthYear, deathYear from tl_characters";
+	$queryActors = $connection->query($sqlActors);
+
+	$actors = array();
+
+	while($row = $queryActors->fetch_assoc()) {
+		/*
+		public $id;
+		public $parent1;	// could also be an array
+		public $parent2;
+		public $birth;
+		public $death;
+		public $image;		// character picture
+
+		//arrays?
+		public $symbols;	// shield or symbol infront of name
+		public $genders;	// can change over time
+		public $races;
+		public $subraces;
+
+		//arrays for sure
+		public $names;
+		public $titles;
+		*/
+
+		$actor = new Character();
+		$actor->id = $row['id'];
+		$actor->firstName = $row['firstname'];
+		$actor->lastName = $row['lastname'];
+		$actor->birthYear = $row['birthYear'];
+		
+		array_push($actors, $actor);
+	}
 
 	$timeline = new stdClass();
-	$timeline->id = 1;
-	$timeline->statusCode = 200;
-	$timeline->title = "Remote Title (hardcoded)";
-	$timeline->description = "Remote description (hardcoded)";
+	$timeline->id = 1;		// TODO: Hardcoded
+	$timeline->statusCode = 200;		// TODO: Hardcoded
+	$timeline->title = "Remote Title (hardcoded)";		// TODO: Hardcoded
+	$timeline->description = "Remote description (hardcoded)";		// TODO: Hardcoded
 	
 	$timeline->eras = $eras;
-	
-	$timeline->actors = array(
+
+	$timeline->actors = $actors;
+
+	/*
+	$timeline->actors = array(		// TODO: Hardcoded
 		"1" => array(
 			"firstName" => "Cal",
 			"lastName" => "Nordinger",
@@ -276,6 +384,7 @@
 			"birthYear" => 1960
 		)
 	);
+	*/
 
 	if (false) {
 		echo "<pre>";

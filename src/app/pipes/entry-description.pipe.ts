@@ -10,10 +10,18 @@ export class EntryDescriptionPipe implements PipeTransform {
 
 		function transformReference(reference: Reference) {
 			let html: string = "";
+
+			console.log("transformReference reference", reference);
 			
 			switch(reference.type) {
 				case "person": 
+					console.log("person");
 					// TODO: Fix to current year 
+
+					//html = "Ham Shafeeq altså";
+					
+					//html = reference.firstName + " " + reference.lastName;
+
 					let age: number = year - reference.birthYear; //me.date - reference.birthYear;
 					let title: string = null
 					
@@ -61,14 +69,33 @@ export class EntryDescriptionPipe implements PipeTransform {
 		}
 
 		while (text.includes("{")) {
-			let startIndex: number = text.search("{"),
-				endIndex: number = text.search("}"),
-				rawReferenceString: string = text.substring(startIndex, endIndex + 1),
-				referenceIndex: number = parseInt(rawReferenceString.substring(1, rawReferenceString.length - 1)),
-				reference: Reference = references[referenceIndex],
-				referenceString: string = reference ? transformReference(reference) : "NOT FOUND";
+			let startIndex: number,
+				endIndex: number,
+				rawReferenceString: string,
+				referenceString: string,
+				splittedString: string[],
+				referenceIndex: number,
+				reference: Reference,
+				newString: string;
 
-			text = text.replace(rawReferenceString, referenceString);
+			startIndex = text.search("{");
+			endIndex = text.search("}");
+			rawReferenceString = text.substring(startIndex, endIndex + 1);
+			referenceString = rawReferenceString.substring(1, rawReferenceString.length - 1);
+			
+			splittedString = referenceString.split('-');
+			
+			referenceIndex = parseInt(splittedString[1]);
+
+			console.log("references", references);
+
+			reference = references.find(x => x.id == referenceIndex);
+
+			//reference = references[referenceIndex];
+
+			newString = reference ? transformReference(reference) : "NOT FOUND. Id: " + referenceIndex;
+
+			text = text.replace(rawReferenceString, newString);
 		}
 		return text;
 	}
