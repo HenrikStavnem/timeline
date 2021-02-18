@@ -36,7 +36,7 @@ export class EntrylistComponent implements OnInit {
 			this.references = data.actors;
 		},
 		error => {
-			console.log('error: ', error);
+			console.error('api error: ', error);
 		});
 	}
 	

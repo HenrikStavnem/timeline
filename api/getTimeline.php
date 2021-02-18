@@ -33,8 +33,20 @@
 		public $subraces;
 
 		//arrays for sure
-		public $names;
+		public $names = array();
 		public $titles;
+	}
+
+	class CharacterTitle {
+		public $title;
+		public $startDate;
+		public $endDate;
+
+		public function __construct($title, $startDate, $endDate) {
+			$this->title = $title;
+			$this->startDate = $startDate;
+			$this->endDate = $endDate;
+		}
 	}
 
 	class Event {
@@ -323,6 +335,15 @@
 		$actor->firstName = $row['firstname'];
 		$actor->lastName = $row['lastname'];
 		$actor->birthYear = $row['birthYear'];
+
+		$actorTitles = array();		// DODO: Hardcoded
+		array_push($actorTitles, new CharacterTitle('Duke', 1900, 1960));
+		array_push($actorTitles, new CharacterTitle('King', 1961, 1985));
+		array_push($actorTitles, new CharacterTitle('Beggar', 1984, 1985));
+		array_push($actorTitles, new CharacterTitle('Jester', 1985, 1986));
+		array_push($actorTitles, new CharacterTitle('Captain', 1986, 2030));
+
+		$actor->titles = $actorTitles;
 		
 		array_push($actors, $actor);
 	}

@@ -15,12 +15,8 @@ export class EntryDescriptionPipe implements PipeTransform {
 			
 			switch(reference.type) {
 				case "person": 
-					console.log("person");
+					console.log("person", reference);
 					// TODO: Fix to current year 
-
-					//html = "Ham Shafeeq altså";
-					
-					//html = reference.firstName + " " + reference.lastName;
 
 					let age: number = year - reference.birthYear; //me.date - reference.birthYear;
 					let title: string = null
@@ -55,7 +51,7 @@ export class EntryDescriptionPipe implements PipeTransform {
 			let title = "";
 
 			titles.forEach(date => {
-				if (date.year <= year) {
+				if (date.startDate <= year) {
 					title = date.title;
 					return;
 				}
