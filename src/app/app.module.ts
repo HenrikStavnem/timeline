@@ -19,7 +19,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 
-import {TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
+import { TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
 import { TimelineService } from './services/timeline.service';
 
 @NgModule({

@@ -1,0 +1,37 @@
+<ng-container *ngIf="timeline">
+	<div class="header" [style.background-image]="'url(https://cdnb.artstation.com/p/assets/images/images/002/222/455/large/sasha-tudvaseva-ruby-grove-2.jpg?1458905294)'">
+		<div class="header-content">
+			<h1>{{timeline.title}}</h1>
+			<p>{{timeline.description}}</p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div *ngFor="let era of timeline.eras">
+			<h1>{{era.title}}</h1>
+			<p>{{era.description}}</p>
+
+			<div *ngFor="let year of era.years">
+				<h2 *ngIf="year.exactness=='exact'">{{year.year}}</h2>
+				<h2 *ngIf="year.exactness=='circa'">Ca. {{year.year}}</h2>
+				<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
+
+				<div *ngFor="let month of year.months">
+					<b>Month {{month.month}}: {{month.title}}</b>
+
+					<div *ngFor="let day of month.days">
+						<i>Day {{day.day}}</i>
+
+						<div *ngFor="let entry of day.entries">
+							<p>{{entry.description}}</p>
+						</div>
+
+						<!--<entry *ngFor="let entry of day.entries" [item]="entry" [references]="references" [year]="year.year"></entry>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br /><br /><br /><br />
+</ng-container>

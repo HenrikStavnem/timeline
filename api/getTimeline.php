@@ -76,14 +76,14 @@
 
 	class Month {
 		public $month;
-		public $name;
+		public $title;
 		public $exactness;
 		public $days = array();
 
-		public function __construct($month, $name, $exactness, $days) {
+		public function __construct($month, $title, $exactness, $days) {
 			$this->month = $month;
 			$this->exactness = $exactness;
-			$this->name = $name;
+			$this->title = $title;
 
 			foreach($days as $day => $val) {
 				array_push($this->days, $val);
