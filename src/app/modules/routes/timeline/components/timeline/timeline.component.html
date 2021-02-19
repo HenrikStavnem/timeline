@@ -23,7 +23,7 @@
 						<i>Day {{day.day}}</i>
 
 						<div *ngFor="let entry of day.entries">
-							<p>{{entry.description}}</p>
+							<entry [item]="entry" [item]="entry" [references]="timeline.actors" [year]="year.year"></entry>
 						</div>
 
 						<!--<entry *ngFor="let entry of day.entries" [item]="entry" [references]="references" [year]="year.year"></entry>-->

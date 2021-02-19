@@ -1,0 +1,70 @@
+h2 {
+	font-family: 'Semplicita', 'Hoefler Text', sans-serif;
+}
+
+.entry {
+	height: auto;
+	background-color: #3b270e;
+	background-image: url('http://www.dark-legacy.info/Parchment.jpg');
+	background-size: cover;
+	color: white;
+	font-family: 'Hoefler Text', serif;
+	margin-bottom: 10px;
+
+	border: 1px solid #000000;
+	border-radius: 10px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 1), 0 0 80px rgba(0, 0, 0, 0.5) inset;
+	display: flex;
+	flex-direction: row;
+
+	.entry-icon {
+		background-color: blue;
+		min-width: 50px;
+		height: auto;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+
+		&.combat {
+			background-color: red;
+		}
+
+		&.death {
+			background-color: black;
+		}
+
+		&.travel {
+			background-color: yellowgreen;
+		}
+	}
+	.entry-text {
+		margin: 10px;
+	}
+}
+
+span.small {
+	padding-left: 10px;
+	color: gray;
+	text-transform: uppercase;
+	font-size: small;
+	font-family: sans-serif;
+}
+
+p {
+	color: white;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+	margin-block-start: 0;
+	margin-block-end: 0;
+
+	img {
+		width: 16px;
+		top: 5px;
+	}
+
+	span.gray {
+		color: gray;
+	}
+}
+
+a.link {
+	color: #ffd700 !important;
+}
