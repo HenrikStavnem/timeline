@@ -199,10 +199,10 @@
 	}
 
 	if ($slug) {
-		$sqlTimeline = "SELECT id, title, description, image, owner from tl_timelines WHERE url='$slug' LIMIT 1";
+		$sqlTimeline = "SELECT tl_timelines.id as id, title, tl_timelines.description as description, tl_timelines.image as image, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id WHERE url='$slug' LIMIT 1";
 	}
 	else {
-		$sqlTimeline = "SELECT id, title, description, image, owner from tl_timelines WHERE id=1 LIMIT 1";
+		$sqlTimeline = "SELECT tl_timelines.id as id, title, tl_timelines.description as description, tl_timelines.image as image, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id WHERE tl_timelines.id=1 LIMIT 1";
 	}
 	$queryTimeline = $connection->query($sqlTimeline);
 
@@ -215,6 +215,8 @@
 		$timelineTitle = $row['title'];
 		$timelineDescription = $row['description'];
 		$timelineImage = $row['image'];
+
+		$timelineAuthor = new Author($row['authorname'], $row['authorimage']);
 	}
 
 
@@ -391,7 +393,7 @@
 	$timeline->title = $timelineTitle;
 	$timeline->description = $timelineDescription;
 	$timeline->image = $timelineImage;
-	$timeline->author = new Author("Henrik Stavnem", "icon-example");
+	$timeline->author = $timelineAuthor;
 	
 	$timeline->eras = $eras;
 
