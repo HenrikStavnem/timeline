@@ -2,9 +2,16 @@ export interface ITimeline {
 	id: number,
 	title: string,
 	description: string,
+	image: string,
+	author: IAuthor,
 	statusCode: number,
 	eras: IEra[],
 	actors: IActor[],
+}
+
+export interface IAuthor {
+	name: string,
+	icon: string
 }
 
 export interface IEra {

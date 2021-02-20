@@ -22,16 +22,26 @@
 		position: relative;
 		width: 800px;
 		margin-bottom: 40px;
+		display: flex;
+		flex-direction: column;
 
 		h1 {
-			//position: absolute;
-			//bottom: 100px;
-			width: 100%;
+			//width: 100%;
 			color: white;
-			text-align: center;
+			//text-align: center;
 			text-shadow: 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
 			letter-spacing: 15px;
 			font-family: 'Semplicita';
+		}
+
+		h2 {
+			//width: 100%;
+			color: white;
+			//text-align: center;
+			text-shadow: 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
+			letter-spacing: 5px;
+			font-family: 'Semplicita';
+			font-size: 16px;
 		}
 
 		p {

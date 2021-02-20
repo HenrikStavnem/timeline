@@ -1,7 +1,8 @@
 <ng-container *ngIf="timeline">
-	<div class="header" [style.background-image]="'url(https://cdnb.artstation.com/p/assets/images/images/002/222/455/large/sasha-tudvaseva-ruby-grove-2.jpg?1458905294)'">
+	<div class="header" [style.background-image]="'url(' + timeline.image + ')'">
 		<div class="header-content">
 			<h1>{{timeline.title}}</h1>
+			<h2>By {{timeline.author.name}}</h2>
 			<p>{{timeline.description}}</p>
 		</div>
 	</div>
@@ -17,10 +18,13 @@
 				<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
 
 				<div *ngFor="let month of year.months">
-					<b>Month {{month.month}}: {{month.title}}</b>
+					<b *ngIf="month.exactness=='exact'">Month {{month.month}}: {{month.title}}</b>
+					<b *ngIf="month.exactness=='circa'">Ca. Month {{month.month}}: {{month.title}}</b>
+					<b *ngIf="month.exactness=='unknown'">Unknown month</b>
 
 					<div *ngFor="let day of month.days">
 						<i>Day {{day.day}}</i>
+						<!--TODO: Reintroduce relative dates. See old entrylist component-->
 
 						<div *ngFor="let entry of day.entries">
 							<entry [item]="entry" [item]="entry" [references]="timeline.actors" [year]="year.year"></entry>

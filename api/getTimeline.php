@@ -6,7 +6,20 @@
 	$password = "";
 	$database = "timeline";
 
-	$eras = array();
+	$slug = null;
+	if (isset($_GET["slug"])) {
+		$slug = $_GET["slug"];
+	}
+
+	class Author {
+		public $name;
+		public $icon;
+
+		public function __construct($name, $icon) {
+			$this->name = $name;
+			$this->icon = $icon;
+		}
+	}
 
 	class Actors {
 		public $characters = array();
@@ -119,6 +132,7 @@
 		}
 	}
 
+	$eras = array();
 	$charactersIndexList = array();
 	$itemsIndexList = array();
 	$locationsIndexList = array();
@@ -184,7 +198,27 @@
 		die("Connection failed: " . $connection->connect_error);
 	}
 
-	$sqlEras = "SELECT id, title, description FROM tl_eras WHERE timeline=1";
+	if ($slug) {
+		$sqlTimeline = "SELECT id, title, description, image, owner from tl_timelines WHERE url='$slug' LIMIT 1";
+	}
+	else {
+		$sqlTimeline = "SELECT id, title, description, image, owner from tl_timelines WHERE id=1 LIMIT 1";
+	}
+	$queryTimeline = $connection->query($sqlTimeline);
+
+	$timelineId = null;
+	$timelineTitle = "";
+	$timelineDescription = "";
+
+	while ($row = $queryTimeline->fetch_assoc()) {
+		$timelineId = $row['id'];
+		$timelineTitle = $row['title'];
+		$timelineDescription = $row['description'];
+		$timelineImage = $row['image'];
+	}
+
+
+	$sqlEras = "SELECT id, title, description FROM tl_eras WHERE timeline=$timelineId";
 	$queryEras = $connection->query($sqlEras);
 
 	$eras = array();
@@ -275,7 +309,7 @@
 						$currentMonth = $thisMonth;
 
 						if ($isNewYear && !$isFirstIndex) {
-							$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);
+							$newYear = new Year("yearTitle", $currentYear, "relative", $newMonths);
 
 							array_push($newYears, $newYear);
 
@@ -349,63 +383,19 @@
 	}
 
 	$timeline = new stdClass();
-	$timeline->id = 1;		// TODO: Hardcoded
+
+	$timeline->slug = $slug;
+
+	$timeline->id = $timelineId;
 	$timeline->statusCode = 200;		// TODO: Hardcoded
-	$timeline->title = "Remote Title (hardcoded)";		// TODO: Hardcoded
-	$timeline->description = "Remote description (hardcoded)";		// TODO: Hardcoded
+	$timeline->title = $timelineTitle;
+	$timeline->description = $timelineDescription;
+	$timeline->image = $timelineImage;
+	$timeline->author = new Author("Henrik Stavnem", "icon-example");
 	
 	$timeline->eras = $eras;
 
 	$timeline->actors = $actors;
-
-	/*
-	$timeline->actors = array(		// TODO: Hardcoded
-		"1" => array(
-			"firstName" => "Cal",
-			"lastName" => "Nordinger",
-			"type" => "person",
-			"birthYear" => 1971,
-			"shield" => "http://dukendor.com/nadtas/timeline/graphics/shields/red.png",
-			"titles" => array(
-				"0" => array(
-					"year" => 2012,
-					"title" => "Lord"
-				),
-				"1" => array(
-					"year" => 2018,
-					"title" => "Farmer"
-				)
-			)
-		),
-		"2" => array(
-			"firstName" => "Tarrosh",
-			"lastName" => "Felding",
-			"type" => "person",
-			"birthYear" => 1985,
-			"shield" => "http://dukendor.com/nadtas/timeline/graphics/shields/cole.png"
-		),
-		"3" => array(
-			"firstName" => "Darkstone Castle",
-			"lastName" => "",
-			"type" => "location",
-			"birthYear" => 1594,
-			"shield" => "http://dukendor.com/nadtas/timeline/graphics/shields/thorne.png"
-		),
-		"4" => array(
-			"firstName" => "Minna",
-			"lastName" => "Wallford",
-			"type" => "person",
-			"birthYear" => 2004,
-			"shield" => "assets/shield.png"
-		),
-		"5" => array(
-			"firstName" => "Dakklon",
-			"lastName" => "Throe",
-			"type" => "person",
-			"birthYear" => 1960
-		)
-	);
-	*/
 
 	if (false) {
 		echo "<pre>";

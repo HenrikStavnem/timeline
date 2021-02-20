@@ -19,8 +19,15 @@ export class TimelineService {
 		this.http.post(url, msg);
 	}
 
-	getTimeline() {
-		return this.http.get('http://localhost:80/timeline/api/getTimeline');
+	getTimeline(slug?: string) {
+		if (slug !== undefined) {
+			console.log('Slug defined.');
+			return this.http.get('http://localhost:80/timeline/api/getTimeline?slug='+slug);
+		}
+		else {
+			console.log('Slug not defined.');
+			return this.http.get('http://localhost:80/timeline/api/getTimeline');
+		}
 	}
 
 	getTimelineInfo() {
