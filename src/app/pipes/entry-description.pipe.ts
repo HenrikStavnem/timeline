@@ -10,12 +10,9 @@ export class EntryDescriptionPipe implements PipeTransform {
 
 		function transformReference(reference: Reference) {
 			let html: string = "";
-
-			console.log("transformReference reference", reference);
 			
 			switch(reference.type) {
 				case "person": 
-					console.log("person", reference);
 					// TODO: Fix to current year 
 
 					let age: number = year - reference.birthYear; //me.date - reference.birthYear;
@@ -28,7 +25,7 @@ export class EntryDescriptionPipe implements PipeTransform {
 					if (reference.shield) {html = html + createShield(reference.shield);}
 					//if (reference.title) {html = html + reference.title + " ";}
 					if (title) {html = html + title + " ";}
-					html = html + `<a class='${reference.type}'>`;
+					html = html + `<a class='${reference.type}' href='character/test'>`; //TODO: href instead of routerLink and slug is hardcoded
 					html = html + reference.firstName + " " + reference.lastName;
 					html = html + "</a>";
 					html = html + " <span class='gray'>(" + age + " years old)</span>";
@@ -82,8 +79,6 @@ export class EntryDescriptionPipe implements PipeTransform {
 			splittedString = referenceString.split('-');
 			
 			referenceIndex = parseInt(splittedString[1]);
-
-			console.log("references", references);
 
 			reference = references.find(x => x.id == referenceIndex);
 

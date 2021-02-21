@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
 	{
 		path: '',
-		loadChildren: () => import('src/app/modules/routes/timeline/timeline.module').then(module => module.TimelineModule),
+		loadChildren: () => import('src/app/modules/routes/index/index.module').then(module => module.IndexModule),
 		data: {pageType: 'index'}
 	},
 	{
@@ -14,9 +14,14 @@ const routes: Routes = [
 		data: {pageType: 'timeline'}
 	},
 	{
+		path: 'character/:id',
+		loadChildren: () => import('src/app/modules/routes/character/character.module').then(module => module.CharacterModule),
+		data: {pageType: 'character'}
+	},
+	{
 		path: 'test',
 		loadChildren: () => import('src/app/modules/routes/test/test.module').then(module => module.TestModule),
-		data: {pageType: 'timeline'}
+		data: {pageType: 'test'}
 	},
 	{
 		path: '**',

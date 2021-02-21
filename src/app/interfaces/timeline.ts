@@ -49,7 +49,7 @@ export interface IEntry {
 export interface IActor {
 	id: number,
 	type: string,
-	fistName: string,	// TODO: will be replaced by 'names'
+	firstName: string,	// TODO: will be replaced by 'names'
 	lastName: string,	// TODO: will be replaced by 'names'
 	birthYear: number,
 	birth: IDate,

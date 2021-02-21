@@ -311,7 +311,7 @@
 						$currentMonth = $thisMonth;
 
 						if ($isNewYear && !$isFirstIndex) {
-							$newYear = new Year("yearTitle", $currentYear, "relative", $newMonths);
+							$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);
 
 							array_push($newYears, $newYear);
 

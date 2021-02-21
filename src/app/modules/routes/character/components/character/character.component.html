@@ -1,0 +1,10 @@
+<ng-container *ngIf="character">
+	<div class="header" [style.background-image]="'url(https://cdnb.artstation.com/p/assets/images/images/034/991/557/large/will-murai-barrens-keyart-008.jpg?1613802083)'">
+		<div class="header-content">
+			<h1>{{character.firstName}} {{character.lastName}}</h1>
+		</div>
+	</div>
+	<div class="content">
+		Character: {{character.firstName}} {{character.lastName}}
+	</div>
+</ng-container>

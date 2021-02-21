@@ -20,11 +20,9 @@ export class TimelineComponent implements OnInit {
 		let slug: string;
 		this.route.paramMap.subscribe(params => {
 			slug = params.get('id');
-			console.log("slug:", slug);
 		});
 
 		this.timelineService.getTimeline(slug ? slug : undefined).subscribe((timeline: ITimeline) => {
-			console.log("DATA:::", timeline);
 			this.timeline = timeline;
 		},
 		error => {
