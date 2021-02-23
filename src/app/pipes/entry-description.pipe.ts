@@ -1,55 +1,78 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { IActor, IActors } from '../interfaces/timeline';
 import { Reference } from '../reference';
 
 @Pipe({
 	name: 'entryDescription'
 })
+/**
+ * A pipe that transforms actor references in timeline entry texts into 
+ */
 export class EntryDescriptionPipe implements PipeTransform {
-	private transformReferences(text: string, references: Array<Reference>, year: number) {
+	private transformReferences(text: string, references: IActors, date: any) {
 		var me = this;
 
-		function transformReference(reference: Reference) {
+		function transformReference(type, index) {
 			let html: string = "";
 			
-			switch(reference.type) {
-				case "person": 
-					// TODO: Fix to current year 
+			switch(type) {
+				case "char": 
+					let character: IActor = references.characters.find(x => x.id == index);
 
-					let age: number = year - reference.birthYear; //me.date - reference.birthYear;
+					let age: number = date.year - character.birthYear; //me.date - reference.birthYear;
 					let title: string = null
 					
-					if (reference.titles) {
-						title = getTitle(reference.titles, year);
+					if (character.titles) {
+						title = getTitle(character.titles, date);
 					}
 
-					if (reference.shield) {html = html + createShield(reference.shield);}
+					if (character.shield) {html = html + createShield(character.shield);}
 					//if (reference.title) {html = html + reference.title + " ";}
 					if (title) {html = html + title + " ";}
-					html = html + `<a class='${reference.type}' href='character/test'>`; //TODO: href instead of routerLink and slug is hardcoded
-					html = html + reference.firstName + " " + reference.lastName;
+					html = html + `<a class='${character.type}' href='character/${character.slug}'>`; //TODO: href instead of routerLink
+					html = html + character.firstName + " " + character.lastName;
 					html = html + "</a>";
 					html = html + " <span class='gray'>(" + age + " years old)</span>";
 					break;
 				case "location": 
-				if (reference.shield) {html = html + createShield(reference.shield);}
+					console.log("Reference is a location");
+					//TODO: NYI
+				/*
+					if (reference.shield) {html = html + createShield(reference.shield);}
 					html = html + `<a class='${reference.type}'>`;
 					html = html + reference.firstName;
 					html = html + "</a>";
+				*/
+					break;
+				case "item": 
+				console.log("Reference is an item");
+					//TODO: NYI
+					html = "item";
 					break;
 				default:
-					console.error("Reference type not recognized: " + reference.type);
+					console.error("Reference type not recognized: " + type);
 					break;
 			}
 
 			return html;
 		}
 
-		function getTitle(titles: Array<any>, year: number) {
+		function getTitle(titles: Array<any>, date: any) {
+			//TODO: This doesn't not take eras, months and days into consideration and cannot expire
 			let title = "";
 
-			titles.forEach(date => {
-				if (date.startDate <= year) {
-					title = date.title;
+			if (titles.length > 0) {
+//				debugger;
+			}
+
+			titles.forEach(titleObj => {
+				if (
+					titleObj.startDate.year <= date.year &&
+					titleObj.endDate.year >= date.year
+					) {
+					console.log('Start date is perfect');
+
+					title = titleObj.title;
 					return;
 				}
 			});
@@ -68,7 +91,7 @@ export class EntryDescriptionPipe implements PipeTransform {
 				referenceString: string,
 				splittedString: string[],
 				referenceIndex: number,
-				reference: Reference,
+				referenceType: string,
 				newString: string;
 
 			startIndex = text.search("{");
@@ -77,21 +100,19 @@ export class EntryDescriptionPipe implements PipeTransform {
 			referenceString = rawReferenceString.substring(1, rawReferenceString.length - 1);
 			
 			splittedString = referenceString.split('-');
+
+			referenceType = splittedString[0];
 			
 			referenceIndex = parseInt(splittedString[1]);
 
-			reference = references.find(x => x.id == referenceIndex);
-
-			//reference = references[referenceIndex];
-
-			newString = reference ? transformReference(reference) : "NOT FOUND. Id: " + referenceIndex;
+			newString = transformReference(referenceType, referenceIndex) ;
 
 			text = text.replace(rawReferenceString, newString);
 		}
 		return text;
 	}
 
-	transform(value: string, references: Array<any>, year: number): string {
+	transform(value: string, references: IActors, year: number): string {
 		return this.transformReferences(value, references, year);
 	}
 

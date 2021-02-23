@@ -7,7 +7,7 @@
 		</div>
 	</div>
 
-	<div class="content">
+	<div class="content has-header">
 		<div *ngFor="let era of timeline.eras">
 			<h1>{{era.title}}</h1>
 			<p>{{era.description}}</p>
@@ -27,7 +27,7 @@
 						<!--TODO: Reintroduce relative dates. See old entrylist component-->
 
 						<div *ngFor="let entry of day.entries">
-							<entry [item]="entry" [item]="entry" [references]="timeline.actors" [year]="year.year"></entry>
+							<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: 1, year: year.year, month: month.month, day: day.day}"></entry>
 						</div>
 
 						<!--<entry *ngFor="let entry of day.entries" [item]="entry" [references]="references" [year]="year.year"></entry>-->

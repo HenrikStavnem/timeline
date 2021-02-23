@@ -25,7 +25,7 @@ export class CharacterComponent implements OnInit {
 		
 		this.timelineService.getCharacter(slug).subscribe((character: any) => {
 			this.character = character.character;
-			console.log(this.character);
+			console.log("this character", this.character);
 		},
 		error => {
 			console.error('api error: ', error);

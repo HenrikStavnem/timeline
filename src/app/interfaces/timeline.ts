@@ -46,15 +46,25 @@ export interface IEntry {
 	type: string
 }
 
+export interface IActors {
+	characters: any[],
+	items: any[],
+	locations: any[]
+}
+
 export interface IActor {
 	id: number,
 	type: string,
 	firstName: string,	// TODO: will be replaced by 'names'
 	lastName: string,	// TODO: will be replaced by 'names'
 	birthYear: number,
+	deathYear: number,
 	birth: IDate,
 	names: IActorName[],
-	image: string
+	titles: IActorTitle[],
+	image: string,
+	slug: string,
+	shield: string	// TODO: will be changed to an array, 
 }
 
 export interface IDate {

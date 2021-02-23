@@ -24,6 +24,7 @@ export class TimelineComponent implements OnInit {
 
 		this.timelineService.getTimeline(slug ? slug : undefined).subscribe((timeline: ITimeline) => {
 			this.timeline = timeline;
+			console.log('timeline',timeline);
 		},
 		error => {
 			console.error('api error: ', error);

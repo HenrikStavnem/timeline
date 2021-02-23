@@ -23,6 +23,8 @@
 
 	class Actors {
 		public $characters = array();
+		public $items = array();
+		public $locations = array();
 	}
 
 	class Character {
@@ -32,6 +34,7 @@
 		public $lastName;
 		public $birthYear;
 		public $type = "person";
+		public $slug;
 
 		public $parent1;	// could also be an array
 		public $parent2;
@@ -40,10 +43,12 @@
 		public $image;		// character picture
 
 		//arrays?
+		/*
 		public $symbols;	// shield or symbol infront of name
 		public $genders;	// can change over time
 		public $races;
 		public $subraces;
+		*/
 
 		//arrays for sure
 		public $names = array();
@@ -59,6 +64,15 @@
 			$this->title = $title;
 			$this->startDate = $startDate;
 			$this->endDate = $endDate;
+		}
+	}
+
+	class Date {
+		public function __construct($era, $year, $month, $day) {
+			$this->era = $era;
+			$this->year = $year;
+			$this->month = $month;
+			$this->day = $day;
 		}
 	}
 
@@ -341,12 +355,12 @@
 		}
 	}
 
-	$sqlActors = "SELECT id, firstname, lastname, birthYear, deathYear from tl_characters";
-	$queryActors = $connection->query($sqlActors);
+	$sqlCharacters = "SELECT id, firstname, lastname, birthYear, deathYear, slug from tl_characters";
+	$queryCharacters = $connection->query($sqlCharacters);
 
-	$actors = array();
+	$characters = array();
 
-	while($row = $queryActors->fetch_assoc()) {
+	while($row = $queryCharacters->fetch_assoc()) {
 		/*
 		public $id;
 		public $parent1;	// could also be an array
@@ -366,22 +380,27 @@
 		public $titles;
 		*/
 
-		$actor = new Character();
-		$actor->id = $row['id'];
-		$actor->firstName = $row['firstname'];
-		$actor->lastName = $row['lastname'];
-		$actor->birthYear = $row['birthYear'];
+		$character = new Character();
+		$character->id = $row['id'];
+		$character->firstName = $row['firstname'];
+		$character->lastName = $row['lastname'];
+		$character->birthYear = $row['birthYear'];
+		$character->slug = $row['slug'];
 
-		$actorTitles = array();		// DODO: Hardcoded
-		array_push($actorTitles, new CharacterTitle('Duke', 1900, 1960));
-		array_push($actorTitles, new CharacterTitle('King', 1961, 1985));
-		array_push($actorTitles, new CharacterTitle('Beggar', 1984, 1985));
-		array_push($actorTitles, new CharacterTitle('Jester', 1985, 1986));
-		array_push($actorTitles, new CharacterTitle('Captain', 1986, 2030));
+		$sqlCharacterTitles = "SELECT title, ordinal, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_titles WHERE characterId=".$row['id'];
+		$queryCharacterTitles = $connection->query($sqlCharacterTitles);
 
-		$actor->titles = $actorTitles;
+		$characterTitles = array();
+		while($row = $queryCharacterTitles->fetch_assoc()) {
+			$startDate = new Date($row['startEra'], $row['startYear'], $row['startMonth'], $row['startDay']);
+			$endDate = new Date($row['endEra'], $row['endYear'], $row['endMonth'], $row['endDay']);
+
+			array_push($characterTitles, new CharacterTitle($row['title'], $startDate, $endDate));
+		}
+
+		$character->titles = $characterTitles;
 		
-		array_push($actors, $actor);
+		array_push($characters, $character);
 	}
 
 	$timeline = new stdClass();
@@ -396,6 +415,10 @@
 	$timeline->author = $timelineAuthor;
 	
 	$timeline->eras = $eras;
+
+
+	$actors = new Actors();
+	$actors->characters = $characters;
 
 	$timeline->actors = $actors;
 
