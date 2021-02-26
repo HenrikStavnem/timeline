@@ -18,6 +18,7 @@ export interface IEra {
 	id: number | string,
 	title: string,
 	description: string,
+	image: string,
 	years: IYear[]
 }
 

@@ -16,7 +16,7 @@ export class EntryComponent implements OnInit {
 	@Input() date: any;
 
 	ngOnInit(): void {
-		console.log('entry date', this.date);
+		//console.log('entry date', this.date);
 	}
 
 	constructor() {

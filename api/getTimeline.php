@@ -138,11 +138,13 @@
 		public $title;
 		public $years;
 		public $description;
+		public $image;
 
-		public function __construct($era, $title, $description) {
+		public function __construct($era, $title, $description, $image) {
 			$this->era = $era;
 			$this->title = $title;
 			$this->description = $description;
+			$this->image = $image;
 		}
 	}
 
@@ -234,7 +236,7 @@
 	}
 
 
-	$sqlEras = "SELECT id, title, description FROM tl_eras WHERE timeline=$timelineId";
+	$sqlEras = "SELECT id, title, description, image FROM tl_eras WHERE timeline=$timelineId ORDER BY eraOrder, era";
 	$queryEras = $connection->query($sqlEras);
 
 	$eras = array();
@@ -244,7 +246,7 @@
 			
 			$eraId = $row["id"];
 
-			$newEra = new Era($eraId, $row["title"], $row["description"]);
+			$newEra = new Era($eraId, $row["title"], $row["description"], $row['image']);
 
 			$sqlEvents = "SELECT id, year, month, day, description, type FROM tl_events WHERE era=$eraId ORDER BY era, year, month, day";
 			$queryEvents = $connection->query($sqlEvents);
@@ -263,7 +265,7 @@
 			$i = 0;
 			$lastIndex = $queryEvents->num_rows;
 
-			while($rowEra = $queryEvents->fetch_assoc()) {
+			while($rowEvent = $queryEvents->fetch_assoc()) {
 				$isNewYear = false;
 				$isNewMonth = false;
 				$isNewDay = false;
@@ -271,9 +273,11 @@
 				$isFirstIndex = false;
 				$isLastIndex = false;
 
-				$thisYear = $rowEra['year'];
-				$thisMonth = $rowEra['month'];
-				$thisDay = $rowEra['day'];
+				$thisYear = $rowEvent['year'];
+				$thisMonth = $rowEvent['month'];
+				$thisDay = $rowEvent['day'];
+
+				$monthTitle = "Example"; //TODO: Replace with actual month name from db
 
 				if ($i === 0) {
 					$isFirstIndex = true;
@@ -305,8 +309,8 @@
 					$currentDay = $thisDay;
 				}
 
-				extractReferences($rowEra['description']);
-				$newEvent = new Event($rowEra['description'], "other");
+				extractReferences($rowEvent['description']);
+				$newEvent = new Event($rowEvent['description'], "other");
 
 				if ($isNewDay && !$isFirstIndex) {
 					$newDay = new Day($currentDay, "exact", $newEvents);
@@ -317,7 +321,7 @@
 					$currentDay = $thisDay;
 
 					if ($isNewMonth && !$isFirstIndex) {
-						$newMonth = new Month($currentMonth, "month name", "exact", $newDays);
+						$newMonth = new Month($currentMonth, $monthTitle, "exact", $newDays);
 						array_push($newMonths, $newMonth);
 
 						$newDays = array();
@@ -341,7 +345,7 @@
 					$newDay = new Day($currentDay, "exact", $newEvents);
 					array_push($newDays, $newDay);
 
-					$newMonth = new Month($currentMonth, "monthName", "exact", $newDays);
+					$newMonth = new Month($currentMonth, $monthTitle, "exact", $newDays);
 					array_push($newMonths, $newMonth);
 
 					$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);

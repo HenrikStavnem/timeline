@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IActor, IActors } from '../interfaces/timeline';
+import { IActor, IActors, IDate } from '../interfaces/timeline';
 import { Reference } from '../reference';
 
 @Pipe({
@@ -57,21 +57,50 @@ export class EntryDescriptionPipe implements PipeTransform {
 			return html;
 		}
 
-		function getTitle(titles: Array<any>, date: any) {
-			//TODO: This doesn't not take eras, months and days into consideration and cannot expire
-			let title = "";
+		function validateDate(startDate: IDate, endDate: IDate, currentDate: IDate) {
+			//TODO: Does not take eras and exactness into consideration
 
-			if (titles.length > 0) {
-//				debugger;
+			let isStartDateValid = false,
+				isEndDateValid = false;
+
+			// check if start date is valid
+			if (startDate.year === currentDate.year) {
+				if (startDate.month === currentDate.month) {
+					if (startDate.day <= currentDate.day) {
+						isStartDateValid = true;
+					}
+				}
+				else if (startDate.month < currentDate.month) {
+					isStartDateValid = true;
+				}
+			}
+			else if (startDate.year < currentDate.year) {
+				isStartDateValid = true;
 			}
 
-			titles.forEach(titleObj => {
-				if (
-					titleObj.startDate.year <= date.year &&
-					titleObj.endDate.year >= date.year
-					) {
-					console.log('Start date is perfect');
+			// check if end date is valid
+			if (endDate.year === currentDate.year) {
+				if (endDate.month === currentDate.month) {
+					if (endDate.day >= currentDate.day) {
+						isEndDateValid = true;
+					}
+				}
+				else if (endDate.month > currentDate.month) {
+					isEndDateValid = true;
+				}
+			}
+			else if (endDate.year > currentDate.year) {
+				isEndDateValid = true;
+			}
 
+			return (isStartDateValid && isEndDateValid);
+		}
+
+		function getTitle(titles: Array<any>, currentDate: IDate) {
+			let title = "";
+
+			titles.forEach(titleObj => {
+				if (validateDate(titleObj.startDate, titleObj.endDate, currentDate)) {
 					title = titleObj.title;
 					return;
 				}

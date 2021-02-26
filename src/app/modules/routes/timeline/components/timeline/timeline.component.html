@@ -9,31 +9,35 @@
 
 	<div class="content has-header">
 		<div *ngFor="let era of timeline.eras">
-			<h1>{{era.title}}</h1>
-			<p>{{era.description}}</p>
+			<ng-container *ngIf="era.years.length > 0">
+				<div class="era" [style.background-image]="'url(' + era.image + ')'">
+					<h1>{{era.title}}</h1>
+					<p>{{era.description}}</p>
+				</div>
 
-			<div *ngFor="let year of era.years">
-				<h2 *ngIf="year.exactness=='exact'">{{year.year}}</h2>
-				<h2 *ngIf="year.exactness=='circa'">Ca. {{year.year}}</h2>
-				<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
+				<div *ngFor="let year of era.years">
+					<h2 *ngIf="year.exactness=='exact'">{{year.year}}</h2>
+					<h2 *ngIf="year.exactness=='circa'">Ca. {{year.year}}</h2>
+					<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
 
-				<div *ngFor="let month of year.months">
-					<b *ngIf="month.exactness=='exact'">Month {{month.month}}: {{month.title}}</b>
-					<b *ngIf="month.exactness=='circa'">Ca. Month {{month.month}}: {{month.title}}</b>
-					<b *ngIf="month.exactness=='unknown'">Unknown month</b>
+					<div *ngFor="let month of year.months">
+						<b *ngIf="month.exactness=='exact'">Month {{month.month}}: {{month.title}}</b>
+						<b *ngIf="month.exactness=='circa'">Ca. Month {{month.month}}: {{month.title}}</b>
+						<b *ngIf="month.exactness=='unknown'">Unknown month</b>
 
-					<div *ngFor="let day of month.days">
-						<i>Day {{day.day}}</i>
-						<!--TODO: Reintroduce relative dates. See old entrylist component-->
+						<div *ngFor="let day of month.days">
+							<i>Day {{day.day}}</i>
+							<!--TODO: Reintroduce relative dates. See old entrylist component-->
 
-						<div *ngFor="let entry of day.entries">
-							<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: 1, year: year.year, month: month.month, day: day.day}"></entry>
+							<div *ngFor="let entry of day.entries">
+								<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: 1, year: year.year, month: month.month, day: day.day}"></entry>
+							</div>
+
+							<!--<entry *ngFor="let entry of day.entries" [item]="entry" [references]="references" [year]="year.year"></entry>-->
 						</div>
-
-						<!--<entry *ngFor="let entry of day.entries" [item]="entry" [references]="references" [year]="year.year"></entry>-->
 					</div>
 				</div>
-			</div>
+			</ng-container>
 		</div>
 	</div>
 
