@@ -58,8 +58,8 @@ export interface IActor {
 	type: string,
 	firstName: string,	// TODO: will be replaced by 'names'
 	lastName: string,	// TODO: will be replaced by 'names'
-	birthYear: number,
-	deathYear: number,
+	birthDate: IDate,
+	deathDate: IDate,
 	birth: IDate,
 	names: IActorName[],
 	titles: IActorTitle[],

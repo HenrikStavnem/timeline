@@ -1,0 +1,8 @@
+<div class="content">
+	<h1>Edit Timeline</h1>
+	<form [formGroup]="form">
+		<input formControlName="Title" type="text" />
+		<textarea formControlName="Description" placeholder="Please write some text"></textarea>
+		<button (click)="onSubmit()">Submit</button>
+	</form>
+</div>

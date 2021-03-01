@@ -19,20 +19,22 @@ export class EntryDescriptionPipe implements PipeTransform {
 				case "char": 
 					let character: IActor = references.characters.find(x => x.id == index);
 
-					let age: number = date.year - character.birthYear; //me.date - reference.birthYear;
-					let title: string = null
+					let age: number = date.year - character.birthDate.year; //me.date - reference.birthYear;
+					let title: string = null;
+
+					age = getAge(character.birthDate, character.deathDate, date);
 					
 					if (character.titles) {
 						title = getTitle(character.titles, date);
 					}
 
 					if (character.shield) {html = html + createShield(character.shield);}
-					//if (reference.title) {html = html + reference.title + " ";}
+					
 					if (title) {html = html + title + " ";}
 					html = html + `<a class='${character.type}' href='character/${character.slug}'>`; //TODO: href instead of routerLink
 					html = html + character.firstName + " " + character.lastName;
 					html = html + "</a>";
-					html = html + " <span class='gray'>(" + age + " years old)</span>";
+					html = html + " <span class='gray'>(" + (age >= 0 ? age + " years old" : 'deceased') + ")</span>";
 					break;
 				case "location": 
 					console.log("Reference is a location");
@@ -107,6 +109,14 @@ export class EntryDescriptionPipe implements PipeTransform {
 			});
 
 			return title;
+		}
+
+		function getAge(birthDate: IDate, deathDate: IDate, currentDate: IDate) {
+			if (currentDate.year > deathDate.year) {
+				console.log(currentDate.year + ">" + deathDate.year);
+				return -1;
+			}
+			return date.year - birthDate.year;
 		}
 
 		function createShield(shield: string) {

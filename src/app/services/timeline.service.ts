@@ -41,4 +41,12 @@ export class TimelineService {
 	testConnection() {
 		return this.http.get('http://localhost:80/timeline/api/test');
 	}
+
+	updateTimeline(title: string, description: string) {
+		var obj = JSON.stringify({'title': title, 'description': description});
+
+		console.log('http://localhost:80/timeline/api/updateTimeline?obj='+obj);
+
+		return this.http.get('http://localhost:80/timeline/api/updateTimeline?obj='+obj);
+	}
 }

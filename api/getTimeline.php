@@ -32,14 +32,13 @@
 
 		public $firstName;
 		public $lastName;
-		public $birthYear;
 		public $type = "person";
 		public $slug;
 
 		public $parent1;	// could also be an array
 		public $parent2;
-		public $birth;
-		public $death;
+		public $birthDate;
+		public $deathDate;
 		public $image;		// character picture
 
 		//arrays?
@@ -69,10 +68,10 @@
 
 	class Date {
 		public function __construct($era, $year, $month, $day) {
-			$this->era = $era;
-			$this->year = $year;
-			$this->month = $month;
-			$this->day = $day;
+			$this->era = intval($era);
+			$this->year = ($era != null) ? intval($year) : null; // TODO: Doesn't work
+			$this->month = intval($month);
+			$this->day = intval($day);
 		}
 	}
 
@@ -359,7 +358,8 @@
 		}
 	}
 
-	$sqlCharacters = "SELECT id, firstname, lastname, birthYear, deathYear, slug from tl_characters";
+	$ids = join(',',$charactersIndexList);
+	$sqlCharacters = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, slug from tl_characters WHERE id IN ($ids)";
 	$queryCharacters = $connection->query($sqlCharacters);
 
 	$characters = array();
@@ -388,7 +388,8 @@
 		$character->id = $row['id'];
 		$character->firstName = $row['firstname'];
 		$character->lastName = $row['lastname'];
-		$character->birthYear = $row['birthYear'];
+		$character->birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
+		$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 		$character->slug = $row['slug'];
 
 		$sqlCharacterTitles = "SELECT title, ordinal, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_titles WHERE characterId=".$row['id'];
