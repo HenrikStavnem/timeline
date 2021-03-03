@@ -29,7 +29,7 @@
 	}
 
 	
-	$sqlTimeline = "SELECT title, tl_timelines.description as description, tl_timelines.image as image, tl_timelines.url as url, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id";
+	$sqlTimeline = "SELECT title, tl_timelines.description as description, tl_timelines.image as image, tl_timelines.url as url, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id ORDER BY title";
 
 	$queryTimeline = $connection->query($sqlTimeline);
 

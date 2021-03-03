@@ -42,8 +42,8 @@ export class TimelineService {
 		return this.http.get('http://localhost:80/timeline/api/test');
 	}
 
-	updateTimeline(title: string, description: string) {
-		var obj = JSON.stringify({'title': title, 'description': description});
+	updateTimeline(id: number, title: string, description: string) {
+		var obj = JSON.stringify({'id': id, 'title': title, 'description': description});
 
 		console.log('http://localhost:80/timeline/api/updateTimeline?obj='+obj);
 

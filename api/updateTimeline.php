@@ -31,7 +31,7 @@
 
 	$title = $decodeObj['title'];
 	$description = $decodeObj['description'];
-	$timelineId = 4;
+	$timelineId = $decodeObj['id'];
 	
 	$stmt = $connection->prepare("UPDATE tl_timelines SET title=?, description=? WHERE id=?");
 	$stmt->bind_param('ssi', $title, $description, $timelineId);

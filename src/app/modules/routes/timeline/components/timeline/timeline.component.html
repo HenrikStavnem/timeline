@@ -1,9 +1,23 @@
 <ng-container *ngIf="timeline">
 	<div class="header" [style.background-image]="'url(' + timeline.image + ')'">
+		<div class="top-btn-container">
+			<button>Image</button>
+			<button>Settings</button>
+		</div>
 		<div class="header-content">
-			<h1>{{timeline.title}}</h1>
-			<h2>By {{timeline.author.name}}</h2>
-			<p>{{timeline.description}}</p>
+			<ng-container *ngIf="!canEdit">
+				<h1>{{timeline.title}}</h1>
+				<h2>By {{timeline.author.name}}</h2>
+				<p>{{timeline.description}}</p>
+			</ng-container>
+			<ng-container *ngIf="canEdit">
+				<form [formGroup]="headerForm">
+					<input formControlName="Title" class="title" type="text">
+					<h2>By {{timeline.author.name}}</h2>
+					<textarea formControlName="Description" placeholder="Write some text here, dude">{{timeline.description}}</textarea>
+					<button (click)="onSubmit()" [disabled]="!isFormDirty">Save</button>
+				</form>
+			</ng-container>
 		</div>
 	</div>
 

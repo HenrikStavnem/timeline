@@ -35,7 +35,7 @@ export class ManageTimelineComponent implements OnInit {
 			let title = this.form.get('Title').value,
 				description = this.form.get('Description').value;
 
-			this.timelineService.updateTimeline(title, description).subscribe((message: any) => {
+			this.timelineService.updateTimeline(4, title, description).subscribe((message: any) => {
 				console.log(message);
 			},
 			error => {
