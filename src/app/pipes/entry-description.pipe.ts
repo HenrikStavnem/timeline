@@ -9,7 +9,7 @@ import { Reference } from '../reference';
  * A pipe that transforms actor references in timeline entry texts into 
  */
 export class EntryDescriptionPipe implements PipeTransform {
-	private transformReferences(text: string, references: IActors, date: any) {
+	private transformReferences(text: string, references: IActors, date: IDate) {
 		var me = this;
 
 		function transformReference(type, index) {
@@ -34,7 +34,9 @@ export class EntryDescriptionPipe implements PipeTransform {
 					html = html + `<a class='${character.type}' href='character/${character.slug}'>`; //TODO: href instead of routerLink
 					html = html + character.firstName + " " + character.lastName;
 					html = html + "</a>";
-					html = html + " <span class='gray'>(" + (age >= 0 ? age + " years old" : 'deceased') + ")</span>";
+					if (age !== -1) {
+						html = html + " <span class='gray'>(" + (age >= 0 ? age + " years old" : 'deceased') + ")</span>";
+					}
 					break;
 				case "location": 
 					console.log("Reference is a location");
@@ -62,6 +64,9 @@ export class EntryDescriptionPipe implements PipeTransform {
 		function validateDate(startDate: IDate, endDate: IDate, currentDate: IDate) {
 			//TODO: Does not take eras and exactness into consideration
 
+			console.log("startDate", startDate);
+			console.log("currentDate", currentDate);
+
 			let isStartDateValid = false,
 				isEndDateValid = false;
 
@@ -77,7 +82,11 @@ export class EntryDescriptionPipe implements PipeTransform {
 				}
 			}
 			else if (startDate.year < currentDate.year) {
+				console.log("heh");
 				isStartDateValid = true;
+			}
+			else {
+				console.log("booh: " + startDate.year + " >= " + currentDate.year);
 			}
 
 			// check if end date is valid
@@ -112,10 +121,14 @@ export class EntryDescriptionPipe implements PipeTransform {
 		}
 
 		function getAge(birthDate: IDate, deathDate: IDate, currentDate: IDate) {
+			// TODO: Use eras, monts and days too
 			if (currentDate.year > deathDate.year) {
 				console.log(currentDate.year + ">" + deathDate.year);
 				return -1;
 			}
+
+			// TODO: Instead, return {status: (alive, dead, unknown), age: age}
+
 			return date.year - birthDate.year;
 		}
 
@@ -151,8 +164,8 @@ export class EntryDescriptionPipe implements PipeTransform {
 		return text;
 	}
 
-	transform(value: string, references: IActors, year: number): string {
-		return this.transformReferences(value, references, year);
+	transform(value: string, references: IActors, date: IDate): string {
+		return this.transformReferences(value, references, date);
 	}
 
 }

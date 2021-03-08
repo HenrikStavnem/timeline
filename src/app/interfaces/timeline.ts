@@ -16,6 +16,7 @@ export interface IAuthor {
 
 export interface IEra {
 	id: number | string,
+	era: number,
 	title: string,
 	description: string,
 	image: string,

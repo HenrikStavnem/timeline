@@ -3,7 +3,7 @@ import { Input } from '@angular/core';
 //import { Entry } from '../../classes/entry/entry';
 //import { Person } from '../../classes/person';
 import { Reference } from '@angular/compiler/src/render3/r3_ast';
-import { IActor, IActors } from 'src/app/interfaces/timeline';
+import { IActor, IActors, IDate } from 'src/app/interfaces/timeline';
 
 @Component({
 	selector: 'entry',
@@ -13,7 +13,7 @@ import { IActor, IActors } from 'src/app/interfaces/timeline';
 export class EntryComponent implements OnInit {
 	@Input() item: any;
 	@Input() references: IActors;//Array<Reference>;
-	@Input() date: any;
+	@Input() date: IDate;
 
 	ngOnInit(): void {
 		//console.log('entry date', this.date);

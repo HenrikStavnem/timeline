@@ -91,7 +91,7 @@
 		public $entries = array();
 
 		public function __construct($day, $dateType, $entries) {
-			$this->day = $day;
+			$this->day = intval($day);
 			$this->dateType = $dateType;
 
 			foreach($entries as $entry => $val) {
@@ -107,7 +107,7 @@
 		public $days = array();
 
 		public function __construct($month, $title, $exactness, $days) {
-			$this->month = $month;
+			$this->month = intval($month);
 			$this->exactness = $exactness;
 			$this->title = $title;
 
@@ -126,7 +126,7 @@
 
 		public function __construct($title, $year, $exactness/*, $dates,*/, $months) {
 			$this->title = $title;
-			$this->year = $year;
+			$this->year = intval($year);
 			$this->exactness = $exactness;
 			$this->months = $months;
 		}
@@ -140,7 +140,7 @@
 		public $image;
 
 		public function __construct($era, $title, $description, $image) {
-			$this->era = $era;
+			$this->era = intval($era);
 			$this->title = $title;
 			$this->description = $description;
 			$this->image = $image;
@@ -248,6 +248,11 @@
 			$newEra = new Era($eraId, $row["title"], $row["description"], $row['image']);
 
 			$sqlEvents = "SELECT id, year, month, day, description, type FROM tl_events WHERE era=$eraId ORDER BY era, year, month, day";
+
+			/*
+			$sqlEvents = "SELECT tl_events.id, tl_events.year, tl_events.month, tl_events.day, tl_events.description, tl_events.type, tl_months.month as monthTitle FROM tl_events LEFT JOIN tl_months ON tl_events.month = tl_months.month WHERE era=$eraId AND tl_months.timeline_id=$timelineId ORDER BY tl_events.era, tl_events.year, tl_events.month, tl_events.day";
+			*/
+
 			$queryEvents = $connection->query($sqlEvents);
 
 			// NEW START
@@ -358,54 +363,56 @@
 		}
 	}
 
-	$ids = join(',',$charactersIndexList);
-	$sqlCharacters = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, slug from tl_characters WHERE id IN ($ids)";
-	$queryCharacters = $connection->query($sqlCharacters);
-
 	$characters = array();
 
-	while($row = $queryCharacters->fetch_assoc()) {
-		/*
-		public $id;
-		public $parent1;	// could also be an array
-		public $parent2;
-		public $birth;
-		public $death;
-		public $image;		// character picture
+	if (count($charactersIndexList) > 0) {
+		$ids = join(',',$charactersIndexList);
+		$sqlCharacters = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, slug from tl_characters WHERE id IN ($ids)";
+		$queryCharacters = $connection->query($sqlCharacters);
 
-		//arrays?
-		public $symbols;	// shield or symbol infront of name
-		public $genders;	// can change over time
-		public $races;
-		public $subraces;
+		while($row = $queryCharacters->fetch_assoc()) {
+			/*
+			public $id;
+			public $parent1;	// could also be an array
+			public $parent2;
+			public $birth;
+			public $death;
+			public $image;		// character picture
 
-		//arrays for sure
-		public $names;
-		public $titles;
-		*/
+			//arrays?
+			public $symbols;	// shield or symbol infront of name
+			public $genders;	// can change over time
+			public $races;
+			public $subraces;
 
-		$character = new Character();
-		$character->id = $row['id'];
-		$character->firstName = $row['firstname'];
-		$character->lastName = $row['lastname'];
-		$character->birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
-		$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
-		$character->slug = $row['slug'];
+			//arrays for sure
+			public $names;
+			public $titles;
+			*/
 
-		$sqlCharacterTitles = "SELECT title, ordinal, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_titles WHERE characterId=".$row['id'];
-		$queryCharacterTitles = $connection->query($sqlCharacterTitles);
+			$character = new Character();
+			$character->id = $row['id'];
+			$character->firstName = $row['firstname'];
+			$character->lastName = $row['lastname'];
+			$character->birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
+			$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
+			$character->slug = $row['slug'];
 
-		$characterTitles = array();
-		while($row = $queryCharacterTitles->fetch_assoc()) {
-			$startDate = new Date($row['startEra'], $row['startYear'], $row['startMonth'], $row['startDay']);
-			$endDate = new Date($row['endEra'], $row['endYear'], $row['endMonth'], $row['endDay']);
+			$sqlCharacterTitles = "SELECT title, ordinal, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_titles WHERE characterId=".$row['id'];
+			$queryCharacterTitles = $connection->query($sqlCharacterTitles);
 
-			array_push($characterTitles, new CharacterTitle($row['title'], $startDate, $endDate));
+			$characterTitles = array();
+			while($row = $queryCharacterTitles->fetch_assoc()) {
+				$startDate = new Date($row['startEra'], $row['startYear'], $row['startMonth'], $row['startDay']);
+				$endDate = new Date($row['endEra'], $row['endYear'], $row['endMonth'], $row['endDay']);
+
+				array_push($characterTitles, new CharacterTitle($row['title'], $startDate, $endDate));
+			}
+
+			$character->titles = $characterTitles;
+			
+			array_push($characters, $character);
 		}
-
-		$character->titles = $characterTitles;
-		
-		array_push($characters, $character);
 	}
 
 	$timeline = new stdClass();

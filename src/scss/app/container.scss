@@ -6,7 +6,7 @@
 	position: relative;
 	top: 100px;
 	box-sizing: border-box;
-	width: 800px;
+	width: 100%; //800px;
 	background-color: rgb(50,50,50);
 	padding: 20px;
 	margin: 0 auto;
@@ -16,7 +16,23 @@
 	border-radius: 10px;
 	z-index: 10;
 
+	@include breakpoint('xlarge') {
+		width: 800px;
+	}
+
 	h1, h2, h3 {
 		font-family: 'Hoefler Text';
+
+		@include breakpoint('medium') {
+			color: red !important;
+		}
+
+		@include breakpoint('large') {
+			color: blue !important;
+		}
+
+		@include breakpoint('xlarge') {
+			color: green !important;
+		}
 	}
 }

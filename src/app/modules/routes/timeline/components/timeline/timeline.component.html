@@ -1,20 +1,26 @@
 <ng-container *ngIf="timeline">
 	<div class="header" [style.background-image]="'url(' + timeline.image + ')'">
-		<div class="top-btn-container">
-			<button>Image</button>
-			<button>Settings</button>
+		<div class="top-btn-container" *ngIf="canEdit">
+			<ng-container *ngIf="isEditingHeader">
+				<button>Image</button>
+				<button>Settings</button>
+				<button (click)="onHeaderEditClick()">Edit</button>
+			</ng-container>
+			<ng-container *ngIf="!isEditingHeader">
+				<button (click)="onHeaderEditClick()">Edit</button>
+			</ng-container>
 		</div>
 		<div class="header-content">
-			<ng-container *ngIf="!canEdit">
+			<ng-container *ngIf="!isEditingHeader">
 				<h1>{{timeline.title}}</h1>
 				<h2>By {{timeline.author.name}}</h2>
 				<p>{{timeline.description}}</p>
 			</ng-container>
-			<ng-container *ngIf="canEdit">
+			<ng-container *ngIf="isEditingHeader">
 				<form [formGroup]="headerForm">
 					<input formControlName="Title" class="title" type="text">
 					<h2>By {{timeline.author.name}}</h2>
-					<textarea formControlName="Description" placeholder="Write some text here, dude">{{timeline.description}}</textarea>
+					<textarea formControlName="Description" placeholder="Write some text here, dude" (input)="onTextAreaInput($event)" maxlength="150">{{timeline.description}}</textarea>
 					<button (click)="onSubmit()" [disabled]="!isFormDirty">Save</button>
 				</form>
 			</ng-container>
@@ -44,7 +50,7 @@
 							<!--TODO: Reintroduce relative dates. See old entrylist component-->
 
 							<div *ngFor="let entry of day.entries">
-								<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: 1, year: year.year, month: month.month, day: day.day}"></entry>
+								<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
 							</div>
 
 							<!--<entry *ngFor="let entry of day.entries" [item]="entry" [references]="references" [year]="year.year"></entry>-->
@@ -56,4 +62,10 @@
 	</div>
 
 	<br /><br /><br /><br />
+</ng-container>
+<ng-container *ngIf="!timeline">
+	<div class="content">
+		<h1>Error</h1>
+		<p>Could not load timeline</p>
+	</div>
 </ng-container>
