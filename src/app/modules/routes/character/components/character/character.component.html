@@ -1,12 +1,18 @@
 <ng-container *ngIf="character">
-	<div class="header" [style.background-image]="'url(https://cdnb.artstation.com/p/assets/images/images/034/991/557/large/will-murai-barrens-keyart-008.jpg?1613802083)'">
+	<div class="header" [style.background-image]="character.coverImage ? 'url('+character.coverImage+')' : 'url(https://cdnb.artstation.com/p/assets/images/images/034/991/557/large/will-murai-barrens-keyart-008.jpg?1613802083)'">
 		<div class="header-content">
 			<h1>{{character.firstName}} {{character.lastName}}</h1>
+			<p>{{character.birthDate.year}}—{{character.deathDate.year}}</p>
 		</div>
 	</div>
 	<div class="content has-header">
-		{{character.firstName}} {{character.lastName}}<br />
-		{{character.birthYear}}—{{character.deathYear}}<br /><br />
-		Hardcoded descriptive text.
+		<div class="content-top" *ngIf="character.image">
+			<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
+		</div>
+		<div>
+			{{character.firstName}} {{character.lastName}}<br />
+			{{character.birthDate.year}}—{{character.deathDate.year}}<br /><br />
+			Hardcoded descriptive text.
+		</div>
 	</div>
 </ng-container>

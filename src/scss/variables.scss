@@ -1,0 +1,14 @@
+@font-face {
+	font-family: 'Hoefler Text';
+	//src: url('./assets/fonts/HoeflerText.ttf') format('truetype');
+	//src: url('../res/fonts/HoeflerText.ttf') format('truetype');
+	src: url('../assets/fonts/HoeflerText.ttf');
+}
+
+@font-face {
+	font-family: 'Semplicita';
+	src: url('../assets/fonts/semplicita-bold.woff2') format('woff2');
+}
+
+$font-hoefler: "Hoefler Text";
+$font-semplicita: "Semplicita";

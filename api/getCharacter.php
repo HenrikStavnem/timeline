@@ -7,12 +7,23 @@
 	$database = "timeline";
 
 	class Character {
-		public function __construct($id, $firstname, $lastname, $birthYear, $deathYear) {
+		public function __construct($id, $firstname, $lastname, $birthDate, $deathDate, $image, $coverImage) {
 			$this->id = $id;
 			$this->firstName = $firstname;
 			$this->lastName = $lastname;
-			$this->birthYear = $birthYear;
-			$this->deathYear = $deathYear;
+			$this->birthDate = $birthDate;
+			$this->deathDate = $deathDate;
+			$this->image = $image;
+			$this->coverImage = $coverImage;
+		}
+	}
+
+	class Date {
+		public function __construct($era, $year, $month, $day) {
+			$this->era = intval($era);
+			$this->year = ($era != null) ? intval($year) : null; // TODO: Doesn't work
+			$this->month = intval($month);
+			$this->day = intval($day);
 		}
 	}
 
@@ -28,12 +39,15 @@
 	}
 
 	
-	$sqlCharacter = "SELECT id, type, firstname, lastname, birthYear, deathYear from tl_characters WHERE slug='$slug' LIMIT 1";
+	$sqlCharacter = "SELECT id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage from tl_characters WHERE slug='$slug' LIMIT 1";
 
 	$queryCharacter = $connection->query($sqlCharacter);
 
 	while ($row = $queryCharacter->fetch_assoc()) {
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $row['birthYear'], $row['deathYear']);
+		$birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
+		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
+
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage']);
 	}
 
 	http_response_code(200);

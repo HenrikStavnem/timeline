@@ -20,9 +20,30 @@
 		width: 800px;
 	}
 
-	h1, h2, h3 {
-		font-family: 'Hoefler Text';
+	.content-top {
+		position: relative;
+		top: -100px;
+		left: 0px;
+		height: 300px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
+		.image {
+			width: 300px;
+			height: 100%;
+			background-color: gray;
+			background-size: cover;
+			border-radius: 10px;
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+		}
+	}
+
+	h1, h2, h3 {
+		font-family: $font-hoefler;
+
+		/*
 		@include breakpoint('medium') {
 			color: red !important;
 		}
@@ -34,5 +55,6 @@
 		@include breakpoint('xlarge') {
 			color: green !important;
 		}
+		*/
 	}
 }

@@ -1,16 +1,6 @@
 @import "scss/mixin/mixins";
+@import "scss/app";
 @import "scss/app/app";
-
-@font-face {
-	font-family: 'Hoefler Text';
-	//src: url('./assets/fonts/HoeflerText.ttf') format('truetype');
-	src: url('../res/fonts/HoeflerText.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'Semplicita';
-	src: url('../res/fonts/semplicita-bold.woff2') format('woff2');
-}
 
 body {
 	background-color: #292a2d;
