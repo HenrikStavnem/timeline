@@ -7,7 +7,7 @@
 	$database = "timeline";
 
 	class Character {
-		public function __construct($id, $firstname, $lastname, $birthDate, $deathDate, $image, $coverImage) {
+		public function __construct($id, $firstname, $lastname, $birthDate, $deathDate, $image, $coverImage, $description) {
 			$this->id = $id;
 			$this->firstName = $firstname;
 			$this->lastName = $lastname;
@@ -15,6 +15,7 @@
 			$this->deathDate = $deathDate;
 			$this->image = $image;
 			$this->coverImage = $coverImage;
+			$this->description = $description;
 		}
 	}
 
@@ -39,7 +40,7 @@
 	}
 
 	
-	$sqlCharacter = "SELECT id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage from tl_characters WHERE slug='$slug' LIMIT 1";
+	$sqlCharacter = "SELECT id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description from tl_characters WHERE slug='$slug' LIMIT 1";
 
 	$queryCharacter = $connection->query($sqlCharacter);
 
@@ -47,7 +48,7 @@
 		$birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage']);
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description']);
 	}
 
 	http_response_code(200);

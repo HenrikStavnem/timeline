@@ -10,9 +10,7 @@
 			<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
 		</div>
 		<div>
-			{{character.firstName}} {{character.lastName}}<br />
-			{{character.birthDate.year}}—{{character.deathDate.year}}<br /><br />
-			Hardcoded descriptive text.
+			<p>{{character.description ? character.description : "No description"}}</p>
 		</div>
 	</div>
 </ng-container>

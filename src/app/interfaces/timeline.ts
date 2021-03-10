@@ -66,6 +66,7 @@ export interface IActor {
 	titles: IActorTitle[],
 	image: string,
 	coverImage: string,
+	description: string,
 	slug: string,
 	shield: string	// TODO: will be changed to an array, 
 }
