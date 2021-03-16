@@ -1,5 +1,50 @@
 <div class="content">
-	<h1>Test</h1>
+	<h1>Create event POC</h1>
+	<br /><br />
 
-	<button (click)="createEventBtnClick()">Create event</button>
+	<form [formGroup]="form">
+		<label>Type</label>
+		<select formControlName="Type">
+			<option *ngFor="let type of types" [value]="type.id">{{type.title}}</option>
+		</select>
+		<br />
+
+		<label>Era</label>
+		<select formControlName="Era">
+			<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
+		</select>
+		<br />
+
+		<label>Year</label>
+		<input type="number" formControlName="Year" />
+		<br />
+
+		<label>Month</label>
+		<select formControlName="Month">
+			<option *ngFor="let month of months" [value]="month.id">{{month.month}}: {{month.title}}</option>
+		</select>
+		<br />
+
+		<label>Day</label>
+		<input type="number" formControlName="Day" />
+		<br />
+
+		<br />
+		<label>Description</label><br />
+		<textarea formControlName="Description" placeholder="Please write some text"></textarea><br />
+		<button (click)="createEventBtnClick()">Create event</button>
+
+		<br /><br />
+		<label>New description</label>
+		<div [class]="showMentions ? 'mention-container show' : 'mention-container'">
+			<ul>
+				<li (click)="insert('Actor 1')">Actor 1</li>
+				<li (click)="insert('Actor 2')">Actor 2</li>
+				<li (click)="insert('Actor 3')">Actor 3</li>
+			</ul>
+		</div>
+		<div id="custom" class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keydown)="onKeyDown($event)" (blur)="onBlur()"></div>
+		<button (click)="test()">Get contenteditable html</button>
+		<!--<button (click)="insert('from insert button')">INSERT</button>-->
+	</form>
 </div>

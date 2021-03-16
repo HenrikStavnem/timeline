@@ -11,6 +11,16 @@ body {
 	margin: 0px;
 }
 
+.mention {
+	display: inline-block;
+	border-radius: 3px;
+	border: 1px solid black;
+	background-color: yellow;
+	color: black;
+	padding: 0 5px;
+	user-select: contain;
+}
+
 .shield {
 	position: relative;
 	top: 5px;

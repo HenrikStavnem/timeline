@@ -50,11 +50,22 @@ export class TimelineService {
 		return this.http.get('http://localhost:80/timeline/api/updateTimeline?obj='+obj);
 	}
 
-	createEvent(description: string) {
+	createEvent(era: number, year: number, month: number, day: number, type: number, description: string) {
 		console.log("createEvent in service");
 
-		var obj = JSON.stringify({'description': description}); //TODO Add dates and get data from caller, not service
+		var obj = JSON.stringify({
+			'type': type,
+			'description': description,
+			'era': era,
+			'year': year,
+			'month': month,
+			'day': day
+		});
 
 		return this.http.get('http://localhost:80/timeline/api/createEvent?obj='+obj);
+	}
+
+	getMonths(timelineId: number) {
+		return this.http.get('http://localhost:80/timeline/api/getEventInputs');
 	}
 }

@@ -1,5 +1,5 @@
 <div class="entry">
-	<div class="entry-icon {{item.type}}"></div>
+	<div class="entry-icon" [style.background-image]="'url(' + item.type + ')'"></div>
 	<div class="entry-text">
 		<p [outerHTML]="item.description | entryDescription : references : date"></p>
 	</div>

@@ -247,7 +247,7 @@
 
 			$newEra = new Era($eraId, $row["title"], $row["description"], $row['image']);
 
-			$sqlEvents = "SELECT id, year, month, day, description, type FROM tl_events WHERE era=$eraId ORDER BY era, year, month, day";
+			$sqlEvents = "SELECT tl_events.id, year, month, day, description, image FROM tl_events INNER JOIN tl_event_types ON tl_events.type = tl_event_types.id WHERE era=$eraId ORDER BY era, year, month, day";
 
 			/*
 			$sqlEvents = "SELECT tl_events.id, tl_events.year, tl_events.month, tl_events.day, tl_events.description, tl_events.type, tl_months.month as monthTitle FROM tl_events LEFT JOIN tl_months ON tl_events.month = tl_months.month WHERE era=$eraId AND tl_months.timeline_id=$timelineId ORDER BY tl_events.era, tl_events.year, tl_events.month, tl_events.day";
@@ -314,7 +314,7 @@
 				}
 
 				extractReferences($rowEvent['description']);
-				$newEvent = new Event($rowEvent['description'], "other");
+				$newEvent = new Event($rowEvent['description'], $rowEvent['image']);
 
 				if ($isNewDay && !$isFirstIndex) {
 					$newDay = new Day($currentDay, "exact", $newEvents);

@@ -18,11 +18,12 @@ h2 {
 	flex-direction: row;
 
 	.entry-icon {
-		background-color: blue;
-		min-width: 50px;
+		min-width: 100px;
 		height: auto;
 		border-top-left-radius: 10px;
 		border-bottom-left-radius: 10px;
+		background-size: cover;
+		background-position: center center;
 
 		&.combat {
 			background-color: red;

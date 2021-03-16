@@ -25,11 +25,11 @@
 		$msg = "Invalid JSON";
 	}
 
-	$type = 1;
-	$eraId = 10;
-	$year = 1888;
-	$month = 1;
-	$day = 1;
+	$eraId = $decodeObj['era'];
+	$year = $decodeObj['year'];
+	$month = $decodeObj['month'];
+	$day = $decodeObj['day'];
+	$type = $decodeObj['type'];
 	$description = $decodeObj['description'];
 
 	$stmt = $connection->prepare("INSERT INTO `tl_events` (`id`, `type`, `era`, `year`, `month`, `day`, `description`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
