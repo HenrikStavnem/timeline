@@ -6,6 +6,8 @@
 	$password = "";
 	$database = "timeline";
 
+	require_once 'classes/character.php';
+
 	class Month {
 		public function __construct($id, $month, $title) {
 			$this->id = $id;
@@ -71,11 +73,24 @@
 		array_push($types, $type);
 	}
 
+	$characters = array();
+	array_push($characters, new Character(1, 'Matthew', 'Mercer', null, null, null, null, 'DM'));
+	array_push($characters, new Character(2, 'Travis', 'Willingham', null, null, null, null, 'Fjord'));
+	array_push($characters, new Character(3, 'Marisha', 'Ray', null, null, null, null, 'Beuregard'));
+	array_push($characters, new Character(4, 'Liam', 'O\'Brien', null, null, null, null, 'Caleb Widogast'));
+	array_push($characters, new Character(5, 'Sam', 'Riegel', null, null, null, null, 'Nott the Brave'));
+	array_push($characters, new Character(6, 'Laura', 'Bailey', null, null, null, null, 'Jester'));
+	array_push($characters, new Character(7, 'Taliesin', 'Jaffe', null, null, null, null, 'Mollymauk Tealeaf'));
+	array_push($characters, new Character(8, 'Ashley', 'Johnson', null, null, null, null, 'Yasha'));
+	array_push($characters, new Character(9, 'Foxy', '', null, null, null, null, 'Foxy'));
+	array_push($characters, new Character(10, 'Farrold "Murky"', 'Breakblade', null, null, null, null, 'Foxy'));
+
 	http_response_code(200);
 	$result = new StdClass();
 	$result->eras = $eras;
 	$result->months = $months;
 	$result->types = $types;
+	$result->characters = $characters;
 	$result->statusCode = 200;
 
 	if (false) {

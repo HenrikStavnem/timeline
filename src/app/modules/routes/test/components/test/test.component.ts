@@ -12,6 +12,7 @@ export class TestComponent implements OnInit {
 	types: any;		// TODO: Convert to correct type
 	eras: any;		// TODO: Convert to correct type
 	months: any;	// TODO: Convert to correct type
+	characters: any;// TODO: Convert to correct type
 	timelineId: number = 10;
 	showMentions: boolean = false;
 	textfieldRange: Range = null;
@@ -26,6 +27,7 @@ export class TestComponent implements OnInit {
 			this.types = result.types;
 			this.eras = result.eras;
 			this.months = result.months;
+			this.characters = result.characters;
 		});
 
 		this.form = new FormGroup({
@@ -100,21 +102,30 @@ export class TestComponent implements OnInit {
 
 	}
 
-	insert(str: string) {
-		let el: HTMLElement = document.querySelector("#custom");
-		let newEl: HTMLDivElement = document.createElement("div");
-		newEl.innerHTML = `<div class='mention'>${str}</div>`;
+	private findCharacterById(id: number) {
+		const key = Object.keys(this.characters).find(character => this.characters[character].id === id);
+		return this.characters[key];
+	}
+
+	onMentionClick() {
+		console.log("Mention clicked");
+	}
+
+	insert(id: number) {
+		let el: HTMLElement = document.querySelector("#custom"),
+			newEl: HTMLDivElement = document.createElement("div"),
+			character = this.findCharacterById(id);
+
+		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName} ${character.lastName}" onClick="console.log('CLICK');"/>`;
+		
+		// TODO: mention element onClick must be bound with onMentionClick() component function
+		// TODO: initial '@' must be removed on successful mention insertion
+
 
 		el.focus(); // force focus on custom textfield component
 
-		/*
-		let selection = window.getSelection(),
-			range = selection.getRangeAt(0);
-		*/
-
 		let range: Range = this.textfieldRange;
 		
-		//console.log("selection", selection);
 		
 		range.deleteContents();
 
@@ -126,10 +137,11 @@ export class TestComponent implements OnInit {
 			lastNode = fragment.appendChild(node);
 		}
 
-		// space
-		let testEl = document.createTextNode("--");
-
-		fragment.appendChild(testEl);
+		// Below is to add an extra space after input
+		/*
+		let extraSpace = document.createTextNode("\u00A0");
+		fragment.appendChild(extraSpace);
+		*/
 
 		console.log("fragment", fragment);
 
@@ -142,27 +154,49 @@ export class TestComponent implements OnInit {
 		this.showMentions = false;
 	}
 
-	onKeyDown(event: Event) {
+	onKeyUp(event: KeyboardEvent) {
 		//console.log("Key down $event:", event);
 
-		let selection = window.getSelection(),
+		let el = document.querySelector("#custom"),
+			selection = window.getSelection(),
 			range = selection.getRangeAt(0),
 			rangeParentElement = range.startContainer.parentElement,
 			elementIsMention = rangeParentElement.classList.contains('mention');
 
-		//TODO: getting the right container is off, but it's the right approach.
+		//TODO: getting the right container is off, but it's the right approach
 
-		if (elementIsMention) {
-			console.log("Element is a mention. Do skip.");
-		}
+		let caretPosition = this.getCaretCharacterOffset(el);
+
+		console.log(caretPosition);
 
 		/*
 		if (event.key === "ArrowRight") {
-			console.log("Right");
+			if (elementIsMention) {
+				console.log("Element is a mention. Do skip.", rangeParentElement);
+				debugger;
+			}
 		}
 
 		if (event.key === "ArrowLeft") {
-			console.log("Left");
+			if (elementIsMention) {
+				console.log("Element is a mention. Do skip.", el);
+
+				let newCaretPosition: number = caretPosition - rangeParentElement.innerHTML.length;
+				console.log(newCaretPosition);
+
+				let newRange: Range;
+				
+				selection.empty();
+				selection.addRange(newRange);
+
+				//
+				for (let i = 0; i < el.children.length; i++) {
+					if (el.children[i] === rangeParentElement) {
+						//debugger;
+					}
+				}
+				//
+			}
 		}
 		*/
 	}
@@ -173,10 +207,40 @@ export class TestComponent implements OnInit {
 	}
 
 	private saveSelectionRange(): void {
-		let selection = window.getSelection(),
-			range = selection.getRangeAt(0);
+		let selection: Selection = window.getSelection(),
+			range: Range = selection.getRangeAt(0);
 
 			this.textfieldRange = range;
+	}
+
+	private getCaretCharacterOffset(element: Element): number {
+		let caretOffset: number = 0,
+			document: any = element.ownerDocument,
+			window: Window = document.defaultView,
+			selection: any;
+
+		if (typeof window.getSelection() != "undefined") {
+			selection = window.getSelection();
+
+			if (selection.rangeCount > 0) {
+				let range: Range = window.getSelection().getRangeAt(0),
+					preCaretRange: Range = range.cloneRange();
+			
+				preCaretRange.selectNodeContents(element);
+				preCaretRange.setEnd(range.endContainer, range.endOffset);
+				caretOffset = preCaretRange.toString().length;
+			}
+		}
+		else if ( (selection = document.selection) && selection.type !== "Control") {
+			let textRange = selection.createRange(),
+				preCaretTextRange = document.body.createTextRange();
+
+				preCaretTextRange.moveToElementText(element);
+				preCaretTextRange.setEndPoint("EndToEnd", textRange);
+				caretOffset = preCaretTextRange.text.length;
+		}
+
+		return caretOffset;
 	}
 
 }

@@ -15,4 +15,9 @@
 	&.show {
 		display: block;
 	}
+
+	li:hover {
+		background-color: lightgray;
+		cursor: pointer;
+	}
 }
