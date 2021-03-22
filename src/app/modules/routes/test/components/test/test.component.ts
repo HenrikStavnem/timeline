@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TimelineService } from 'src/app/services/timeline.service';
 
@@ -8,6 +8,9 @@ import { TimelineService } from 'src/app/services/timeline.service';
 	styleUrls: ['./test.component.scss']
 })
 export class TestComponent implements OnInit {
+	@ViewChild('descriptionEditor') descriptionEditor: ElementRef;
+	@ViewChild('mentionsDropdown') mentionsDropdown: ElementRef;
+
 	form: FormGroup;
 	types: any;		// TODO: Convert to correct type
 	eras: any;		// TODO: Convert to correct type
@@ -15,6 +18,7 @@ export class TestComponent implements OnInit {
 	characters: any;// TODO: Convert to correct type
 	timelineId: number = 10;
 	showMentions: boolean = false;
+	showMentionEditor: boolean = false;
 	textfieldRange: Range = null;
 
 	constructor(
@@ -67,7 +71,8 @@ export class TestComponent implements OnInit {
 				day = this.form.get('Day').value,
 				type = this.form.get('Type').value,
 				//description = this.form.get('Description').value;
-				el = document.querySelector("#custom"),
+				//el = document.querySelector("#custom"),
+				el = this.descriptionEditor,
 				description = this.encodeHtmlToDbString(el);
 
 			let inputObj = {
@@ -89,9 +94,15 @@ export class TestComponent implements OnInit {
 	}
 
 	onDescriptionChange(event: InputEvent) {
+		this.saveSelectionRange();
+		console.log("event", InputEvent);
+
 		if (event.data==="@") {
+			let range: Range = this.textfieldRange;
 			console.log("Trigger mention functionality");
 			this.showMentions = true;
+			this.mentionsDropdown.nativeElement.style.top = 0 - range.getBoundingClientRect().height - 10 + 'px';
+			this.mentionsDropdown.nativeElement.style.left = range.getBoundingClientRect().left + 'px';
 		}
 		else {
 			this.showMentions = false;
@@ -99,14 +110,14 @@ export class TestComponent implements OnInit {
 	}
 
 	test() {
-		let el = document.querySelector("#custom");
-		console.log('innerHtml', el.innerHTML);
+		let el: ElementRef = this.descriptionEditor; //document.querySelector("#custom");
+		console.log('innerHtml', el.nativeElement.innerHTML);
 		console.log('encoded', this.encodeHtmlToDbString(el));
 	}
 
-	private encodeHtmlToDbString(el: Element): string {
+	private encodeHtmlToDbString(el: ElementRef): string {
 		let result: string,
-			nodes: NodeListOf<ChildNode|HTMLElement> = el.childNodes;
+			nodes: NodeListOf<ChildNode|HTMLElement> = el.nativeElement.childNodes;
 
 		result = "";
 
@@ -132,29 +143,27 @@ export class TestComponent implements OnInit {
 		return this.characters[key];
 	}
 
-	onMentionClick() {
+	onMentionClick(event: Event) {
+		let target = event.currentTarget;
+		this.showMentionEditor = !this.showMentionEditor;
 		console.log("Mention clicked");
 	}
 
 	insert(id: number) {
-		let el: HTMLElement = document.querySelector("#custom"),
+		let el: ElementRef = this.descriptionEditor,
 			newEl: HTMLDivElement = document.createElement("div"),
 			character = this.findCharacterById(id);
 
-		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName} ${character.lastName}" onClick="console.log('CLICK', event.currentTarget);"/>`;
+		//newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName} ${character.lastName}" onClick="console.log('CLICK', event.currentTarget);"/>`;
 
-		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName}${character.lastName ? " " + character.lastName : ""}" (click)="console.log('CLICK', event.currentTarget);"/>`;
+		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName}${character.lastName ? " " + character.lastName : ""}"/>`;
 		
-		// TODO: mention element onClick must be bound with onMentionClick() component function
 		// TODO: initial '@' must be removed on successful mention insertion
 		// TODO: support of single and double quotes in character names
 
+		el.nativeElement.focus(); // force focus on custom textfield component
 
-		el.focus(); // force focus on custom textfield component
-
-		let range: Range = this.textfieldRange;
-		
-		
+		let range: Range = this.textfieldRange;		
 		range.deleteContents();
 
 		var fragment: DocumentFragment = document.createDocumentFragment(),
@@ -162,21 +171,20 @@ export class TestComponent implements OnInit {
 			lastNode: ChildNode;
 
 		while ( (node = newEl.firstChild) ) {
+			node.addEventListener('click', (e) => {
+				this.onMentionClick(e);
+			});
 			lastNode = fragment.appendChild(node);
 		}
+
+		debugger;
 
 		// Below is to add an extra space after input
 		/*
 		let extraSpace = document.createTextNode("\u00A0");
 		fragment.appendChild(extraSpace);
 		*/
-
-		console.log("fragment", fragment);
-
-		var firstNode: ChildNode = fragment.firstChild;
 		range.insertNode(fragment);
-
-		console.log("range", range);
 
 		//close mentions popup
 		this.showMentions = false;
@@ -185,7 +193,7 @@ export class TestComponent implements OnInit {
 	onKeyUp(event: KeyboardEvent) {
 		//console.log("Key down $event:", event);
 
-		let el = document.querySelector("#custom"),
+		let el: ElementRef = this.descriptionEditor, //document.querySelector("#custom"),
 			selection = window.getSelection(),
 			range = selection.getRangeAt(0),
 			rangeParentElement = range.startContainer.parentElement,
@@ -193,9 +201,9 @@ export class TestComponent implements OnInit {
 
 		//TODO: getting the right container is off, but it's the right approach
 
-		let caretPosition = this.getCaretCharacterOffset(el);
+		//let caretPosition = this.getCaretCharacterOffset(el);
 
-		console.log(caretPosition);
+		//console.log(caretPosition);
 
 		/*
 		if (event.key === "ArrowRight") {

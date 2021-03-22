@@ -36,12 +36,15 @@
 
 		<br /><br />
 		<label>New description</label>
-		<div [class]="showMentions ? 'mention-container show' : 'mention-container'">
+		<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'">
 			<ul>
 				<li *ngFor="let character of characters" (click)="insert(character.id)">{{character.firstName}} {{character.lastName}}</li>
 			</ul>
 		</div>
-		<div id="custom" class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
+		<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
+			Edit mention.
+		</div>
+		<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
 		<button (click)="test()">Get contenteditable html</button>
 		<!--<button (click)="insert('from insert button')">INSERT</button>-->
 	</form>
