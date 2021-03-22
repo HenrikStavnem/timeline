@@ -66,7 +66,9 @@ export class TestComponent implements OnInit {
 				month = this.form.get('Month').value,
 				day = this.form.get('Day').value,
 				type = this.form.get('Type').value,
-				description = this.form.get('Description').value;
+				//description = this.form.get('Description').value;
+				el = document.querySelector("#custom"),
+				description = this.encodeHtmlToDbString(el);
 
 			let inputObj = {
 				description: description,
@@ -99,7 +101,30 @@ export class TestComponent implements OnInit {
 	test() {
 		let el = document.querySelector("#custom");
 		console.log('innerHtml', el.innerHTML);
+		console.log('encoded', this.encodeHtmlToDbString(el));
+	}
 
+	private encodeHtmlToDbString(el: Element): string {
+		let result: string,
+			nodes: NodeListOf<ChildNode|HTMLElement> = el.childNodes;
+
+		result = "";
+
+		console.log(nodes);
+
+		nodes.forEach(node => {
+			if (node.nodeType === 1) { // Is an element
+				let thisNode: any = node, // TODO Set to correct type
+					dataset = thisNode.dataset;
+				
+				result = result + "{char-"+dataset.actorId+"}";
+			}
+			if (node.nodeType === 3) { // Pure text
+				result = result + node.textContent;
+			}
+		});
+
+		return result;
 	}
 
 	private findCharacterById(id: number) {
@@ -116,10 +141,13 @@ export class TestComponent implements OnInit {
 			newEl: HTMLDivElement = document.createElement("div"),
 			character = this.findCharacterById(id);
 
-		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName} ${character.lastName}" onClick="console.log('CLICK');"/>`;
+		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName} ${character.lastName}" onClick="console.log('CLICK', event.currentTarget);"/>`;
+
+		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName}${character.lastName ? " " + character.lastName : ""}" (click)="console.log('CLICK', event.currentTarget);"/>`;
 		
 		// TODO: mention element onClick must be bound with onMentionClick() component function
 		// TODO: initial '@' must be removed on successful mention insertion
+		// TODO: support of single and double quotes in character names
 
 
 		el.focus(); // force focus on custom textfield component

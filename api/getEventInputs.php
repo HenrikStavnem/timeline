@@ -73,7 +73,17 @@
 		array_push($types, $type);
 	}
 
+	$sqlCharacters = "SELECT id, firstname, lastname, description FROM tl_characters ORDER BY firstname, lastname";
+	$queryCharacters = $connection->query($sqlCharacters);
+
 	$characters = array();
+
+	while ($row = $queryCharacters->fetch_assoc()) {
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], null, null, null, null, $row['description']);
+		array_push($characters, $character);
+	}
+
+	/*
 	array_push($characters, new Character(1, 'Matthew', 'Mercer', null, null, null, null, 'DM'));
 	array_push($characters, new Character(2, 'Travis', 'Willingham', null, null, null, null, 'Fjord'));
 	array_push($characters, new Character(3, 'Marisha', 'Ray', null, null, null, null, 'Beuregard'));
@@ -84,6 +94,7 @@
 	array_push($characters, new Character(8, 'Ashley', 'Johnson', null, null, null, null, 'Yasha'));
 	array_push($characters, new Character(9, 'Foxy', '', null, null, null, null, 'Foxy'));
 	array_push($characters, new Character(10, 'Farrold "Murky"', 'Breakblade', null, null, null, null, 'Foxy'));
+	*/
 
 	http_response_code(200);
 	$result = new StdClass();
