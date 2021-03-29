@@ -12,7 +12,7 @@ export class EntryDescriptionPipe implements PipeTransform {
 	private transformReferences(text: string, references: IActors, date: IDate) {
 		var me = this;
 
-		function transformReference(type, index) {
+		function transformReference(type: string, index: number) {
 			let html: string = "";
 			
 			switch(type) {

@@ -50,7 +50,10 @@
 				</ul>-->
 			</div>
 			<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
-				Edit mention.
+				<form [formGroup]="editMentionForm">
+					<label>Override name</label>
+					<input type="text" />
+				</form>
 			</div>
 			<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
 			<button (click)="getDescriptionValue()">Get contenteditable html</button>

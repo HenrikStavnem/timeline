@@ -14,6 +14,7 @@ export class TestComponent implements OnInit {
 
 	form: FormGroup;
 	mentionForm: FormGroup;
+	editMentionForm: FormGroup;
 	types: any;				// TODO: Convert to correct type
 	eras: IEra[];
 	months: IMonth[];
@@ -175,7 +176,7 @@ export class TestComponent implements OnInit {
 
 		el.nativeElement.focus(); // force focus on custom textfield component
 
-		let range: Range = this.textfieldRange;		
+		let range: Range = this.textfieldRange;
 		range.deleteContents();
 
 		var fragment: DocumentFragment = document.createDocumentFragment(),

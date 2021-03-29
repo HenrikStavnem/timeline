@@ -183,9 +183,10 @@
 	function indexReferences($string) {
 		global $charactersIndexList, $itemsIndexList, $locationsIndexList;
 		
-		$parts = explode("-", $string);		
+		$parts = explode("-", $string);
 		$type = $parts[0];
-		$index = $parts[1];
+		$parts = explode("|", $parts[1]);
+		$index = $parts[0];
 
 		switch ($type) {
 			case "char":
