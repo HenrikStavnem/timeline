@@ -4,6 +4,10 @@
 	padding: 10px 20px;
 }
 
+.mention-component {
+	position: relative;
+}
+
 .mention-editor {
 	position: absolute;
 	display: none;
@@ -31,6 +35,19 @@
 
 	&.show {
 		display: block;
+	}
+
+	input[type=radio] {
+		
+	}
+
+	label {
+		display: block;
+		line-height: 1.5;
+	}
+
+	input[type=radio]:checked+label {
+		background-color: rgb(127, 199, 195);
 	}
 
 	ul {

@@ -31,6 +31,7 @@ export interface IYear {
 }
 
 export interface IMonth {
+	id?: number,
 	title: string,
 	month: number,
 	exactness: string,
@@ -45,7 +46,13 @@ export interface IDay {
 
 export interface IEntry {
 	description: string,
-	type: string
+	type: string		// TODO: Use IEventType instead, when BE delivers
+}
+
+export interface IEventType {
+	id: number,
+	title: string,
+	image: string
 }
 
 export interface IActors {

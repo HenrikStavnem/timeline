@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IActor, IEra, IMonth } from 'src/app/interfaces/timeline';
 import { TimelineService } from 'src/app/services/timeline.service';
 
 @Component({
@@ -12,10 +13,11 @@ export class TestComponent implements OnInit {
 	@ViewChild('mentionsDropdown') mentionsDropdown: ElementRef;
 
 	form: FormGroup;
-	types: any;		// TODO: Convert to correct type
-	eras: any;		// TODO: Convert to correct type
-	months: any;	// TODO: Convert to correct type
-	characters: any;// TODO: Convert to correct type
+	mentionForm: FormGroup;
+	types: any;				// TODO: Convert to correct type
+	eras: IEra[];
+	months: IMonth[];
+	characters: IActor[];
 	timelineId: number = 10;
 	showMentions: boolean = false;
 	showMentionEditor: boolean = false;
@@ -58,22 +60,25 @@ export class TestComponent implements OnInit {
 				Validators.minLength(1)
 			])
 		});
+
+		this.mentionForm = new FormGroup({
+			Mention: new FormControl('', [
+			])
+		});
 	}
 
 	createEventBtnClick() {
 		console.log("createEventBtnClick");
+		let el: ElementRef = this.descriptionEditor,
+			description: string = this.encodeHtmlToDbString(el);
 
-		if (this.form.valid) {
+		if (this.form.valid && description !== '') {
 
 			let era = this.form.get('Era').value,
 				year = this.form.get('Year').value,
 				month = this.form.get('Month').value,
 				day = this.form.get('Day').value,
-				type = this.form.get('Type').value,
-				//description = this.form.get('Description').value;
-				//el = document.querySelector("#custom"),
-				el = this.descriptionEditor,
-				description = this.encodeHtmlToDbString(el);
+				type = this.form.get('Type').value;
 
 			let inputObj = {
 				description: description,
@@ -98,10 +103,11 @@ export class TestComponent implements OnInit {
 		console.log("event", InputEvent);
 
 		if (event.data==="@") {
-			let range: Range = this.textfieldRange;
+			let range: Range = this.textfieldRange,
+				editor = this.descriptionEditor;
 			console.log("Trigger mention functionality");
 			this.showMentions = true;
-			this.mentionsDropdown.nativeElement.style.top = 0 - range.getBoundingClientRect().height - 10 + 'px';
+			this.mentionsDropdown.nativeElement.style.top = 0 - editor.nativeElement.height - range.getBoundingClientRect().height - 50 + 'px';
 			this.mentionsDropdown.nativeElement.style.left = range.getBoundingClientRect().left + 'px';
 		}
 		else {
@@ -109,10 +115,11 @@ export class TestComponent implements OnInit {
 		}
 	}
 
-	test() {
+	getDescriptionValue(): string {
 		let el: ElementRef = this.descriptionEditor; //document.querySelector("#custom");
 		console.log('innerHtml', el.nativeElement.innerHTML);
 		console.log('encoded', this.encodeHtmlToDbString(el));
+		return this.encodeHtmlToDbString(el);
 	}
 
 	private encodeHtmlToDbString(el: ElementRef): string {
@@ -149,6 +156,11 @@ export class TestComponent implements OnInit {
 		console.log("Mention clicked");
 	}
 
+	onAddMention() {
+		let value = this.mentionForm.get('Mention').value;
+		this.insert(value);
+	}
+
 	insert(id: number) {
 		let el: ElementRef = this.descriptionEditor,
 			newEl: HTMLDivElement = document.createElement("div"),
@@ -176,8 +188,6 @@ export class TestComponent implements OnInit {
 			});
 			lastNode = fragment.appendChild(node);
 		}
-
-		debugger;
 
 		// Below is to add an extra space after input
 		/*

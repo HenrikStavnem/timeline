@@ -36,16 +36,25 @@
 
 		<br /><br />
 		<label>New description</label>
-		<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'">
-			<ul>
-				<li *ngFor="let character of characters" (click)="insert(character.id)">{{character.firstName}} {{character.lastName}}</li>
-			</ul>
+		<div class="mention-component">
+			<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'">
+				<form [formGroup]="mentionForm">
+					<ng-container *ngFor="let character of characters">
+						<input formControlName="Mention" type="radio" name="Mention" value="{{character.id}}" id="{{'char-'+character.id}}">
+						<label for="{{'char-'+character.id}}">{{character.firstName}} {{character.lastName}}</label>
+					</ng-container>
+					<button (click)="onAddMention()">Add mention</button>
+				</form>
+				<!--<ul>
+					<li (click)="insert(character.id)">{{character.firstName}} {{character.lastName}}</li>
+				</ul>-->
+			</div>
+			<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
+				Edit mention.
+			</div>
+			<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
+			<button (click)="getDescriptionValue()">Get contenteditable html</button>
 		</div>
-		<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
-			Edit mention.
-		</div>
-		<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
-		<button (click)="test()">Get contenteditable html</button>
 		<!--<button (click)="insert('from insert button')">INSERT</button>-->
 	</form>
 </div>
