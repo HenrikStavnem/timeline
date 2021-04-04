@@ -1,23 +1,12 @@
 <?php
 	header("Access-Control-Allow-Origin: *");
 
+	require_once 'classes/character.php';
+
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
 	$database = "timeline";
-
-	class Character {
-		public function __construct($id, $firstname, $lastname, $birthDate, $deathDate, $image, $coverImage, $description) {
-			$this->id = $id;
-			$this->firstName = $firstname;
-			$this->lastName = $lastname;
-			$this->birthDate = $birthDate;
-			$this->deathDate = $deathDate;
-			$this->image = $image;
-			$this->coverImage = $coverImage;
-			$this->description = $description;
-		}
-	}
 
 	class Date {
 		public function __construct($era, $year, $month, $day) {
@@ -48,7 +37,10 @@
 		$birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description']);
+		// TODO: Replace static D&D stats with data from db
+		$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 9, 12, 12, 16, 17, 15);
+
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $dndStats);
 	}
 
 	http_response_code(200);

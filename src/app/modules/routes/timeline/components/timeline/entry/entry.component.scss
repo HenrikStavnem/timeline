@@ -66,6 +66,9 @@ p {
 	}
 }
 
-a.link {
-	color: #ffd700 !important;
+:host{
+	a {
+		color: red; //#ffd700;
+		text-decoration: none;
+	}
 }

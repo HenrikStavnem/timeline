@@ -181,7 +181,7 @@
 	}
 
 	function indexReferences($string) {
-		global $charactersIndexList, $itemsIndexList, $locationsIndexList;
+		global $charactersIndexList, $itemsIndexList, $locationsIndexList, $characterSettingsList;
 		
 		$parts = explode("-", $string);
 		$type = $parts[0];

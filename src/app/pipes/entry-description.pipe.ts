@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IActor, IActors, IDate } from '../interfaces/timeline';
+import { IActor, IActors, IActorSettings, IDate } from '../interfaces/timeline';
 import { Reference } from '../reference';
 
 @Pipe({
@@ -12,15 +12,14 @@ export class EntryDescriptionPipe implements PipeTransform {
 	private transformReferences(text: string, references: IActors, date: IDate) {
 		var me = this;
 
-		function transformReference(type: string, index: number) {
+		function transformReference(type: string, index: number, settings: IActorSettings) {
 			let html: string = "";
 			
 			switch(type) {
-				case "char": 
-					let character: IActor = references.characters.find(x => x.id == index);
-
-					let age: number = date.year - character.birthDate.year; //me.date - reference.birthYear;
-					let title: string = null;
+				case "char":
+					let character: IActor = references.characters.find(x => x.id == index),
+						age: number = date.year - character.birthDate.year,
+						title: string = null;
 
 					age = getAge(character.birthDate, character.deathDate, date);
 					
@@ -32,11 +31,23 @@ export class EntryDescriptionPipe implements PipeTransform {
 					
 					if (title) {html = html + title + " ";}
 					html = html + `<a class='${character.type}' href='character/${character.slug}'>`; //TODO: href instead of routerLink
-					html = html + character.firstName + " " + character.lastName;
+					if (settings?.overrideName) {
+						html = html + settings?.overrideName;
+					}
+					else {
+						html = html + character.firstName + " " + character.lastName;
+					}
 					html = html + "</a>";
-					if (age !== -1) {
+
+					// TODO: The following doesn't work
+					if (settings && settings.hasOwnProperty('showAge') && settings.showAge) {
 						html = html + " <span class='gray'>(" + (age >= 0 ? age + " years old" : 'deceased') + ")</span>";
 					}
+					else if (age !== -1) {
+						html = html + " <span class='gray'>(" + (age >= 0 ? age + " years old" : 'deceased') + ")</span>";
+					}
+
+
 					break;
 				case "location": 
 					console.log("Reference is a location");
@@ -64,9 +75,6 @@ export class EntryDescriptionPipe implements PipeTransform {
 		function validateDate(startDate: IDate, endDate: IDate, currentDate: IDate) {
 			//TODO: Does not take eras and exactness into consideration
 
-			console.log("startDate", startDate);
-			console.log("currentDate", currentDate);
-
 			let isStartDateValid = false,
 				isEndDateValid = false;
 
@@ -82,7 +90,6 @@ export class EntryDescriptionPipe implements PipeTransform {
 				}
 			}
 			else if (startDate.year < currentDate.year) {
-				console.log("heh");
 				isStartDateValid = true;
 			}
 			else {
@@ -123,7 +130,6 @@ export class EntryDescriptionPipe implements PipeTransform {
 		function getAge(birthDate: IDate, deathDate: IDate, currentDate: IDate) {
 			// TODO: Use eras, monts and days too
 			if (currentDate.year > deathDate.year) {
-				console.log(currentDate.year + ">" + deathDate.year);
 				return -1;
 			}
 
@@ -136,14 +142,18 @@ export class EntryDescriptionPipe implements PipeTransform {
 			return `<img class="shield" src="${shield}" alt="" />`;
 		}
 
+		// TODO: Clean-up/refactor this
 		while (text.includes("{")) {
 			let startIndex: number,
 				endIndex: number,
 				rawReferenceString: string,
 				referenceString: string,
 				splittedString: string[],
+				splittedString2: string[],
 				referenceIndex: number,
 				referenceType: string,
+				referenceSettingsString: string,
+				referenceSettings: IActorSettings,
 				newString: string;
 
 			startIndex = text.search("{");
@@ -154,14 +164,58 @@ export class EntryDescriptionPipe implements PipeTransform {
 			splittedString = referenceString.split('-');
 
 			referenceType = splittedString[0];
-			
-			referenceIndex = parseInt(splittedString[1]);
 
-			newString = transformReference(referenceType, referenceIndex) ;
+			splittedString2 = splittedString[1].split('|');
+			
+			referenceIndex = parseInt(splittedString2[0]);
+
+			referenceSettingsString = splittedString2[1];
+
+			if (referenceSettingsString) {
+				referenceSettings = this.extractCharacterSettings(referenceSettingsString);
+			}
+
+			newString = transformReference(referenceType, referenceIndex, referenceSettings) ;
 
 			text = text.replace(rawReferenceString, newString);
 		}
 		return text;
+	}
+
+	extractCharacterSettings(rawString: string): IActorSettings {
+		let settings: IActorSettings = {},
+			rawStrings: string[] = rawString.split(';'),
+			overrideName: string = undefined,
+			showAge: boolean = undefined,
+			showTitle: boolean = undefined;
+
+		console.log("rawStrings", rawStrings);
+
+		rawStrings.forEach(raw => {
+			let rawSplit: string[] = raw.split(':'),
+				property: string = rawSplit[0],
+				value: any = rawSplit[1];
+
+			switch(property) {
+				case 'name': overrideName = value; console.log('overrideName'); break;
+				case 'age': showAge = (value == 'true'); break;
+				case 'title': showTitle = (value == 'true'); break;
+				default: console.error(`'${property}' is a not a valid property name.`);
+			}
+		});
+
+		if (overrideName) {
+			settings.overrideName = overrideName;
+		}
+		if (showAge) {
+			console.log("Character has showAge and it is: " + showAge);
+			settings.showAge = showAge;
+		}
+		if (showTitle) {
+			settings.showTitle = showTitle;
+		}
+
+		return settings;
 	}
 
 	transform(value: string, references: IActors, date: IDate): string {

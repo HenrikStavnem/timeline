@@ -78,6 +78,12 @@ export interface IActor {
 	shield: string	// TODO: will be changed to an array, 
 }
 
+export interface IActorSettings {
+	overrideName?: string,
+	showAge?: boolean,
+	showTitle?: boolean
+}
+
 export interface IDate {
 	era: number,
 	year: number,
