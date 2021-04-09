@@ -1,5 +1,8 @@
 <?php
 	header("Access-Control-Allow-Origin: *");
+	mb_internal_encoding('UTF-8');
+	mb_http_output('UTF-8');
+	mb_http_input('UTF-8');
 
 	$servername = "localhost";
 	$username = "root";
@@ -209,6 +212,8 @@
 	}
 
 	$connection = new mysqli($servername, $username, $password, $database);
+	$connection->set_charset('utf8');
+	
 
 	if ($connection->connect_error) {
 		die("Connection failed: " . $connection->connect_error);
@@ -289,7 +294,7 @@
 				$thisMonth = $rowEvent['month'];
 				$thisDay = $rowEvent['day'];
 
-				$monthTitle = $rowEvent['monthTitle']; //TODO: Replace with actual month name from db
+				$monthTitle = $rowEvent['monthTitle'];
 
 				if ($i === 0) {
 					$isFirstIndex = true;
