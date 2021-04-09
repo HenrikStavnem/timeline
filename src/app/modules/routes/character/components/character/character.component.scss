@@ -1,0 +1,15 @@
+.grid {
+	display: grid;
+	column-gap: 10px;
+	row-gap: 10px;
+	//column-count: 2;
+	grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+}
+
+.tile {
+	border-radius: 3px;
+	background-color: gray;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+}

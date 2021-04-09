@@ -41,18 +41,30 @@
 					<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
 
 					<div *ngFor="let month of year.months">
-						<b *ngIf="month.exactness=='exact'">Month {{month.month}}: {{month.title}}</b>
-						<b *ngIf="month.exactness=='circa'">Ca. Month {{month.month}}: {{month.title}}</b>
-						<b *ngIf="month.exactness=='unknown'">Unknown month</b>
+						<ng-container *ngIf="month.days.length == 1">
+							<div *ngFor="let day of month.days">
+								<i>{{month.title ? month.title : 'Month title not found!'}} {{day.day}}</i>
+								<!--TODO: Reintroduce relative dates. See old entrylist component-->
 
-						<div *ngFor="let day of month.days">
-							<i>Day {{day.day}}</i>
-							<!--TODO: Reintroduce relative dates. See old entrylist component-->
-
-							<div *ngFor="let entry of day.entries">
-								<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
+								<div *ngFor="let entry of day.entries">
+									<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
+								</div>
 							</div>
-						</div>
+						</ng-container>
+						<ng-container *ngIf="month.days.length > 1">
+							<b *ngIf="month.exactness=='exact'">{{month.title ? month.title : 'Month title not found!'}} (month {{month.month}})</b>
+							<b *ngIf="month.exactness=='circa'">Ca. Month {{month.month}}: {{month.title}}</b>
+							<b *ngIf="month.exactness=='unknown'">Unknown month</b>
+
+							<div *ngFor="let day of month.days">
+								<i>Day {{day.day}}</i>
+								<!--TODO: Reintroduce relative dates. See old entrylist component-->
+
+								<div *ngFor="let entry of day.entries">
+									<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
+								</div>
+							</div>
+						</ng-container>
 					</div>
 				</div>
 			</ng-container>

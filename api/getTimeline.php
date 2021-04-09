@@ -248,7 +248,14 @@
 
 			$newEra = new Era($eraId, $row["title"], $row["description"], $row['image']);
 
-			$sqlEvents = "SELECT tl_events.id, year, month, day, description, image FROM tl_events INNER JOIN tl_event_types ON tl_events.type = tl_event_types.id WHERE era=$eraId ORDER BY era, year, month, day";
+			$sqlEvents = "SELECT tl_events.id, year, tl_events.month as month, tl_months.title as monthTitle, day, description, image
+				FROM tl_events
+				INNER JOIN tl_event_types
+					ON tl_events.type = tl_event_types.id
+				LEFT JOIN tl_months
+					ON tl_events.month = tl_months.month
+				WHERE era=$eraId
+				ORDER BY era, year, month, day";
 
 			/*
 			$sqlEvents = "SELECT tl_events.id, tl_events.year, tl_events.month, tl_events.day, tl_events.description, tl_events.type, tl_months.month as monthTitle FROM tl_events LEFT JOIN tl_months ON tl_events.month = tl_months.month WHERE era=$eraId AND tl_months.timeline_id=$timelineId ORDER BY tl_events.era, tl_events.year, tl_events.month, tl_events.day";
@@ -282,7 +289,7 @@
 				$thisMonth = $rowEvent['month'];
 				$thisDay = $rowEvent['day'];
 
-				$monthTitle = "Example"; //TODO: Replace with actual month name from db
+				$monthTitle = $rowEvent['monthTitle']; //TODO: Replace with actual month name from db
 
 				if ($i === 0) {
 					$isFirstIndex = true;

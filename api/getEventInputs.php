@@ -79,7 +79,7 @@
 	$characters = array();
 
 	while ($row = $queryCharacters->fetch_assoc()) {
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], null, null, null, null, $row['description']);
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], null, null, null, null, $row['description'], null);
 		array_push($characters, $character);
 	}
 

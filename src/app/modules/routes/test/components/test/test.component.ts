@@ -66,6 +66,11 @@ export class TestComponent implements OnInit {
 			Mention: new FormControl('', [
 			])
 		});
+
+		this.editMentionForm = new FormGroup({
+			//Mention: new FormControl('', [
+			//])
+		});
 	}
 
 	createEventBtnClick() {

@@ -33,11 +33,11 @@ export class TimelineComponent implements OnInit {
 			console.log('timeline',timeline);
 
 			this.headerForm = new FormGroup({
-				Title: new FormControl(this.timeline.title, [
+				Title: new FormControl(this.timeline?.title, [
 					Validators.required,
 					Validators.minLength(2)
 				]),
-				Description: new FormControl(this.timeline.description, [ 
+				Description: new FormControl(this.timeline?.description, [ 
 				])
 			});
 
