@@ -1,5 +1,8 @@
 <?php
 	header("Access-Control-Allow-Origin: *");
+	mb_internal_encoding('UTF-8');
+	mb_http_output('UTF-8');
+	mb_http_input('UTF-8');
 
 	$servername = "localhost";
 	$username = "root";
@@ -7,6 +10,7 @@
 	$database = "timeline";
 
 	$connection = new mysqli($servername, $username, $password, $database);
+	$connection->set_charset('utf8');
 
 	if ($connection->connect_error) {
 		die("Connection failed: " . $connection->connect_error);
@@ -38,6 +42,7 @@
 
 	$message = new StdClass();
 	$message->msg = $msg;
+	$message->input = $decodeObj;
 
 	echo json_encode($message);
 ?>

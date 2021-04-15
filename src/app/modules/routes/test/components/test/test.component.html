@@ -29,11 +29,6 @@
 		<input type="number" formControlName="Day" />
 		<br />
 
-		<br />
-		<label>Description</label><br />
-		<textarea formControlName="Description" placeholder="Please write some text"></textarea><br />
-		<button (click)="createEventBtnClick()">Create event</button>
-
 		<br /><br />
 		<label>New description</label>
 		<div class="mention-component">
@@ -56,7 +51,8 @@
 				</form>
 			</div>
 			<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
-			<button (click)="getDescriptionValue()">Get contenteditable html</button>
+			<!--<button (click)="getDescriptionValue()">Get contenteditable html</button>-->
+			<button (click)="createEventBtnClick()">Save</button>
 		</div>
 		<!--<button (click)="insert('from insert button')">INSERT</button>-->
 	</form>

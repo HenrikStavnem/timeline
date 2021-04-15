@@ -23,6 +23,7 @@ export class TestComponent implements OnInit {
 	showMentions: boolean = false;
 	showMentionEditor: boolean = false;
 	textfieldRange: Range = null;
+	atSymbolRange: Range = null;
 
 	constructor(
 		private timelineService: TimelineService
@@ -38,8 +39,6 @@ export class TestComponent implements OnInit {
 		});
 
 		this.form = new FormGroup({
-			Description: new FormControl('', [
-			]),
 			Type: new FormControl('', [
 				Validators.required,
 				Validators.minLength(1)
@@ -113,6 +112,7 @@ export class TestComponent implements OnInit {
 				editor = this.descriptionEditor;
 			console.log("Trigger mention functionality");
 			this.showMentions = true;
+			this.atSymbolRange = range;
 			this.mentionsDropdown.nativeElement.style.top = 0 - editor.nativeElement.height - range.getBoundingClientRect().height - 50 + 'px';
 			this.mentionsDropdown.nativeElement.style.left = range.getBoundingClientRect().left + 'px';
 		}
@@ -190,6 +190,7 @@ export class TestComponent implements OnInit {
 
 		while ( (node = newEl.firstChild) ) {
 			node.addEventListener('click', (e) => {
+				console.log("clicked");
 				this.onMentionClick(e);
 			});
 			lastNode = fragment.appendChild(node);
@@ -201,6 +202,20 @@ export class TestComponent implements OnInit {
 		fragment.appendChild(extraSpace);
 		*/
 		range.insertNode(fragment);
+		range.setStartAfter(lastNode);
+		
+		/*
+		if (lastNode) {
+			range = range.cloneRange();
+			range.setStartAfter(lastNode);
+
+			window.getSelection().removeAllRanges();
+			window.getSelection().addRange(range);
+		}
+		*/
+
+		// Cannot use the following, as it breaks click events on mentions
+		//el.nativeElement.innerHTML = el.nativeElement.innerHTML.replaceAll('@','');
 
 		//close mentions popup
 		this.showMentions = false;
