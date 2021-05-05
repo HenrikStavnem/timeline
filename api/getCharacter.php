@@ -39,7 +39,7 @@
 		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 
 		// TODO: Replace static D&D stats with data from db
-		$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 9, 12, 12, 16, 17, 15);
+		$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 9, 20, 1, 16, 17, 15);
 
 		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $dndStats);
 	}

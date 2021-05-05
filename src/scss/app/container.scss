@@ -21,9 +21,7 @@
 	}
 
 	.content-top {
-		position: relative;
-		top: -100px;
-		left: 0px;
+		transform: translateY(-100px);
 		height: 300px;
 		width: 100%;
 		display: flex;
