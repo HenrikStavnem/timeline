@@ -69,6 +69,20 @@
 		}
 	}
 
+	class CharacterName {
+		public $firstName;
+		public $lastName;
+		public $startDate;
+		public $endDate;
+
+		public function __construct($firstName, $lastName, $startDate, $endDate) {
+			$this->firstName = $firstName;
+			$this->lastName = $lastName;
+			$this->startDate = $startDate;
+			$this->endDate = $endDate;
+		}
+	}
+
 	class Date {
 		public function __construct($era, $year, $month, $day) {
 			$this->era = intval($era);
@@ -246,7 +260,7 @@
 
 	$eras = array();
 
-	if ($queryEras->num_rows > 0) {
+	if ($queryEras && $queryEras->num_rows > 0) {
 		while($row = $queryEras->fetch_assoc()) {
 			
 			$eraId = $row["id"];
@@ -410,6 +424,19 @@
 			$character->birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 			$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 			$character->slug = $row['slug'];
+						
+			$sqlCharacterNames = "SELECT firstName, lastName, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_names where characterId=".$row['id']." ORDER BY startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay";
+
+			$queryCharacterNames = $connection->query($sqlCharacterNames);
+
+			$characterNames = array();
+
+			while ($nameRow = $queryCharacterNames->fetch_assoc()) {
+				$startDate = new Date($nameRow['startEra'], $nameRow['startYear'], $nameRow['startMonth'], $nameRow['startDay']);
+				$endDate = new Date($nameRow['endEra'], $nameRow['endYear'], $nameRow['endMonth'], $nameRow['endDay']);
+
+				array_push($characterNames, new CharacterName($nameRow['firstName'], $nameRow['lastName'], $startDate, $endDate));
+			}
 
 			$sqlCharacterTitles = "SELECT title, ordinal, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_titles WHERE characterId=".$row['id'];
 			$queryCharacterTitles = $connection->query($sqlCharacterTitles);
@@ -423,6 +450,7 @@
 			}
 
 			$character->titles = $characterTitles;
+			$character->names = $characterNames;
 			
 			array_push($characters, $character);
 		}

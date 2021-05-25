@@ -104,6 +104,9 @@ export class TestComponent implements OnInit {
 	}
 
 	onDescriptionChange(event: InputEvent) {
+		let dropdown = this.mentionsDropdown.nativeElement,
+			form = dropdown.querySelector('form');
+
 		this.saveSelectionRange();
 		console.log("event", InputEvent);
 
@@ -113,8 +116,14 @@ export class TestComponent implements OnInit {
 			console.log("Trigger mention functionality");
 			this.showMentions = true;
 			this.atSymbolRange = range;
-			this.mentionsDropdown.nativeElement.style.top = 0 - editor.nativeElement.height - range.getBoundingClientRect().height - 50 + 'px';
-			this.mentionsDropdown.nativeElement.style.left = range.getBoundingClientRect().left + 'px';
+			dropdown.style.top = 0 - editor.nativeElement.height - range.getBoundingClientRect().height - 50 + 'px';
+			dropdown.style.left = range.getBoundingClientRect().left + 'px';
+			
+			// Below is an ugly hack to force focus on dropdown
+			setTimeout(() => {
+				form.children[0].focus();
+			}, 10);
+
 		}
 		else {
 			this.showMentions = false;
@@ -122,7 +131,7 @@ export class TestComponent implements OnInit {
 	}
 
 	getDescriptionValue(): string {
-		let el: ElementRef = this.descriptionEditor; //document.querySelector("#custom");
+		let el: ElementRef = this.descriptionEditor;
 		console.log('innerHtml', el.nativeElement.innerHTML);
 		console.log('encoded', this.encodeHtmlToDbString(el));
 		return this.encodeHtmlToDbString(el);
@@ -172,11 +181,8 @@ export class TestComponent implements OnInit {
 			newEl: HTMLDivElement = document.createElement("div"),
 			character = this.findCharacterById(id);
 
-		//newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName} ${character.lastName}" onClick="console.log('CLICK', event.currentTarget);"/>`;
-
 		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName}${character.lastName ? " " + character.lastName : ""}"/>`;
 		
-		// TODO: initial '@' must be removed on successful mention insertion
 		// TODO: support of single and double quotes in character names
 
 		el.nativeElement.focus(); // force focus on custom textfield component
@@ -219,6 +225,20 @@ export class TestComponent implements OnInit {
 
 		//close mentions popup
 		this.showMentions = false;
+
+		this.cleanUpText(el);
+	}
+
+	cleanUpText(el: ElementRef): void {
+		let nodes: NodeList = el.nativeElement.childNodes;
+
+		if (nodes.length) {
+			nodes.forEach(node => {
+				if (node.nodeType === Node.TEXT_NODE) {
+					node.nodeValue = node.nodeValue.replace(/@/g, '');
+				}
+			});
+		}
 	}
 
 	onKeyUp(event: KeyboardEvent) {
@@ -229,43 +249,6 @@ export class TestComponent implements OnInit {
 			range = selection.getRangeAt(0),
 			rangeParentElement = range.startContainer.parentElement,
 			elementIsMention = rangeParentElement.classList.contains('mention');
-
-		//TODO: getting the right container is off, but it's the right approach
-
-		//let caretPosition = this.getCaretCharacterOffset(el);
-
-		//console.log(caretPosition);
-
-		/*
-		if (event.key === "ArrowRight") {
-			if (elementIsMention) {
-				console.log("Element is a mention. Do skip.", rangeParentElement);
-				debugger;
-			}
-		}
-
-		if (event.key === "ArrowLeft") {
-			if (elementIsMention) {
-				console.log("Element is a mention. Do skip.", el);
-
-				let newCaretPosition: number = caretPosition - rangeParentElement.innerHTML.length;
-				console.log(newCaretPosition);
-
-				let newRange: Range;
-				
-				selection.empty();
-				selection.addRange(newRange);
-
-				//
-				for (let i = 0; i < el.children.length; i++) {
-					if (el.children[i] === rangeParentElement) {
-						//debugger;
-					}
-				}
-				//
-			}
-		}
-		*/
 	}
 
 	onBlur() {

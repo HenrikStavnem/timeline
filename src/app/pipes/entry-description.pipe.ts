@@ -19,11 +19,23 @@ export class EntryDescriptionPipe implements PipeTransform {
 				case "char":
 					let character: IActor = references.characters.find(x => x.id == index),
 						age: number = date.year - character.birthDate.year,
+						firstName: string,
+						lastName: string,
 						title: string = null;
 
 					age = getAge(character.birthDate, character.deathDate, date);
+
+					if (character.names && character.names.length > 0) {
+						let names: any = getName(character.names, date, character.firstName, character.lastName);
+						firstName = names.firstName;
+						lastName = names.lastName;
+					}
+					else {
+						firstName = character.firstName;
+						lastName = character.lastName;
+					}
 					
-					if (character.titles) {
+					if (character.titles && character.titles.length > 0) {
 						title = getTitle(character.titles, date);
 					}
 
@@ -35,7 +47,7 @@ export class EntryDescriptionPipe implements PipeTransform {
 						html = html + settings?.overrideName;
 					}
 					else {
-						html = html + character.firstName + " " + character.lastName;
+						html = html + firstName + " " + lastName;
 					}
 					html = html + "</a>";
 
@@ -112,6 +124,20 @@ export class EntryDescriptionPipe implements PipeTransform {
 			}
 
 			return (isStartDateValid && isEndDateValid);
+		}
+
+		function getName(names: Array<any>, currentDate: IDate, defaultFirstName: string, defaultLastName: string) {
+			let firstName: string = defaultFirstName,
+				lastName: string = defaultLastName;
+
+			names.forEach(nameObj => {
+				if (validateDate(nameObj.startDate, nameObj.endDate, currentDate)) {
+					firstName = nameObj.firstName;
+					lastName = nameObj.lastName;
+				}
+			});
+
+			return {firstName: firstName, lastName: lastName}
 		}
 
 		function getTitle(titles: Array<any>, currentDate: IDate) {
