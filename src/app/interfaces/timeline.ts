@@ -107,6 +107,8 @@ export interface IDate {
 	year: number,
 	month: number,
 	day: number,
+	startable?: boolean,
+	expirable?: boolean,
 	exactness: string	// TODO: Will this be used like this?
 }
 

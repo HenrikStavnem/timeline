@@ -5,6 +5,8 @@ h2 {
 }
 
 .entry {
+	display: flex;
+	flex-direction: row;
 	height: auto;
 	background-color: #3b270e;
 	background-image: url('http://www.dark-legacy.info/Parchment.jpg');
@@ -16,8 +18,7 @@ h2 {
 	border: 1px solid #000000;
 	border-radius: 10px;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 1), 0 0 80px rgba(0, 0, 0, 0.5) inset;
-	display: flex;
-	flex-direction: row;
+	visibility: visible;
 
 	.entry-icon {
 		min-width: 100px;
@@ -41,6 +42,10 @@ h2 {
 	}
 	.entry-text {
 		margin: 10px;
+
+		.gray {
+			color: gray;
+		}
 	}
 }
 
@@ -70,7 +75,7 @@ p {
 
 :host{
 	a {
-		color: red; //#ffd700;
+		color: red !important; //#ffd700;
 		text-decoration: none;
 	}
 }

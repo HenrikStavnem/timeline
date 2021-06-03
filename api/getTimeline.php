@@ -4,6 +4,8 @@
 	mb_http_output('UTF-8');
 	mb_http_input('UTF-8');
 
+	require_once 'classes/date.php';
+
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
@@ -80,15 +82,6 @@
 			$this->lastName = $lastName;
 			$this->startDate = $startDate;
 			$this->endDate = $endDate;
-		}
-	}
-
-	class Date {
-		public function __construct($era, $year, $month, $day) {
-			$this->era = intval($era);
-			$this->year = ($era != null) ? intval($year) : null; // TODO: Doesn't work
-			$this->month = intval($month);
-			$this->day = intval($day);
 		}
 	}
 
@@ -425,15 +418,15 @@
 			$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 			$character->slug = $row['slug'];
 						
-			$sqlCharacterNames = "SELECT firstName, lastName, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_names where characterId=".$row['id']." ORDER BY startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay";
+			$sqlCharacterNames = "SELECT firstName, lastName, startable, expirable, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_names where characterId=".$row['id']." ORDER BY startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay";
 
 			$queryCharacterNames = $connection->query($sqlCharacterNames);
 
 			$characterNames = array();
 
 			while ($nameRow = $queryCharacterNames->fetch_assoc()) {
-				$startDate = new Date($nameRow['startEra'], $nameRow['startYear'], $nameRow['startMonth'], $nameRow['startDay']);
-				$endDate = new Date($nameRow['endEra'], $nameRow['endYear'], $nameRow['endMonth'], $nameRow['endDay']);
+				$startDate = new DateStartable($nameRow['startEra'], $nameRow['startYear'], $nameRow['startMonth'], $nameRow['startDay'], $nameRow['startable']);
+				$endDate = new DateExpirable($nameRow['endEra'], $nameRow['endYear'], $nameRow['endMonth'], $nameRow['endDay'], $nameRow['expirable']);
 
 				array_push($characterNames, new CharacterName($nameRow['firstName'], $nameRow['lastName'], $startDate, $endDate));
 			}

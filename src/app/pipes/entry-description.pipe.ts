@@ -19,8 +19,8 @@ export class EntryDescriptionPipe implements PipeTransform {
 				case "char":
 					let character: IActor = references.characters.find(x => x.id == index),
 						age: number = date.year - character.birthDate.year,
-						firstName: string,
-						lastName: string,
+						firstName: string = character.firstName,
+						lastName: string = character.lastName,
 						title: string = null;
 
 					age = getAge(character.birthDate, character.deathDate, date);
@@ -29,10 +29,6 @@ export class EntryDescriptionPipe implements PipeTransform {
 						let names: any = getName(character.names, date, character.firstName, character.lastName);
 						firstName = names.firstName;
 						lastName = names.lastName;
-					}
-					else {
-						firstName = character.firstName;
-						lastName = character.lastName;
 					}
 					
 					if (character.titles && character.titles.length > 0) {
@@ -52,11 +48,15 @@ export class EntryDescriptionPipe implements PipeTransform {
 					html = html + "</a>";
 
 					// TODO: The following doesn't work
-					if (settings && settings.hasOwnProperty('showAge') && settings.showAge) {
+					//if (settings && settings.hasOwnProperty('showAge') && settings.showAge) {
+					if (settings && settings.showAge) {
 						html = html + " <span class='gray'>(" + (age >= 0 ? age + " years old" : 'deceased') + ")</span>";
 					}
 					else if (age !== -1) {
 						html = html + " <span class='gray'>(" + (age >= 0 ? age + " years old" : 'deceased') + ")</span>";
+					}
+					else {
+						html = html + " <span class='gray'>AGE-ELSE-FINAL</span>";
 					}
 
 
@@ -134,6 +134,12 @@ export class EntryDescriptionPipe implements PipeTransform {
 				if (validateDate(nameObj.startDate, nameObj.endDate, currentDate)) {
 					firstName = nameObj.firstName;
 					lastName = nameObj.lastName;
+
+					debugger;
+
+					if (nameObj.startDate.startable) {
+						debugger;
+					}
 				}
 			});
 
@@ -224,7 +230,7 @@ export class EntryDescriptionPipe implements PipeTransform {
 
 			switch(property) {
 				case 'name': overrideName = value; console.log('overrideName'); break;
-				case 'age': showAge = (value == 'true'); break;
+				case 'age' || 'showAge': showAge = (value == 'true'); break; //TODO: Only use 'showAge'
 				case 'title': showTitle = (value == 'true'); break;
 				default: console.error(`'${property}' is a not a valid property name.`);
 			}
@@ -233,7 +239,7 @@ export class EntryDescriptionPipe implements PipeTransform {
 		if (overrideName) {
 			settings.overrideName = overrideName;
 		}
-		if (showAge) {
+		if (showAge !== undefined) {
 			console.log("Character has showAge and it is: " + showAge);
 			settings.showAge = showAge;
 		}
