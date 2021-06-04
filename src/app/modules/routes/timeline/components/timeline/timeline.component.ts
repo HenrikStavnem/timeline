@@ -3,6 +3,7 @@ import { TimelineService } from 'src/app/services/timeline.service';
 import { ITimeline } from 'src/app/interfaces/timeline'
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TimelineMapper } from 'src/app/mapper/timeline.mapper';
 
 @Component({
 	selector: 'app-timeline',
@@ -29,7 +30,10 @@ export class TimelineComponent implements OnInit {
 		});
 
 		this.timelineService.getTimeline(slug ? slug : undefined).subscribe((timeline: ITimeline) => {
-			this.timeline = timeline;
+
+			const timelineMapper: TimelineMapper = new TimelineMapper;
+
+			this.timeline = timelineMapper.transformTimeline(timeline);
 			console.log('timeline',timeline);
 
 			this.headerForm = new FormGroup({

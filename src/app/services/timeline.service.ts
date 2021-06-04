@@ -9,10 +9,10 @@ import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
 export class TimelineService {
 
 	constructor(private http: HttpClient) {
-		let url: string = "http://localhost:80/timeline/api/updateTimelineInfo";
-		let msg = {
-			msg: "Test from client"
-		};
+		let url: string = "http://localhost:80/timeline/api/updateTimelineInfo",
+			msg = {
+				msg: "Test from client"
+			};
 
 		this.http.post(url, msg);
 	}

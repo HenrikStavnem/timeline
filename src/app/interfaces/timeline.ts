@@ -46,7 +46,13 @@ export interface IDay {
 
 export interface IEntry {
 	description: string,
-	type: string		// TODO: Use IEventType instead, when BE delivers
+	type: string,		// TODO: Use IEventType instead, when BE delivers
+	elements?: IEntryElements[]
+}
+
+export interface IEntryElements {
+	description: string,
+	type: string
 }
 
 export interface IEventType {
