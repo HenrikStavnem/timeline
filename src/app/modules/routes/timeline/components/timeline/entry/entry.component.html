@@ -12,7 +12,7 @@
 
 			<ng-container *ngIf="element.type ==='character'">
 				<a [routerLink]="element.url">{{element.name}}</a>
-				<span class="gray">&nbsp;({{element.age}})</span>
+				<span *ngIf="element.showAge" class="gray">&nbsp;({{element.age}})</span>
 			</ng-container>
 
 		</ng-container>

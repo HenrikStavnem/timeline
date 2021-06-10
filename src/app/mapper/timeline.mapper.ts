@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IActor, IDate, ITimeline } from '../interfaces/timeline';
+import { IActor, IActorSettings, IDate, ITimeline } from '../interfaces/timeline';
 
 @Injectable({
   providedIn: 'root'
@@ -48,17 +48,12 @@ export class TimelineMapper {
 										day: actor.birthDate.day,
 										exactness: actor.birthDate.exactness
 									}
+
 									entry.elements.push({
 										type: 'character',
-										name: actor.firstName + " " + actor.lastName,
+										name: actor.settings?.overrideName ? actor.settings.overrideName : actor.firstName + " " + actor.lastName,
 										age: this.getRefenceAge(currentDate, birthDate),
-										birthDate: {
-											era: actor.birthDate.era,
-											year: actor.birthDate.year,
-											month: actor.birthDate.month,
-											day: actor.birthDate.day,
-											exactness: actor.birthDate.exactness
-										},
+										showAge: actor.settings && 'showAge' in actor.settings ? actor.settings.showAge : true,
 										url: `/character/${actor.slug}`
 									});
 								}
@@ -96,14 +91,56 @@ export class TimelineMapper {
 			referenceType = splittedString[0],
 			settingsRawString = splittedString[1].split('|'),
 			referenceIndex = parseInt(settingsRawString[0]),
-			actor: IActor;
+			actor: IActor,
+			referenceSettings: IActorSettings;
+
+		if (settingsRawString[1]) {
+			referenceSettings = this.extractCharacterSettings(settingsRawString[1]);
+		}
 
 		switch(referenceType) {
 			case 'char':
 				actor = references.characters.find(x => x.id == referenceIndex);
+				actor.settings = referenceSettings;
 				break;
 		}
 		return actor;
+	}
+
+	private extractCharacterSettings(rawString: string): IActorSettings {
+		let settings: IActorSettings = {},
+			rawStrings: string[] = rawString.split(';'),
+			overrideName: string = undefined,
+			showAge: boolean = true,
+			showTitle: boolean = undefined;
+
+		//console.log("rawStrings", rawStrings);
+
+		rawStrings.forEach(raw => {
+			let rawSplit: string[] = raw.split(':'),
+				property: string = rawSplit[0],
+				value: any = rawSplit[1];
+
+			switch(property) {
+				case 'name': overrideName = value; console.log('overrideName'); break;
+				case 'age' || 'showAge': showAge = (value === 'true'); break; //TODO: Only use 'showAge'
+				case 'title': showTitle = (value == 'true'); break;
+				default: console.error(`'${property}' is a not a valid property name.`);
+			}
+		});
+
+		if (overrideName) {
+			settings.overrideName = overrideName;
+		}
+		if (showAge !== undefined) {
+			//console.log("Character has showAge and it is: " + showAge);
+			settings.showAge = showAge;
+		}
+		if (showTitle) {
+			settings.showTitle = showTitle;
+		}
+
+		return settings;
 	}
 
 	private getRefenceAge(currenDate: IDate, birthDate: IDate): string {
