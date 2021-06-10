@@ -56,6 +56,7 @@ export interface IEntryElements {
 	description?: string,
 	// character
 	name?: string,
+	age?: string,
 	birthDate?: IDate,
 	deathDate?: IDate,
 	url?: string

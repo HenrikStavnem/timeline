@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IActor, ITimeline } from '../interfaces/timeline';
+import { IActor, IDate, ITimeline } from '../interfaces/timeline';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,14 @@ export class TimelineMapper {
 				year.months.forEach(month => {
 					month.days.forEach(day => {
 						day.entries.forEach(entry => {
+							let currentDate: IDate = {
+								era: era.era,
+								year: year.year,
+								month: month.month,
+								day: day.day,
+								exactness: day.exactness
+							}
+
 							entry.elements = [];
 
 							while (entry.description.includes("{")) {
@@ -33,9 +41,17 @@ export class TimelineMapper {
 									});
 								}
 								if (actor) {
+									let birthDate =  {
+										era: actor.birthDate.era,
+										year: actor.birthDate.year,
+										month: actor.birthDate.month,
+										day: actor.birthDate.day,
+										exactness: actor.birthDate.exactness
+									}
 									entry.elements.push({
 										type: 'character',
 										name: actor.firstName + " " + actor.lastName,
+										age: this.getRefenceAge(currentDate, birthDate),
 										birthDate: {
 											era: actor.birthDate.era,
 											year: actor.birthDate.year,
@@ -88,5 +104,33 @@ export class TimelineMapper {
 				break;
 		}
 		return actor;
+	}
+
+	private getRefenceAge(currenDate: IDate, birthDate: IDate): string {
+		if (currenDate.era !== birthDate.era) { // TODO: Check for exactness
+			console.log("era is not compatible", currenDate.era, birthDate.era);
+			return undefined;
+		}
+
+		if (currenDate.year === birthDate.year) {
+			if (currenDate.month === birthDate.month) {
+				if (currenDate.day === birthDate.day) {
+					// born today!
+					return 'Born today!';
+				}
+				if (currenDate.day > birthDate.day) {
+					// born after today
+					return currenDate.day - birthDate.day + ' days old';
+				}
+				// born same year, month, but after current day = not born yet
+				return 'Born this year, but later';
+			}
+		}
+
+		if (currenDate.year > birthDate.year) {
+			return currenDate.year - birthDate.year + ' years old';
+		}
+
+		return 'Not born yet';
 	}
 }
