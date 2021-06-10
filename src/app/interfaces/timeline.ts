@@ -51,8 +51,14 @@ export interface IEntry {
 }
 
 export interface IEntryElements {
-	description: string,
-	type: string
+	type: string,
+	// text
+	description?: string,
+	// character
+	name?: string,
+	birthDate?: IDate,
+	deathDate?: IDate,
+	url?: string
 }
 
 export interface IEventType {

@@ -2,7 +2,19 @@
 	<div class="entry-icon" [style.background-image]="'url(' + item.type + ')'"></div>
 	<div class="entry-text">
 		<!--<p [outerHTML]="item.description | entryDescription : references : date"></p>-->
-		<p [outerHTML]="item.description"></p>
-		<p *ngFor="let element of item.elements">{{element.description}}</p>
+		<!--<p [outerHTML]="item.description"></p>-->
+		<!--<span *ngFor="let element of item.elements">{{element.description}}</span>-->
+		<ng-container *ngFor="let element of item.elements">
+
+			<ng-container *ngIf="element.type ==='text'">
+				{{element.description}}
+			</ng-container>
+
+			<ng-container *ngIf="element.type ==='character'">
+				<a [routerLink]="element.url">{{element.name}}</a>
+				<span class="gray">&nbsp;({{getRefenceAge(element.birthDate)}})</span>
+			</ng-container>
+
+		</ng-container>
 	</div>
 </div>

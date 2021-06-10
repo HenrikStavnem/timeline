@@ -17,9 +17,38 @@ export class EntryComponent implements OnInit {
 
 	ngOnInit(): void {
 		//console.log('entry date', this.date);
-		//console.log("entry", this.item);
+		console.log("entry", this.item);
 	}
 
 	constructor() {
+	}
+
+	// TODO: Below should be moved to timeline.mapper.ts
+	private getRefenceAge(birthDate: IDate): string {
+		if (this.date.era !== birthDate.era) { // TODO: Check for exactness
+			console.log("era is not compatible", this.date.era, birthDate.era);
+			return undefined;
+		}
+
+		if (this.date.year === birthDate.year) {
+			if (this.date.month === birthDate.month) {
+				if (this.date.day === birthDate.day) {
+					// born today!
+					return 'Born today!';
+				}
+				if (this.date.day > birthDate.day) {
+					// born after today
+					return this.date.day - birthDate.day + ' days old';
+				}
+				// born same year, month, but after current day = not born yet
+				return 'Born this year, but later';
+			}
+		}
+
+		if (this.date.year > birthDate.year) {
+			return this.date.year - birthDate.year + ' years old';
+		}
+
+		return 'Not born yet';
 	}
 }
