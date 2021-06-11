@@ -73,9 +73,35 @@ p {
 	}
 }
 
-:host{
-	a {
-		color: $color-yellow;
-		text-decoration: none;
+a {
+	position: relative;
+	color: $color-yellow;
+	text-decoration: none;
+
+	&:hover {
+		.tooltip {
+			visibility: visible;
+		}
+	}
+}
+
+.tooltip {
+	visibility: hidden;
+	background-color: $color-black;
+	color: $color-white;
+	width: 200px;
+	padding: 5px;
+	position: absolute;
+	text-align: center;
+	left: 50%;
+	bottom: 100%;
+	margin-left: -100px;
+
+	.image {
+		width: 100%;
+		height: 100px;
+		max-height: 200px;
+		background-size: cover;
+		background-position: center;
 	}
 }

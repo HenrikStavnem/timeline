@@ -387,7 +387,7 @@
 
 	if (count($charactersIndexList) > 0) {
 		$ids = join(',',$charactersIndexList);
-		$sqlCharacters = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, slug from tl_characters WHERE id IN ($ids)";
+		$sqlCharacters = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, slug from tl_characters WHERE id IN ($ids)";
 		$queryCharacters = $connection->query($sqlCharacters);
 
 		while($row = $queryCharacters->fetch_assoc()) {
@@ -416,6 +416,7 @@
 			$character->lastName = $row['lastname'];
 			$character->birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 			$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
+			$character->image = $row['image'];
 			$character->slug = $row['slug'];
 						
 			$sqlCharacterNames = "SELECT firstName, lastName, startable, expirable, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_names where characterId=".$row['id']." ORDER BY startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay";

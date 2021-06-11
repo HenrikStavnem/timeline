@@ -11,7 +11,14 @@
 			</ng-container>
 
 			<ng-container *ngIf="element.type ==='character'">
-				<a [routerLink]="element.url">{{element.name}}</a>
+				<a [routerLink]="element.url">
+					{{element.name}}
+					<span class="tooltip">
+						<div *ngIf="element.image" class="image" [style.background-image]="'url(' + element.image + ')'"></div>
+						{{element.name}}<br />
+						{{element.age}}<br />
+					</span>
+				</a>
 				<span *ngIf="element.showAge" class="gray">&nbsp;({{element.age}})</span>
 			</ng-container>
 

@@ -52,6 +52,7 @@ export class TimelineMapper {
 									entry.elements.push({
 										type: 'character',
 										name: actor.settings?.overrideName ? actor.settings.overrideName : actor.firstName + " " + actor.lastName,
+										image: actor.image,
 										age: this.getRefenceAge(currentDate, birthDate),
 										showAge: actor.settings && 'showAge' in actor.settings ? actor.settings.showAge : true,
 										url: `/character/${actor.slug}`
@@ -114,8 +115,6 @@ export class TimelineMapper {
 			showAge: boolean = true,
 			showTitle: boolean = undefined;
 
-		//console.log("rawStrings", rawStrings);
-
 		rawStrings.forEach(raw => {
 			let rawSplit: string[] = raw.split(':'),
 				property: string = rawSplit[0],
@@ -133,7 +132,6 @@ export class TimelineMapper {
 			settings.overrideName = overrideName;
 		}
 		if (showAge !== undefined) {
-			//console.log("Character has showAge and it is: " + showAge);
 			settings.showAge = showAge;
 		}
 		if (showTitle) {
