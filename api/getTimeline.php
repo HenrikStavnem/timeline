@@ -45,6 +45,7 @@
 		public $birthDate;
 		public $deathDate;
 		public $image;		// character picture
+		public $coverImage; 
 
 		//arrays?
 		/*
@@ -387,7 +388,7 @@
 
 	if (count($charactersIndexList) > 0) {
 		$ids = join(',',$charactersIndexList);
-		$sqlCharacters = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, slug from tl_characters WHERE id IN ($ids)";
+		$sqlCharacters = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, slug from tl_characters WHERE id IN ($ids)";
 		$queryCharacters = $connection->query($sqlCharacters);
 
 		while($row = $queryCharacters->fetch_assoc()) {
@@ -417,6 +418,7 @@
 			$character->birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 			$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 			$character->image = $row['image'];
+			$character->coverImage = $row['coverImage'];
 			$character->slug = $row['slug'];
 						
 			$sqlCharacterNames = "SELECT firstName, lastName, startable, expirable, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_names where characterId=".$row['id']." ORDER BY startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay";
@@ -429,7 +431,7 @@
 				$startDate = new DateStartable($nameRow['startEra'], $nameRow['startYear'], $nameRow['startMonth'], $nameRow['startDay'], $nameRow['startable']);
 				$endDate = new DateExpirable($nameRow['endEra'], $nameRow['endYear'], $nameRow['endMonth'], $nameRow['endDay'], $nameRow['expirable']);
 
-				array_push($characterNames, new CharacterName($nameRow['firstName'], $nameRow['lastName'], $startDate, $endDate));
+				array_push($characterNames, new CharacterName($nameRow['firstName']." ".$nameRow['startable']." ".$nameRow['expirable'], $nameRow['lastName'], $startDate, $endDate));
 			}
 
 			$sqlCharacterTitles = "SELECT title, ordinal, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_titles WHERE characterId=".$row['id'];

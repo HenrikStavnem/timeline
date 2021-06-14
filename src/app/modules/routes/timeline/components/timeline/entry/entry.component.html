@@ -14,7 +14,9 @@
 				<a [routerLink]="element.url">
 					{{element.name}}
 					<span class="tooltip">
-						<div *ngIf="element.image" class="image" [style.background-image]="'url(' + element.image + ')'"></div>
+						<div *ngIf="element.coverImage" class="cover-image" [style.background-image]="'url(' + element.coverImage + ')'">
+							<div *ngIf="element.image" class="image" [style.background-image]="'url(' + element.image + ')'"></div>
+						</div>
 						{{element.name}}<br />
 						{{element.age}}<br />
 					</span>

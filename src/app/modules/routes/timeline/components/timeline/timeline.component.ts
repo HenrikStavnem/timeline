@@ -33,6 +33,8 @@ export class TimelineComponent implements OnInit {
 
 			const timelineMapper: TimelineMapper = new TimelineMapper;
 
+			console.log('timeline from db', timeline);
+
 			this.timeline = timelineMapper.transformTimeline(timeline);
 			console.log('timeline',timeline);
 

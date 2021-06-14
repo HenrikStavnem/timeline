@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IActor, IActorSettings, IDate, ITimeline } from '../interfaces/timeline';
+import { IActor, IActorName, IActorSettings, IDate, ITimeline } from '../interfaces/timeline';
 
 @Injectable({
   providedIn: 'root'
@@ -49,10 +49,14 @@ export class TimelineMapper {
 										exactness: actor.birthDate.exactness
 									}
 
+									//debugger;
+
 									entry.elements.push({
 										type: 'character',
-										name: actor.settings?.overrideName ? actor.settings.overrideName : actor.firstName + " " + actor.lastName,
+										//name: actor.settings?.overrideName ? actor.settings.overrideName : actor.firstName + " " + actor.lastName,
+										name: actor.settings?.overrideName ? actor.settings.overrideName : this.getActorName(currentDate, actor.names),
 										image: actor.image,
+										coverImage: actor.coverImage,
 										age: this.getRefenceAge(currentDate, birthDate),
 										showAge: actor.settings && 'showAge' in actor.settings ? actor.settings.showAge : true,
 										url: `/character/${actor.slug}`
@@ -139,6 +143,109 @@ export class TimelineMapper {
 		}
 
 		return settings;
+	}
+
+	private validateDate(startDate: IDate, endDate: IDate, currentDate: IDate): boolean {		
+		//TODO: Does not take eras and exactness into consideration
+		let isStartDateValid = false,
+			isEndDateValid = false;
+
+		/*
+		if (startDate.startable === undefined) {
+			startDate.startable = false;
+		}
+
+		if (endDate.expirable === undefined) {
+			endDate.expirable = false;
+		}
+		*/
+
+		if (startDate.era === undefined || endDate.era === undefined) {
+			//debugger;
+		}
+
+		if (!startDate.startable && !endDate.expirable) {
+			console.log("ValidateDate: Property cannot start nor end, therefore always valid");
+			return true;
+		}
+
+		/*
+		if (!startDate.startable) {
+			console.log('ValidateDate: Start date is unstartable');
+			isStartDateValid = true;
+		}
+
+		if (!endDate.expirable) {
+			console.log('ValidateDate: End date cannot expire');
+			isEndDateValid = true;
+		}*/
+
+		// check if start date is valid
+		if (startDate.startable || startDate.year === currentDate.year) {
+			if (startDate.month === currentDate.month) {
+				if (startDate.day <= currentDate.day) {
+					console.log('ValidateDate: CurrentDate === StartDate', currentDate, startDate);
+					isStartDateValid = true;
+				}
+			}
+			else if (startDate.month < currentDate.month) {
+				isStartDateValid = true;
+			}
+		}
+		else if (startDate.year < currentDate.year) {
+			isStartDateValid = true;
+		}
+		else {
+			console.log("booh: " + startDate.year + " >= " + currentDate.year);
+		}
+
+		// check if end date is valid
+		if (endDate.expirable || endDate.year === currentDate.year) {
+			if (endDate.month === currentDate.month) {
+				if (endDate.day === currentDate.day) {
+					console.log('ValidateDate: CurrentDate >= EndDate', currentDate, endDate);
+					isEndDateValid = true;
+				}
+			}
+			else if (endDate.month > currentDate.month) {
+				isEndDateValid = true;
+			}
+		}
+		else if (endDate.year > currentDate.year) {
+			isEndDateValid = true;
+		}
+
+		return (isStartDateValid && isEndDateValid);
+	}
+
+	getActorName(currenDate: IDate, names: IActorName[]) {
+		let result: string = 'No name given';
+		
+		if (names.length === 0) {
+			return result;
+		}
+
+		names.forEach(name => {
+			let isValidDate = this.validateDate(name.startDate, name.endDate, currenDate);
+			if (isValidDate) {
+				result = "Bingo";
+			}
+
+
+
+			/*
+			if (this.validateDate(name.startDate, name.endDate, currenDate)) {
+				result = `${name.firstName} ${name.lastName}`;
+				return;
+			}
+			*/
+		});
+
+		//result = 'No valid name for date found';
+
+		return result;
+		//return "No valid name for date found";
+		//return `${names[0]?.firstName} ${names[0]?.lastName}`;
 	}
 
 	private getRefenceAge(currenDate: IDate, birthDate: IDate): string {

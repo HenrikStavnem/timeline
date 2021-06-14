@@ -89,7 +89,7 @@ a {
 	visibility: hidden;
 	background-color: $color-black;
 	color: $color-white;
-	width: 200px;
+	width: 300px;
 	padding: 5px;
 	position: absolute;
 	text-align: center;
@@ -97,8 +97,18 @@ a {
 	bottom: 100%;
 	margin-left: -100px;
 
-	.image {
+	.cover-image {
+		display: flex;
+		justify-content: center;
 		width: 100%;
+		height: 100px;
+		max-height: 200px;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.image {
+		width: 100px;
 		height: 100px;
 		max-height: 200px;
 		background-size: cover;

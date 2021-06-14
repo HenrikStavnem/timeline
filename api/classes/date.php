@@ -8,15 +8,23 @@
 		}
 	}
 
-	class DateExpirable extends Date {
+	class DateExpirable {
 		public function __construct($era, $year, $month, $day, $expirable) {
-			$this->expirable = boolval($expirable);
+			$this->era = intval($era);
+			$this->year = ($era != null) ? intval($year) : null; // TODO: Doesn't work
+			$this->month = intval($month);
+			$this->day = intval($day);
+			$this->expirable = boolval($expirable) ? true : false;
 		}
 	}
 
-	class DateStartable extends Date {
+	class DateStartable {
 		public function __construct($era, $year, $month, $day, $startable) {
-			$this->startable = boolval($startable);
+			$this->era = intval($era);
+			$this->year = ($era != null) ? intval($year) : null; // TODO: Doesn't work
+			$this->month = intval($month);
+			$this->day = intval($day);
+			$this->startable = boolval($startable) ? true : false;
 		}
 	}
 ?>

@@ -57,6 +57,7 @@ export interface IEntryElements {
 	// character
 	name?: string,
 	image?: string,
+	coverImage?: string,
 	age?: string,
 	showAge?: boolean,
 	birthDate?: IDate,
