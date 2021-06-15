@@ -431,7 +431,7 @@
 				$startDate = new DateStartable($nameRow['startEra'], $nameRow['startYear'], $nameRow['startMonth'], $nameRow['startDay'], $nameRow['startable']);
 				$endDate = new DateExpirable($nameRow['endEra'], $nameRow['endYear'], $nameRow['endMonth'], $nameRow['endDay'], $nameRow['expirable']);
 
-				array_push($characterNames, new CharacterName($nameRow['firstName']." ".$nameRow['startable']." ".$nameRow['expirable'], $nameRow['lastName'], $startDate, $endDate));
+				array_push($characterNames, new CharacterName($nameRow['firstName'], $nameRow['lastName'], $startDate, $endDate));
 			}
 
 			$sqlCharacterTitles = "SELECT title, ordinal, startEra, startYear, startMonth, startDay, endEra, endYear, endMonth, endDay FROM tl_character_titles WHERE characterId=".$row['id'];

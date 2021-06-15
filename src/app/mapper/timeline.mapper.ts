@@ -145,7 +145,70 @@ export class TimelineMapper {
 		return settings;
 	}
 
-	private validateDate(startDate: IDate, endDate: IDate, currentDate: IDate): boolean {		
+	private validateDate(startDate: IDate, endDate: IDate, currentDate: IDate): boolean {
+		let isStartDateValid = false,
+			isEndDateValid = false;
+
+		if (!startDate.startable) {
+			isStartDateValid = true;
+		}
+		else {
+			// date is not 'since forever'
+
+			if (startDate.era === currentDate.era) {
+				if (startDate.year === currentDate.year) {
+					if (startDate.month === currentDate.month) {
+						if (startDate.day === currentDate.day) {
+							isStartDateValid = true;
+						}
+						else if (startDate.day < currentDate.day) {
+							isStartDateValid = true;
+						}
+					}
+					else if (startDate.month < currentDate.month) {
+						isStartDateValid = true;
+					}
+				}
+				else if (startDate.year < currentDate.year) {
+					isStartDateValid = true;
+				}
+			}
+			else {
+				// TODO: Eras before
+				debugger;
+			}
+		}
+
+		if (!endDate.expirable) {
+			isEndDateValid = true;
+		}
+		else {
+			// date can expire
+
+			if (endDate.year === currentDate.year) {
+				if (endDate.month === currentDate.month) {
+					if (endDate.day === currentDate.day) {
+						isEndDateValid = true;
+					}
+					else if (endDate.day > currentDate.day) {
+						isEndDateValid = true;
+					}
+				}
+				else if (endDate.month > currentDate.month) {
+					isEndDateValid = true;
+				}
+			}
+
+			if (endDate.year > currentDate.year) {
+				isEndDateValid = true;
+			}
+		}
+
+		//isEndDateValid = true; //TODO: just testing
+		return (isStartDateValid && isEndDateValid);
+	}
+
+	private validateDateOld(startDate: IDate, endDate: IDate, currentDate: IDate): boolean {		
 		//TODO: Does not take eras and exactness into consideration
 		let isStartDateValid = false,
 			isEndDateValid = false;
@@ -222,16 +285,17 @@ export class TimelineMapper {
 		let result: string = 'No name given';
 		
 		if (names.length === 0) {
+			console.log('Names are empty');
 			return result;
 		}
 
 		names.forEach(name => {
 			let isValidDate = this.validateDate(name.startDate, name.endDate, currenDate);
+
 			if (isValidDate) {
-				result = "Bingo";
+				result = `${name.firstName} ${name.lastName}`;
+				return;
 			}
-
-
 
 			/*
 			if (this.validateDate(name.startDate, name.endDate, currenDate)) {
@@ -251,7 +315,8 @@ export class TimelineMapper {
 	private getRefenceAge(currenDate: IDate, birthDate: IDate): string {
 		if (currenDate.era !== birthDate.era) { // TODO: Check for exactness
 			console.log("era is not compatible", currenDate.era, birthDate.era);
-			return undefined;
+			return 'Born in a different era';
+			//return undefined;
 		}
 
 		if (currenDate.year === birthDate.year) {
