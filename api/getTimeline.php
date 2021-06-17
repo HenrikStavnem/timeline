@@ -98,12 +98,12 @@
 
 	class Day {
 		public $day;
-		public $dateType;
+		public $exactness;
 		public $entries = array();
 
-		public function __construct($day, $dateType, $entries) {
+		public function __construct($day, $exactness, $entries) {
 			$this->day = intval($day);
-			$this->dateType = $dateType;
+			$this->exactness = $exactness;
 
 			foreach($entries as $entry => $val) {
 				array_push($this->entries, $val);
@@ -261,26 +261,23 @@
 
 			$newEra = new Era($eraId, $row["title"], $row["description"], $row['image']);
 
-			$sqlEvents = "SELECT tl_events.id, year, tl_events.month as month, tl_months.title as monthTitle, day, description, image
+			$sqlEvents = "SELECT tl_events.id, year, tl_events.month as month, tl_months.title as monthTitle, day, description, image, yearExactness, monthExactness, exactness
 				FROM tl_events
 				INNER JOIN tl_event_types
 					ON tl_events.type = tl_event_types.id
 				LEFT JOIN tl_months
 					ON tl_events.month = tl_months.month
 				WHERE era=$eraId
-				ORDER BY era, year, month, day";
-
-			/*
-			$sqlEvents = "SELECT tl_events.id, tl_events.year, tl_events.month, tl_events.day, tl_events.description, tl_events.type, tl_months.month as monthTitle FROM tl_events LEFT JOIN tl_months ON tl_events.month = tl_months.month WHERE era=$eraId AND tl_months.timeline_id=$timelineId ORDER BY tl_events.era, tl_events.year, tl_events.month, tl_events.day";
-			*/
+				ORDER BY era, year, yearExactness, month, day, exactness";
 
 			$queryEvents = $connection->query($sqlEvents);
-
-			// NEW START
 
 			$currentYear = null;
 			$currentMonth = null;
 			$currentDay = null;
+			$currenExactness = null;
+			$currentYearExactness = null;
+			$currentMonthExactness = null;
 
 			$newYears = array();
 			$newMonths = array();
@@ -294,13 +291,20 @@
 				$isNewYear = false;
 				$isNewMonth = false;
 				$isNewDay = false;
+				
+				$isNewExactness = false;
+				$isNewYearExactness = false;
+				$isNewMonthExactness = false;
 
 				$isFirstIndex = false;
 				$isLastIndex = false;
 
+				$exactness = $rowEvent['exactness'];
 				$thisYear = $rowEvent['year'];
 				$thisMonth = $rowEvent['month'];
 				$thisDay = $rowEvent['day'];
+				$thisYearExactness = $rowEvent['yearExactness'];
+				$thisMonthExactness = $rowEvent['monthExactness'];
 
 				$monthTitle = $rowEvent['monthTitle'];
 
@@ -312,7 +316,15 @@
 					$isLastIndex = true;
 				}
 
-				if ($currentYear != $thisYear) {
+				if ($currentYearExactness != $thisYearExactness) {
+					$isNewYearExactness = true;
+				}
+
+				if ($currentMonthExactness != $thisMonthExactness) {
+					$isNewMonthExactness = true;
+				}
+
+				if ($currentYear != $thisYear || $isNewYearExactness) {
 					$isNewYear = true;
 					$isNewMonth = true;
 					$isNewDay = true;
@@ -338,7 +350,7 @@
 				$newEvent = new Event($rowEvent['description'], $rowEvent['image']);
 
 				if ($isNewDay && !$isFirstIndex) {
-					$newDay = new Day($currentDay, "exact", $newEvents);
+					$newDay = new Day($currentDay, $exactness, $newEvents);
 
 					array_push($newDays, $newDay);
 
@@ -346,7 +358,7 @@
 					$currentDay = $thisDay;
 
 					if ($isNewMonth && !$isFirstIndex) {
-						$newMonth = new Month($currentMonth, $monthTitle, "exact", $newDays);
+						$newMonth = new Month($currentMonth, $monthTitle, $exactness, $newDays);
 						array_push($newMonths, $newMonth);
 
 						$newDays = array();
@@ -354,7 +366,7 @@
 						$currentMonth = $thisMonth;
 
 						if ($isNewYear && !$isFirstIndex) {
-							$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);
+							$newYear = new Year("yearTitle", $currentYear, $thisYearExactness, $newMonths);
 
 							array_push($newYears, $newYear);
 
@@ -367,13 +379,14 @@
 				array_push($newEvents, $newEvent);
 
 				if ($isLastIndex) {
-					$newDay = new Day($currentDay, "exact", $newEvents);
+					$newDay = new Day($currentDay, $exactness, $newEvents);
 					array_push($newDays, $newDay);
 
-					$newMonth = new Month($currentMonth, $monthTitle, "exact", $newDays);
+					$newMonth = new Month($currentMonth, $monthTitle, $currentMonthExactness, $newDays);
 					array_push($newMonths, $newMonth);
 
-					$newYear = new Year("yearTitle", $currentYear, "exact", $newMonths);
+					$newYear = new Year("yearTitle", $currentYear, $currentYearExactness, $newMonths);
+					// TODO: Doesn't get $currentYearExactness for some reason...
 					array_push($newYears, $newYear);
 				}
 			}

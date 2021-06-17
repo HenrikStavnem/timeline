@@ -87,6 +87,8 @@ export class TimelineMapper {
 			title: rawTimeline.title
 		};
 
+		console.log('transformed timeline', timeline);
+
 		return timeline;
 	}
 
@@ -175,7 +177,7 @@ export class TimelineMapper {
 			}
 			else {
 				// TODO: Eras before
-				debugger;
+				//debugger;
 			}
 		}
 
