@@ -275,7 +275,6 @@
 			$currentYear = null;
 			$currentMonth = null;
 			$currentDay = null;
-			$currenExactness = null;
 			$currentYearExactness = null;
 			$currentMonthExactness = null;
 
@@ -292,14 +291,12 @@
 				$isNewMonth = false;
 				$isNewDay = false;
 				
-				$isNewExactness = false;
 				$isNewYearExactness = false;
 				$isNewMonthExactness = false;
 
 				$isFirstIndex = false;
 				$isLastIndex = false;
 
-				$exactness = $rowEvent['exactness'];
 				$thisYear = $rowEvent['year'];
 				$thisMonth = $rowEvent['month'];
 				$thisDay = $rowEvent['day'];
@@ -328,12 +325,16 @@
 					$isNewYear = true;
 					$isNewMonth = true;
 					$isNewDay = true;
-	
+
+					$isNewYearExactness = true;
+					$isNewMonthExactness = true;
 				}
 		
-				if ($currentMonth != $thisMonth) {
+				if ($currentMonth != $thisMonth || $isNewMonthExactness) {
 					$isNewMonth = true;
 					$isNewDay = true;
+
+					$isNewMonthExactness = true;
 				}
 		
 				if ($currentDay != $thisDay) {
@@ -344,13 +345,15 @@
 					$currentMonth = $thisMonth;
 					$currentYear = $thisYear;
 					$currentDay = $thisDay;
+					$currentYearExactness = $thisYearExactness;
+					$currentMonthExactness = $thisMonthExactness;
 				}
 
 				extractReferences($rowEvent['description']);
 				$newEvent = new Event($rowEvent['description'], $rowEvent['image']);
 
 				if ($isNewDay && !$isFirstIndex) {
-					$newDay = new Day($currentDay, $exactness, $newEvents);
+					$newDay = new Day($currentDay, 'exact', $newEvents);
 
 					array_push($newDays, $newDay);
 
@@ -358,7 +361,7 @@
 					$currentDay = $thisDay;
 
 					if ($isNewMonth && !$isFirstIndex) {
-						$newMonth = new Month($currentMonth, $monthTitle, $exactness, $newDays);
+						$newMonth = new Month($currentMonth, $monthTitle, $currentMonthExactness, $newDays);
 						array_push($newMonths, $newMonth);
 
 						$newDays = array();
@@ -366,12 +369,13 @@
 						$currentMonth = $thisMonth;
 
 						if ($isNewYear && !$isFirstIndex) {
-							$newYear = new Year("yearTitle", $currentYear, $thisYearExactness, $newMonths);
+							$newYear = new Year("yearTitle I: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths);
 
 							array_push($newYears, $newYear);
 
 							$newMonths = array();
 							$currentYear = $thisYear;
+							$currentYearExactness = $thisYearExactness;
 						}
 					}
 				}
@@ -379,14 +383,14 @@
 				array_push($newEvents, $newEvent);
 
 				if ($isLastIndex) {
-					$newDay = new Day($currentDay, $exactness, $newEvents);
+					$newDay = new Day($currentDay, 'exact', $newEvents);
 					array_push($newDays, $newDay);
 
 					$newMonth = new Month($currentMonth, $monthTitle, $currentMonthExactness, $newDays);
 					array_push($newMonths, $newMonth);
 
-					$newYear = new Year("yearTitle", $currentYear, $currentYearExactness, $newMonths);
-					// TODO: Doesn't get $currentYearExactness for some reason...
+					$newYear = new Year("yearTitle II: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths);
+
 					array_push($newYears, $newYear);
 				}
 			}

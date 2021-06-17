@@ -37,11 +37,15 @@
 
 				<div *ngFor="let year of era.years">
 					<!--
-					<h2 *ngIf="year.exactness=='year' || year.exactness=='day'">{{year.year}}</h2>
-					<h2 *ngIf="year.exactness=='circa'">Ca. {{year.year}}</h2>
-					<h2 *ngIf="year.exactness=='decade'">The {{year.year}}s</h2>
+					<h2 *ngIf="year.exactness == yearExactnessType.exact">{{year.year}}</h2>
+					<h2 *ngIf="year.exactness == yearExactnessType.before">Before {{year.year}}</h2>
+					<h2 *ngIf="year.exactness == yearExactnessType.after">After {{year.year}}</h2>
+					<h2 *ngIf="year.exactness == yearExactnessType.circa">Ca. {{year.year}}</h2>
+					<h2 *ngIf="year.exactness == yearExactnessType.decade">The {{year.year}}s</h2>
 					-->
-					<h2>{{year.year}} {{year.exactness}}</h2>
+					
+					<h3>{{year.year}} {{year.exactness}} ::: {{year.title}}</h3>
+					<!--<p *ngIf="year.exactness === yearExactnessType.exact">Exact year</p>-->
 
 					<div *ngFor="let month of year.months">
 						<ng-container *ngIf="month.days.length == 1">
@@ -51,7 +55,7 @@
 
 								<div *ngFor="let entry of day.entries">
 
-									<h1>Day: {{day.dateType}}</h1>
+									<!--<h1>Day: {{day.dateType}}</h1>-->
 
 									<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
 								</div>

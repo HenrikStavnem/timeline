@@ -1,3 +1,14 @@
+export enum YearExactnessType {
+	millenia = 'millenia',
+	century = 'century',
+	decade = 'decade',
+	before = 'before',
+	circa = 'circa',
+	exact = 'exact',
+	after = 'after',
+	unknown = 'unknown'
+}
+
 export enum ExactnessType {
 	millenia = 'millenia',
 	century = 'century',

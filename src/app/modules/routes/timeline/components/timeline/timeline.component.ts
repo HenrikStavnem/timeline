@@ -4,6 +4,7 @@ import { ITimeline } from 'src/app/interfaces/timeline'
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TimelineMapper } from 'src/app/mapper/timeline.mapper';
+import { YearExactnessType} from 'src/app/stores/exactness-type.store';
 
 @Component({
 	selector: 'app-timeline',
@@ -17,6 +18,8 @@ export class TimelineComponent implements OnInit {
 
 	headerForm: FormGroup;
 	isFormDirty: boolean = false;
+
+	yearExactnessType = YearExactnessType;
 
 	constructor(
 		private timelineService: TimelineService,
@@ -94,6 +97,10 @@ export class TimelineComponent implements OnInit {
 		else {
 			alert('Not valid');
 		}
+	}
+
+	public get YearExactnessType() {
+		return null;
 	}
 
 }
