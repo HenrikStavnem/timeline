@@ -9,6 +9,7 @@ import { EntryComponentOld } from './components/entry/entry.component';
 import { EntrylistComponent } from './components/entrylist/entrylist.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ToastComponent } from './components/toast/toast.component';
 import { WindowComponent } from './components/modal/window/window.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +29,7 @@ import { TimelineService } from './services/timeline.service';
 		EntrylistComponent,
 		MenuComponent,
 		ModalComponent,
+		ToastComponent,
 		WindowComponent,
 		TestDialogComponent
 	],

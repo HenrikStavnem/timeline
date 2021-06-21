@@ -1,0 +1,17 @@
+@import "../../../styles.scss";
+
+:host {
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	background-color: blue;
+	z-index: 100;
+	margin: 20px;
+
+	.toast {
+		font-family: $font-semplicita;
+		color: $color-black;
+		background-color: $color-white;
+		padding: 10px 20px;
+	}
+}

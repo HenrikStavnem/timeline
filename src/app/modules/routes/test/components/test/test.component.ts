@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IActor, IEra, IMonth } from 'src/app/interfaces/timeline';
 import { TimelineService } from 'src/app/services/timeline.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
 	selector: 'app-test',
@@ -26,7 +27,8 @@ export class TestComponent implements OnInit {
 	atSymbolRange: Range = null;
 
 	constructor(
-		private timelineService: TimelineService
+		private timelineService: TimelineService,
+		public toastService: ToastService
 	) { }
 
 	ngOnInit(): void {
@@ -95,19 +97,22 @@ export class TestComponent implements OnInit {
 	
 			this.timelineService.createEvent(era, year, month, day, type, description).subscribe((message: string) => {
 				console.log("Message", message);
+				this.toastService.updateToast('Event saved');
 			},
 			error => {
+				this.toastService.updateToast('Error. See console');
 				console.error('api error: ', error);
 			});
 		}
 		else {
-			alert("Please fill out every field.");
+			this.toastService.updateToast('Please fill out every field');
+			//alert("Please fill out every field.");
 		}
 	}
 
 	saveOverrideNameClick() {
 		this.showMentionEditor = false;
-		console.warn('Override not saved');
+		this.toastService.updateToast('Override not saved');
 	}
 
 	onMentionInput(event: InputEvent) {
@@ -193,7 +198,6 @@ export class TestComponent implements OnInit {
 	onMentionClick(event: Event) {
 		let target = event.currentTarget;
 		this.showMentionEditor = !this.showMentionEditor;
-		console.log("Mention clicked");
 	}
 
 	onAddMention() {
