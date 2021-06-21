@@ -1,8 +1,11 @@
-<div>
-		<a routerLink="/">HOME</a>
-		<span *ngIf="hasConnection">Has connection to service</span>
-		<span *ngIf="!hasConnection">Connection failed</span> 
-		<button mat-raised-button color="accent" (click)="onClickButton()">Open Modal</button>
-		<button mat-raised-button color="accent" (click)="onOpenDialogClick()">Open Dialog</button>
-		<img src="http://tcg.dukendor.com/order-dev/res/user-images/red.png" alt="avatar" />
+<div class="menu-container">
+	<div>
+		<a routerLink="/">HOME</a> ● 
+		<a routerLink="/test">New event</a>
+	</div>
+	<span *ngIf="hasConnection">Has connection to service</span>
+	<span *ngIf="!hasConnection">Connection failed</span> 
+	<!--<button mat-raised-button color="accent" (click)="onClickButton()">Open Modal</button>
+	<button mat-raised-button color="accent" (click)="onOpenDialogClick()">Open Dialog</button>-->
+	<img src="http://tcg.dukendor.com/order-dev/res/user-images/red.png" alt="avatar" />
 </div>

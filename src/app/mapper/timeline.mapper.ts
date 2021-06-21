@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IActor, IActorName, IActorSettings, IDate, ITimeline } from '../interfaces/timeline';
+import { IActor, IActorName, IActorSettings, IActorTitle, IDate, ITimeline } from '../interfaces/timeline';
 
 @Injectable({
   providedIn: 'root'
@@ -49,8 +49,6 @@ export class TimelineMapper {
 										exactness: actor.birthDate.exactness
 									}
 
-									//debugger;
-
 									entry.elements.push({
 										type: 'character',
 										//name: actor.settings?.overrideName ? actor.settings.overrideName : actor.firstName + " " + actor.lastName,
@@ -59,6 +57,7 @@ export class TimelineMapper {
 										coverImage: actor.coverImage,
 										age: this.getRefenceAge(currentDate, birthDate),
 										showAge: actor.settings && 'showAge' in actor.settings ? actor.settings.showAge : true,
+										title: this.getActorTitle(currentDate, actor.titles),
 										url: `/character/${actor.slug}`
 									});
 								}
@@ -312,6 +311,11 @@ export class TimelineMapper {
 		return result;
 		//return "No valid name for date found";
 		//return `${names[0]?.firstName} ${names[0]?.lastName}`;
+	}
+
+	getActorTitle(currenDate: IDate, names: IActorTitle[]) {
+		// TODO: validate date to get titles.
+		return '';
 	}
 
 	private getRefenceAge(currenDate: IDate, birthDate: IDate): string {

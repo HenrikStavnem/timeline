@@ -34,6 +34,10 @@ export class TimelineService {
 		return this.http.get('http://localhost:80/timeline/api/getCharacter?slug='+slug);
 	}
 
+	getCharacters(timelineId: number, query: string) {
+		return this.http.get(`http://localhost:80/timeline/api/getCharacters?timeline=${timelineId}&query=${query}`);
+	}
+
 	getTimelineInfo() {
 		return this.http.get('http://localhost:80/timeline/api/getTimelineInfo');
 	}
@@ -66,6 +70,6 @@ export class TimelineService {
 	}
 
 	getMonths(timelineId: number) {
-		return this.http.get('http://localhost:80/timeline/api/getEventInputs');
+		return this.http.get('http://localhost:80/timeline/api/getEventInputs?timeline='+timelineId);
 	}
 }

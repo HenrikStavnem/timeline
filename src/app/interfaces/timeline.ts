@@ -62,6 +62,7 @@ export interface IEntryElements {
 	showAge?: boolean,
 	birthDate?: IDate,
 	deathDate?: IDate,
+	title?: string,
 	url?: string
 }
 
@@ -94,6 +95,12 @@ export interface IActor {
 	shield: string,	// TODO: will be changed to an array
 	dndStats?: IActorDndStats,
 	settings?: IActorSettings
+}
+
+export interface IActorCompact {
+	id: number,
+	firstName: string,
+	lastName: string
 }
 
 export interface IActorSettings {

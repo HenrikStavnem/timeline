@@ -1,5 +1,3 @@
-import { Date } from '../interfaces/date';
-
 export interface Year {
 	title: string,
 	description: string,

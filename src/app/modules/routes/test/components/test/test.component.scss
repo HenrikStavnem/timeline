@@ -1,6 +1,8 @@
+@import "../../../../../../styles.scss";
+
 .text-input {
-	color: black;
-	background-color: white;
+	color: $color-black;
+	background-color: $color-white;
 	padding: 10px 20px;
 }
 
@@ -13,8 +15,8 @@
 	display: none;
 	padding: 20px;
 	border-radius: 5px;
-	border: 1px solid black;
-	background-color: white;
+	border: 1px solid $color-black;
+	background-color: $color-white;
 	color: black;
 	top: -20px;
 	left: 40px;
@@ -31,15 +33,32 @@
 .mention-container {
 	position: absolute;
 	border-radius: 5px;
-	border: 1px solid black;
-	background-color: white;
+	border: 1px solid $color-black;
+	background-color: $color-white;
 	color: black;
 	display: none;
+	flex-direction: column;
 	user-select: contain;
 	box-sizing: border-box;
 
+	.mention-container-top {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;		
+	}
+
+	.mention-input {
+		display: flex;
+		flex-direction: row;
+	}
+
 	&.show {
-		display: block;
+		display: flex;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
 	}
 
 	input[type=radio] {

@@ -19,7 +19,7 @@ export class TestComponent implements OnInit {
 	eras: IEra[];
 	months: IMonth[];
 	characters: IActor[];
-	timelineId: number = 10;
+	timelineId: number = 1;
 	showMentions: boolean = false;
 	showMentionEditor: boolean = false;
 	textfieldRange: Range = null;
@@ -63,6 +63,8 @@ export class TestComponent implements OnInit {
 
 		this.mentionForm = new FormGroup({
 			Mention: new FormControl('', [
+			]),
+			MentionQuery: new FormControl('', [
 			])
 		});
 
@@ -103,6 +105,22 @@ export class TestComponent implements OnInit {
 		}
 	}
 
+	saveOverrideNameClick() {
+		this.showMentionEditor = false;
+		console.warn('Override not saved');
+	}
+
+	onMentionInput(event: InputEvent) {
+		let value = this.mentionForm.get('MentionQuery').value;
+
+		this.timelineService.getCharacters(this.timelineId, value).subscribe((message: any) => {
+			//console.log('reply', this.timelineId, message);
+			if (message?.characters) {
+				this.characters = message.characters;
+			}
+		});
+	}
+
 	onDescriptionChange(event: InputEvent) {
 		let dropdown = this.mentionsDropdown.nativeElement,
 			form = dropdown.querySelector('form');
@@ -119,15 +137,22 @@ export class TestComponent implements OnInit {
 			dropdown.style.top = 0 - editor.nativeElement.height - range.getBoundingClientRect().height - 50 + 'px';
 			dropdown.style.left = range.getBoundingClientRect().left + 'px';
 			
+			this.mentionForm.get('MentionQuery').setValue('');
+			this.characters = [];
+			
 			// Below is an ugly hack to force focus on dropdown
 			setTimeout(() => {
 				form.children[0].focus();
-			}, 10);
+			}, 20);
 
 		}
 		else {
 			this.showMentions = false;
 		}
+	}
+
+	onMentionCloseClick() {
+		this.showMentions = false;
 	}
 
 	getDescriptionValue(): string {

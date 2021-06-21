@@ -1,12 +1,12 @@
 @font-face {
 	font-family: 'Hoefler Text';
-	//src: url('./assets/fonts/HoeflerText.ttf') format('truetype');
-	//src: url('../res/fonts/HoeflerText.ttf') format('truetype');
+	font-display: swap;
 	src: url('../../assets/fonts/HoeflerText.ttf');
 }
 
 @font-face {
 	font-family: 'Semplicita';
+	font-display: swap;
 	src: url('../../assets/fonts/semplicita-bold.woff2') format('woff2');
 }
 

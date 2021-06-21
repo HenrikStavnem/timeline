@@ -33,10 +33,19 @@
 		<label>New description</label>
 		<div class="mention-component">
 			<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'">
+				<div class="mention-container-top">
+					<button (click)="onMentionCloseClick()">X</button>
+				</div>
 				<form [formGroup]="mentionForm">
-					<ng-container *ngFor="let character of characters">
-						<input formControlName="Mention" type="radio" name="Mention" value="{{character.id}}" id="{{'char-'+character.id}}">
-						<label for="{{'char-'+character.id}}">{{character.firstName}} {{character.lastName}}</label>
+					<input formControlName="MentionQuery" name="MentionQuery" type="text" (input)="onMentionInput($event)" autocomplete="off">
+					<ng-container *ngIf="characters?.length">
+						<div class="mention-input" *ngFor="let character of characters">
+							<input formControlName="Mention" type="radio" name="Mention" value="{{character.id}}" id="{{'char-'+character.id}}">
+							<label for="{{'char-'+character.id}}">{{character.firstName}} {{character.lastName}}</label>
+						</div>
+					</ng-container>
+					<ng-container *ngIf="characters?.length === 0">
+						No characters with that query.
 					</ng-container>
 					<button (click)="onAddMention()">Add mention</button>
 				</form>
@@ -48,6 +57,7 @@
 				<form [formGroup]="editMentionForm">
 					<label>Override name</label>
 					<input type="text" />
+					<button (click)="saveOverrideNameClick()">Save</button>
 				</form>
 			</div>
 			<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
