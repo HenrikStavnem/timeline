@@ -1,10 +1,11 @@
 @import "../../../styles.scss";
 
 :host {
+	display: flex;
+	flex-direction: column-reverse;
 	position: fixed;
 	bottom: 0px;
 	right: 0px;
-	background-color: blue;
 	z-index: 100;
 	margin: 20px;
 
@@ -13,5 +14,27 @@
 		color: $color-black;
 		background-color: $color-white;
 		padding: 10px 20px;
+		margin-top: 5px;
+		//box-shadow: 0 1px 4px rgb(0 0 0), 0 0 80px rgb(0 0 0 / 50%) inset;
+		box-shadow: 0 1px 4px rgb(0 0 0);
+		height: auto;
+
+		&.fading {
+			transition: opacity 1.8s linear;
+			opacity: 0;
+		}
+
+		&.shrinking {
+			transition: height 1s linear, margin-top 1s linear, padding 1s linear;
+			opacity: 0;
+			overflow: hidden;
+			height: 0px;
+			margin-top: 0px;
+			padding: 0 20px;
+		}
+
+		&.hidden {
+			display: none;
+		}
 	}
 }

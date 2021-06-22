@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IToast } from 'src/app/interfaces/toast';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -8,17 +9,21 @@ import { ToastService } from 'src/app/services/toast.service';
 	styleUrls: ['./toast.component.scss']
 })
 export class ToastComponent implements OnInit {
-	constructor(public toastService: ToastService) {		
+	constructor(public toastService: ToastService) {
 	}
 
 	ngOnInit(): void {
 	}
 
-	get toast(): string {
-		return this.toastService.toast;
+	get toasts(): IToast[] {
+		return this.toastService.toasts;
 	}
 
 	onToastClick() {
 		this.toastService.updateToast('');
+	}
+
+	private getStateClass(state: string) {
+		return state;
 	}
 }

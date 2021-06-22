@@ -1,3 +1,5 @@
-<div *ngIf="toast" class="toast" (click)="onToastClick()">
-	<p>{{toast}}</p>
-</div>
+<ng-container *ngFor="let toast of toasts">
+	<div *ngIf="toast.state !== 'hidden'" class="toast" [ngClass]="getStateClass(toast?.state)">{{toast?.body}}</div>
+</ng-container>
+
+<!-- [ngClass]="{'isModalOpen' : this.isModalOpen}" -->

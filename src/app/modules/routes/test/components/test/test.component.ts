@@ -77,7 +77,7 @@ export class TestComponent implements OnInit {
 	}
 
 	createEventBtnClick() {
-		console.log("createEventBtnClick");
+		//console.log("createEventBtnClick");
 		let el: ElementRef = this.descriptionEditor,
 			description: string = this.encodeHtmlToDbString(el);
 
@@ -173,7 +173,7 @@ export class TestComponent implements OnInit {
 
 		result = "";
 
-		console.log(nodes);
+		//console.log(nodes);
 
 		nodes.forEach(node => {
 			if (node.nodeType === 1) { // Is an element
