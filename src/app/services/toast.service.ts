@@ -6,9 +6,12 @@ import { IToast } from 'src/app/interfaces/toast';
 export class ToastService {
 	toasts: IToast[] = [];
 	toastChange: Subject<string> = new Subject<string>();
-	//private index: number = 0;
 
 	constructor() {
+		let durationShort: number = 1000,
+			durationMedium: number = 2000,
+			durationLong: number = 5000;
+
 		this.toastChange.subscribe((value) => {
 			let toast: IToast = {
 				body: value,
@@ -24,13 +27,34 @@ export class ToastService {
 
 					setTimeout(() => {
 						this.toasts[index].state = 'hidden';
-					}, 1000);
-				}, 2000);
-			}, 5000);
+
+						if (this.checkToastsAreHidden()) {
+							this.clearToasts();
+						}
+
+					}, durationShort);
+				}, durationMedium);
+			}, durationLong);
 		});
 	}
 
 	updateToast(message: string) {
 		this.toastChange.next(message);
+	}
+
+	private checkToastsAreHidden(): boolean {
+		let result: boolean = true;
+
+		this.toasts.forEach(toast => {
+			if (toast.state !== 'hidden') {
+				result = false;
+			}
+		});
+
+		return result;
+	}
+
+	private clearToasts(): void {
+		this.toasts = [];
 	}
 }
