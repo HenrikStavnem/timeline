@@ -51,7 +51,6 @@ export class TimelineMapper {
 
 									let name: string;
 									if (actor.names.length > 0) {
-										console.log('map 111', actor.names.length);
 										name = this.getActorName(currentDate, actor.names)
 									}
 									else if (actor.settings?.overrideName) {
@@ -164,12 +163,13 @@ export class TimelineMapper {
 			isEndDateValid = false;
 
 		if (!startDate.startable) {
+			// if not startable, it is 'since forever'
 			isStartDateValid = true;
 		}
 		else {
 			// date is not 'since forever'
 
-			if (startDate.era === currentDate.era) {
+			//if (startDate.era === currentDate.era) {
 				if (startDate.year === currentDate.year) {
 					if (startDate.month === currentDate.month) {
 						if (startDate.day === currentDate.day) {
@@ -186,14 +186,15 @@ export class TimelineMapper {
 				else if (startDate.year < currentDate.year) {
 					isStartDateValid = true;
 				}
-			}
+			/*}
 			else {
 				// TODO: Eras before
 				//debugger;
-			}
+			}*/
 		}
 
 		if (!endDate.expirable) {
+			// if not expirable, the date cannot end
 			isEndDateValid = true;
 		}
 		else {
@@ -222,79 +223,6 @@ export class TimelineMapper {
 		return (isStartDateValid && isEndDateValid);
 	}
 
-	private validateDateOld(startDate: IDate, endDate: IDate, currentDate: IDate): boolean {		
-		//TODO: Does not take eras and exactness into consideration
-		let isStartDateValid = false,
-			isEndDateValid = false;
-
-		/*
-		if (startDate.startable === undefined) {
-			startDate.startable = false;
-		}
-
-		if (endDate.expirable === undefined) {
-			endDate.expirable = false;
-		}
-		*/
-
-		if (startDate.era === undefined || endDate.era === undefined) {
-			//debugger;
-		}
-
-		if (!startDate.startable && !endDate.expirable) {
-			console.log("ValidateDate: Property cannot start nor end, therefore always valid");
-			return true;
-		}
-
-		/*
-		if (!startDate.startable) {
-			console.log('ValidateDate: Start date is unstartable');
-			isStartDateValid = true;
-		}
-
-		if (!endDate.expirable) {
-			console.log('ValidateDate: End date cannot expire');
-			isEndDateValid = true;
-		}*/
-
-		// check if start date is valid
-		if (startDate.startable || startDate.year === currentDate.year) {
-			if (startDate.month === currentDate.month) {
-				if (startDate.day <= currentDate.day) {
-					console.log('ValidateDate: CurrentDate === StartDate', currentDate, startDate);
-					isStartDateValid = true;
-				}
-			}
-			else if (startDate.month < currentDate.month) {
-				isStartDateValid = true;
-			}
-		}
-		else if (startDate.year < currentDate.year) {
-			isStartDateValid = true;
-		}
-		else {
-			console.log("booh: " + startDate.year + " >= " + currentDate.year);
-		}
-
-		// check if end date is valid
-		if (endDate.expirable || endDate.year === currentDate.year) {
-			if (endDate.month === currentDate.month) {
-				if (endDate.day === currentDate.day) {
-					console.log('ValidateDate: CurrentDate >= EndDate', currentDate, endDate);
-					isEndDateValid = true;
-				}
-			}
-			else if (endDate.month > currentDate.month) {
-				isEndDateValid = true;
-			}
-		}
-		else if (endDate.year > currentDate.year) {
-			isEndDateValid = true;
-		}
-
-		return (isStartDateValid && isEndDateValid);
-	}
-
 	getActorName(currenDate: IDate, names: IActorName[]): string {
 		let result: string = 'No name given (#)';
 		
@@ -304,6 +232,7 @@ export class TimelineMapper {
 
 		names.forEach(name => {
 			let isValidDate = this.validateDate(name.startDate, name.endDate, currenDate);
+
 
 			if (isValidDate) {
 				result = `${name.firstName} ${name.lastName}`;
@@ -325,14 +254,32 @@ export class TimelineMapper {
 		//return `${names[0]?.firstName} ${names[0]?.lastName}`;
 	}
 
-	getActorTitle(currenDate: IDate, names: IActorTitle[]) {
+	getActorTitle(currenDate: IDate, titles: IActorTitle[]) {
 		// TODO: validate date to get titles.
-		return '';
+
+		if (titles.length === 0) {
+			return null;
+		}
+
+		let result: string = '';
+
+		titles.forEach(title => {
+			debugger;
+			let isValidDate = this.validateDate(title.startDate, title.endDate, currenDate);
+
+			if (isValidDate) {
+				result = title.title;
+				return;
+			}
+		});
+
+
+		return result;
 	}
 
 	private getRefenceAge(currenDate: IDate, birthDate: IDate): string {
 		if (currenDate.era !== birthDate.era) { // TODO: Check for exactness
-			console.log("era is not compatible", currenDate.era, birthDate.era);
+			//console.log("era is not compatible", currenDate.era, birthDate.era);
 			return 'Born in a different era';
 			//return undefined;
 		}
