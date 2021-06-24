@@ -16,6 +16,7 @@ export class TestComponent implements OnInit {
 	form: FormGroup;
 	mentionForm: FormGroup;
 	editMentionForm: FormGroup;
+	editMentionTarget: any = null;
 	types: any;				// TODO: Convert to correct type
 	eras: IEra[];
 	months: IMonth[];
@@ -111,8 +112,14 @@ export class TestComponent implements OnInit {
 	}
 
 	saveOverrideNameClick() {
+		let el = this.editMentionTarget;
+		
+		el.dataset.override = 'Overridden';
+
 		this.showMentionEditor = false;
 		this.toastService.updateToast('Override not saved');
+		
+		this.editMentionTarget = null;
 	}
 
 	onMentionInput(event: InputEvent) {
@@ -195,8 +202,8 @@ export class TestComponent implements OnInit {
 		return this.characters[key];
 	}
 
-	onMentionClick(event: Event) {
-		let target = event.currentTarget;
+	onMentionClick(target) {
+		this.editMentionTarget = target;
 		this.showMentionEditor = !this.showMentionEditor;
 	}
 
@@ -208,7 +215,8 @@ export class TestComponent implements OnInit {
 	insert(id: number) {
 		let el: ElementRef = this.descriptionEditor,
 			newEl: HTMLDivElement = document.createElement("div"),
-			character = this.findCharacterById(id);
+			character = this.findCharacterById(id),
+			sel: Selection = window.getSelection();
 
 		newEl.innerHTML = `<input type="button" class="mention" data-type="character" data-actor-id="${character.id}" value="${character.firstName}${character.lastName ? " " + character.lastName : ""}"/>`;
 		
@@ -225,8 +233,7 @@ export class TestComponent implements OnInit {
 
 		while ( (node = newEl.firstChild) ) {
 			node.addEventListener('click', (e) => {
-				console.log("clicked");
-				this.onMentionClick(e);
+				this.onMentionClick(e.target);
 			});
 			lastNode = fragment.appendChild(node);
 		}
@@ -238,6 +245,9 @@ export class TestComponent implements OnInit {
 		*/
 		range.insertNode(fragment);
 		range.setStartAfter(lastNode);
+		range.setEndAfter(lastNode);
+		sel.removeAllRanges();
+		sel.addRange(range);
 		
 		/*
 		if (lastNode) {

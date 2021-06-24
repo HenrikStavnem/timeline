@@ -5,11 +5,18 @@
 	flex-direction: column-reverse;
 	position: fixed;
 	bottom: 0px;
-	right: 0px;
+	left: 0px;
 	z-index: 100;
 	margin: 20px;
+	user-select: none;
+
+	@include breakpoint('medium') {
+		right: 0px;
+		left: unset;
+	}
 
 	.toast {
+		border-radius: 3px;
 		font-family: $font-semplicita;
 		color: $color-black;
 		background-color: $color-white;

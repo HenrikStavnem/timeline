@@ -49,10 +49,23 @@ export class TimelineMapper {
 										exactness: actor.birthDate.exactness
 									}
 
+									let name: string;
+									if (actor.names.length > 0) {
+										console.log('map 111', actor.names.length);
+										name = this.getActorName(currentDate, actor.names)
+									}
+									else if (actor.settings?.overrideName) {
+										name = actor.settings.overrideName;
+									}
+									else {
+										name = `${actor.firstName} ${actor.lastName} (*)`;
+									}
+
 									entry.elements.push({
 										type: 'character',
 										//name: actor.settings?.overrideName ? actor.settings.overrideName : actor.firstName + " " + actor.lastName,
-										name: actor.settings?.overrideName ? actor.settings.overrideName : this.getActorName(currentDate, actor.names),
+										//name: actor.settings?.overrideName ? actor.settings.overrideName : this.getActorName(currentDate, actor.names),
+										name: name,
 										image: actor.image,
 										coverImage: actor.coverImage,
 										age: this.getRefenceAge(currentDate, birthDate),
@@ -282,11 +295,10 @@ export class TimelineMapper {
 		return (isStartDateValid && isEndDateValid);
 	}
 
-	getActorName(currenDate: IDate, names: IActorName[]) {
-		let result: string = 'No name given';
+	getActorName(currenDate: IDate, names: IActorName[]): string {
+		let result: string = 'No name given (#)';
 		
 		if (names.length === 0) {
-			console.log('Names are empty');
 			return result;
 		}
 
