@@ -10,5 +10,12 @@
 	src: url('../../assets/fonts/semplicita-bold.woff2') format('woff2');
 }
 
+@font-face {
+	font-family: 'Tavernlore BB';
+	font-display: swap;
+	src: url('../../assets/fonts/TavernloreBB-Regular.otf');
+}
+
 $font-hoefler: "Hoefler Text";
 $font-semplicita: "Semplicita";
+$font-tavernlore: "Tavernlore BB";

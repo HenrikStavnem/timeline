@@ -56,13 +56,14 @@
 			<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
 				<form [formGroup]="editMentionForm">
 					<label>Override name</label>
-					<input type="text" />
+					<input formControlName="override" name="overidee" type="text" />
 					<button (click)="saveOverrideNameClick()">Save</button>
 				</form>
 			</div>
 			<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
 			<!--<button (click)="getDescriptionValue()">Get contenteditable html</button>-->
 			<button (click)="createEventBtnClick()">Save</button>
+			<button (click)="testBtnClick()">Test</button>
 		</div>
 		<!--<button (click)="insert('from insert button')">INSERT</button>-->
 	</form>

@@ -264,7 +264,6 @@ export class TimelineMapper {
 		let result: string = '';
 
 		titles.forEach(title => {
-			debugger;
 			let isValidDate = this.validateDate(title.startDate, title.endDate, currenDate);
 
 			if (isValidDate) {

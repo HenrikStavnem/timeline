@@ -74,7 +74,17 @@ export class TestComponent implements OnInit {
 		this.editMentionForm = new FormGroup({
 			//Mention: new FormControl('', [
 			//])
+			override: new FormControl('', [])
 		});
+	}
+
+	testBtnClick() {
+		//console.log("createEventBtnClick");
+		let el: ElementRef = this.descriptionEditor,
+			description: string = this.encodeHtmlToDbString(el);
+
+		console.log(description);
+		this.toastService.updateToast('Check console');
 	}
 
 	createEventBtnClick() {
@@ -114,10 +124,10 @@ export class TestComponent implements OnInit {
 	saveOverrideNameClick() {
 		let el = this.editMentionTarget;
 		
-		el.dataset.override = 'Overridden';
+		el.dataset.override = this.editMentionForm.get('override').value;
 
 		this.showMentionEditor = false;
-		this.toastService.updateToast('Override not saved');
+		//this.toastService.updateToast('Override not saved');
 		
 		this.editMentionTarget = null;
 	}
@@ -185,9 +195,14 @@ export class TestComponent implements OnInit {
 		nodes.forEach(node => {
 			if (node.nodeType === 1) { // Is an element
 				let thisNode: any = node, // TODO Set to correct type
-					dataset = thisNode.dataset;
-				
-				result = result + "{char-"+dataset.actorId+"}";
+					dataset = thisNode.dataset,
+					settingsString: string = '';
+
+				if (dataset.override !== '' && dataset.override !== undefined) {
+					settingsString = settingsString + `name:${dataset.override}`;
+				}
+
+				result = result + `{char-${dataset.actorId}${settingsString !== '' ? '|' + settingsString : ''}}`;
 			}
 			if (node.nodeType === 3) { // Pure text
 				result = result + node.textContent;
