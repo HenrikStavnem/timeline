@@ -56,8 +56,14 @@
 			<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
 				<form [formGroup]="editMentionForm">
 					<label>Override name</label>
-					<input formControlName="override" name="overidee" type="text" />
-					<button (click)="saveOverrideNameClick()">Save</button>
+					<input formControlName="override" name="overide" type="text" /><br />
+					
+					<label>Show title</label>
+					<input formControlName="showAge" name="showAge" type="checkbox" />
+					
+					<br />
+					<button (click)="onMentionSettingsCancelClick()">Cancel</button>
+					<button (click)="onMentionSettingsSaveClick()">Save</button>
 				</form>
 			</div>
 			<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>

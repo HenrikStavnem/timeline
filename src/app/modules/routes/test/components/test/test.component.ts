@@ -16,7 +16,7 @@ export class TestComponent implements OnInit {
 	form: FormGroup;
 	mentionForm: FormGroup;
 	editMentionForm: FormGroup;
-	editMentionTarget: any = null;
+	editMentionTarget: HTMLInputElement = null;
 	types: any;				// TODO: Convert to correct type
 	eras: IEra[];
 	months: IMonth[];
@@ -74,7 +74,8 @@ export class TestComponent implements OnInit {
 		this.editMentionForm = new FormGroup({
 			//Mention: new FormControl('', [
 			//])
-			override: new FormControl('', [])
+			override: new FormControl('', []),
+			showAge: new FormControl('', [])
 		});
 	}
 
@@ -121,10 +122,16 @@ export class TestComponent implements OnInit {
 		}
 	}
 
-	saveOverrideNameClick() {
-		let el = this.editMentionTarget;
+	onMentionSettingsCancelClick() {
+		this.showMentionEditor = false;
+	}
+
+	onMentionSettingsSaveClick() {
+		let el = this.editMentionTarget,
+		overrideName: string = this.editMentionForm.get('override').value;
 		
-		el.dataset.override = this.editMentionForm.get('override').value;
+		el.dataset.override = overrideName;
+		el.value = overrideName;
 
 		this.showMentionEditor = false;
 		//this.toastService.updateToast('Override not saved');
@@ -248,7 +255,7 @@ export class TestComponent implements OnInit {
 
 		while ( (node = newEl.firstChild) ) {
 			node.addEventListener('click', (e) => {
-				this.onMentionClick(e.target);
+				this.onMentionClick(e.currentTarget);
 			});
 			lastNode = fragment.appendChild(node);
 		}

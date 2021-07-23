@@ -50,11 +50,11 @@ export class TimelineMapper {
 									}
 
 									let name: string;
-									if (actor.names.length > 0) {
-										name = this.getActorName(currentDate, actor.names)
-									}
-									else if (actor.settings?.overrideName) {
+									if (actor.settings?.overrideName) {
 										name = actor.settings.overrideName;
+									}
+									else if (actor.names.length > 0) {
+										name = this.getActorName(currentDate, actor.names)
 									}
 									else {
 										name = `${actor.firstName} ${actor.lastName} (*)`;
