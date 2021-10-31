@@ -266,7 +266,7 @@
 				INNER JOIN tl_event_types
 					ON tl_events.type = tl_event_types.id
 				LEFT JOIN tl_months
-					ON tl_events.month = tl_months.month
+					ON tl_events.month = tl_months.month AND tl_months.timeline_id = $timelineId
 				WHERE era=$eraId
 				ORDER BY era, year, yearExactness, month, day, exactness";
 
