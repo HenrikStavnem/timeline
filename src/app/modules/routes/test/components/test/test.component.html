@@ -32,7 +32,7 @@
 		<br /><br />
 		<label>New description</label>
 		<div class="mention-component">
-			<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'">
+			<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'" (keydown)="onMentionKeyDown($event)" >
 				<div class="mention-container-top">
 					<button (click)="onMentionCloseClick()">X</button>
 				</div>

@@ -53,6 +53,7 @@ export class TimelineMapper {
 									if (actor.settings?.overrideName) {
 										name = actor.settings.overrideName;
 									}
+									// TODO: Handle names correctly when database always have multiple names
 									else if (actor.names.length > 0) {
 										name = this.getActorName(currentDate, actor.names)
 									}

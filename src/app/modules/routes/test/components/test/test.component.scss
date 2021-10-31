@@ -40,6 +40,7 @@
 	flex-direction: column;
 	user-select: contain;
 	box-sizing: border-box;
+	transform: translateY(-80px);
 
 	.mention-container-top {
 		display: flex;
@@ -61,9 +62,11 @@
 		flex-direction: column;
 	}
 
+	/*
 	input[type=radio] {
 		
 	}
+	*/
 
 	label {
 		display: block;

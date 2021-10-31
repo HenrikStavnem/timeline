@@ -21,7 +21,7 @@ export class TestComponent implements OnInit {
 	eras: IEra[];
 	months: IMonth[];
 	characters: IActor[];
-	timelineId: number = 1;
+	timelineId: number = 9;
 	showMentions: boolean = false;
 	showMentionEditor: boolean = false;
 	textfieldRange: Range = null;
@@ -122,8 +122,8 @@ export class TestComponent implements OnInit {
 		}
 	}
 
-	onMentionSettingsCancelClick() {
-		this.showMentionEditor = false;
+	onMentionSettingsCancelClick(): void {
+		this.closeMentions();
 	}
 
 	onMentionSettingsSaveClick() {
@@ -146,8 +146,18 @@ export class TestComponent implements OnInit {
 			//console.log('reply', this.timelineId, message);
 			if (message?.characters) {
 				this.characters = message.characters;
+				if (this.characters.length > 0) {
+					this.selectFirstMention();
+				}
 			}
 		});
+	}
+
+	private selectFirstMention(): void {
+		let form = this.mentionForm.get('Mention');		
+		if (this.characters[0]) {
+			form.setValue(this.characters[0].id);
+		}
 	}
 
 	onDescriptionChange(event: InputEvent) {
@@ -176,12 +186,17 @@ export class TestComponent implements OnInit {
 
 		}
 		else {
-			this.showMentions = false;
+			this.closeMentions();
 		}
 	}
 
 	onMentionCloseClick() {
+		this.closeMentions();
+	}
+
+	private closeMentions() {
 		this.showMentions = false;
+		// TODO: Set text cursor back to where it was before opening the mention dialog
 	}
 
 	getDescriptionValue(): string {
@@ -310,6 +325,12 @@ export class TestComponent implements OnInit {
 			range = selection.getRangeAt(0),
 			rangeParentElement = range.startContainer.parentElement,
 			elementIsMention = rangeParentElement.classList.contains('mention');
+	}
+
+	onMentionKeyDown(event: KeyboardEvent): void {
+		if (event.key === "Escape") {
+			this.closeMentions();
+		}
 	}
 
 	onBlur() {
