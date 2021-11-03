@@ -1,0 +1,60 @@
+<div class="character-edit">
+	<h1>Character Edit</h1>
+
+	<!--Outcommented as it is getting replaced-->
+	<!--Replace with date dependant race list-->
+	<!--
+	<label>Race/species </label>
+	<input type="text">
+	<br /><br />
+	-->
+
+	<div *ngFor="let name of names" class="data-block">
+		<span>
+			{{name.firstName}} {{name.lastName}}<br />
+			{{name.startDate?.year}}—{{name.endDate?.year}}
+		</span>
+		<button>Edit</button>
+	</div>
+	<br />
+	<button (click)="addNewNameField()">Add new name field</button>
+	<br /><br />
+
+	<!--Outcommented as it is getting replaced-->
+	<!--
+	<label>First name</label>
+	<input type="text">
+	<br /><br />
+	
+	<label>Middle name</label>
+	<input type="text">
+	<br /><br />
+
+	<label>Last name</label>
+	<input type="text">
+	<br /><br />
+	-->
+
+	<!--Outcommented below for visual sanity-->
+	<!--
+	<label>Born</label>
+	<input type="number">
+	<select>
+		<option>January</option>
+		<option>February</option>
+		<option>March</option>
+	</select>
+	<input type="number">
+	<br /><br />
+
+	<label>Died</label>
+	<input type="number">
+	<select>
+		<option>January</option>
+		<option>February</option>
+		<option>March</option>
+	</select>
+	<input type="number">
+	<br /><br />
+	-->
+</div>

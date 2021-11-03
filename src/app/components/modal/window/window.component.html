@@ -1,9 +1,18 @@
-<div>
+<div class="window">
 	<div class="accent">
 		<span>{{windowTitle}}</span>
 		<button (click)="onClickCloseBtn()">X</button>
 	</div>
-	<div class="window-content">
-		<p>Content</p>
+	<div class="window-content-wrapper" [ngClass]="{'asideIsOpen' : this.isAsideOpen}">
+		<div class="window-content a">
+			<character-edit></character-edit>
+
+			<button (click)="openAside()">Open aside</button>
+		</div>
+		<div class="window-content b">
+			<p>Aside</p>
+
+			<button (click)="closeAside()">Close aside</button>
+		</div>
 	</div>
 </div>

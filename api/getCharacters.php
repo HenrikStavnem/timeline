@@ -30,7 +30,7 @@
 	}
 
 	
-	$sqlCharacters = "SELECT id, type, firstname, lastname from tl_characters WHERE timelineId=$timelineId AND (firstname LIKE '$query%' OR lastname LIKE '$query%')";
+	$sqlCharacters = "SELECT id, type, firstname, lastname from tl_characters WHERE timelineId=$timelineId AND (firstname LIKE '$query%' OR lastname LIKE '$query%') ORDER BY lastname, firstname";
 
 	$queryCharacters = $connection->query($sqlCharacters);
 

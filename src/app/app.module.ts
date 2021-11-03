@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { CharacterEditComponent } from './components/character-edit/character-edit.component';
 import { EntryComponentOld } from './components/entry/entry.component';
 import { EntrylistComponent } from './components/entrylist/entrylist.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -25,6 +26,7 @@ import { TimelineService } from './services/timeline.service';
 @NgModule({
 	declarations: [
 		AppComponent,
+		CharacterEditComponent,
 		EntryComponentOld,
 		EntrylistComponent,
 		MenuComponent,

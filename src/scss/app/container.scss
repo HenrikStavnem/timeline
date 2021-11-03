@@ -1,6 +1,10 @@
-.content {
+.content-wrapper {
 	&.has-header {
 		top: -75px;
+
+		.content {
+			top: -75px;
+		}
 	}
 
 	position: relative;
@@ -36,6 +40,10 @@
 			border-radius: 10px;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 		}
+	}
+
+	.content {
+		position: relative;
 	}
 
 	h1, h2, h3 {

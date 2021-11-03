@@ -11,6 +11,12 @@
 		height: 500px;
 	}
 
+	.window {
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
+
 	.accent {
 		display: flex;
 		flex-direction: row;
@@ -29,10 +35,35 @@
 		}
 	}
 
-	.window-content {
-		box-sizing: border-box;
-		padding: 30px;
+	.window-content-wrapper {
+		display: flex;
+		flex-direction: row;
+		//padding: 30px;
 		font-family: $font-hoefler, sans-serif;
 		color: $color-black;
+		width: 100%;
+		height: 100%;
+		//overflow: hidden;
+		transition: transform 0.15s ease-in-out;
+
+		&.asideIsOpen {
+			transform: translateX(-100%);
+		}
+
+		.window-content {
+			flex: 0 0 100%;
+			//padding: 30px;
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+
+			&.a {
+				background-color: aquamarine;
+			}
+
+			&.b {
+				background-color: coral;
+			}
+		}
 	}
 }

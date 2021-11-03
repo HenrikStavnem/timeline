@@ -5,21 +5,23 @@
 			<p>{{character.birthDate.year}}—{{character.deathDate.year}}</p>
 		</div>
 	</div>
-	<div class="content has-header">
+	<div class="content-wrapper has-header">
 		<div class="content-top" *ngIf="character.image">
 			<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
 		</div>
-		<div *ngIf="character.dndStats" class="grid">
-			<div class="tile">STR: {{character.dndStats.strength}} ({{getModifier(character.dndStats.strength)}})</div>
-			<div class="tile">DEX: {{character.dndStats.dexterity}} ({{getModifier(character.dndStats.dexterity)}})</div>
-			<div class="tile">CON: {{character.dndStats.constitution}} ({{getModifier(character.dndStats.constitution)}})</div>
-			<div class="tile">INT: {{character.dndStats.intelligence}} ({{getModifier(character.dndStats.intelligence)}})</div>
-			<div class="tile">WIS: {{character.dndStats.wisdom}} ({{getModifier(character.dndStats.wisdom)}})</div>
-			<div class="tile">CHA: {{character.dndStats.charisma}} ({{getModifier(character.dndStats.charisma)}})</div>
-		</div>
-		<div>
-			<h3>Description</h3>
-			<p>{{character.description ? character.description : "No description"}}</p>
+		<div class="content">
+			<div *ngIf="character.dndStats" class="grid">
+				<div class="tile">STR: {{character.dndStats.strength}} ({{getModifier(character.dndStats.strength)}})</div>
+				<div class="tile">DEX: {{character.dndStats.dexterity}} ({{getModifier(character.dndStats.dexterity)}})</div>
+				<div class="tile">CON: {{character.dndStats.constitution}} ({{getModifier(character.dndStats.constitution)}})</div>
+				<div class="tile">INT: {{character.dndStats.intelligence}} ({{getModifier(character.dndStats.intelligence)}})</div>
+				<div class="tile">WIS: {{character.dndStats.wisdom}} ({{getModifier(character.dndStats.wisdom)}})</div>
+				<div class="tile">CHA: {{character.dndStats.charisma}} ({{getModifier(character.dndStats.charisma)}})</div>
+			</div>
+			<div>
+				<h3>Description</h3>
+				<p>{{character.description ? character.description : "No description"}}</p>
+			</div>
 		</div>
 	</div>
 </ng-container>

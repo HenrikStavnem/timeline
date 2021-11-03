@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IActor, IEra, IMonth } from 'src/app/interfaces/timeline';
+import { IActor, IEra, IMonth, ITimeline } from 'src/app/interfaces/timeline';
+import { ITimelineCard, ITimelineCards } from 'src/app/interfaces/timelinecard';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -17,6 +18,7 @@ export class TestComponent implements OnInit {
 	mentionForm: FormGroup;
 	editMentionForm: FormGroup;
 	editMentionTarget: HTMLInputElement = null;
+	timelineCards: ITimelineCard[];		// TODO: Only for tempoary use
 	types: any;				// TODO: Convert to correct type
 	eras: IEra[];
 	months: IMonth[];
@@ -33,6 +35,18 @@ export class TestComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
+		this.timelineService.getTimelines().subscribe((timelines: ITimelineCards) => {
+			this.timelineCards = timelines.timelines;
+		},
+		error => {
+			console.error('api error: ', error);
+		});
+		/*
+		this.timelineService.getTimelines().subscribe( (timelines: ITimelineCards) => {
+			this.timelines = timelines.timelines ;
+		});
+		*/
+
 		this.timelineService.getMonths(this.timelineId).subscribe((result:any) => {
 			console.log(result);
 			this.types = result.types;
@@ -42,6 +56,10 @@ export class TestComponent implements OnInit {
 		});
 
 		this.form = new FormGroup({
+			Timeline: new FormControl('', [
+				Validators.required,
+				Validators.minLength(1)
+			]),
 			Type: new FormControl('', [
 				Validators.required,
 				Validators.minLength(1)
@@ -79,7 +97,11 @@ export class TestComponent implements OnInit {
 		});
 	}
 
-	testBtnClick() {
+	/**
+	 * Function to test toast and description markup
+	 * @returns void
+	 */
+	testBtnClick(): void {
 		//console.log("createEventBtnClick");
 		let el: ElementRef = this.descriptionEditor,
 			description: string = this.encodeHtmlToDbString(el);
@@ -88,7 +110,10 @@ export class TestComponent implements OnInit {
 		this.toastService.updateToast('Check console');
 	}
 
-	createEventBtnClick() {
+	/**
+	 * CreateEventBtnClick
+	 */
+	createEventBtnClick(): void {
 		//console.log("createEventBtnClick");
 		let el: ElementRef = this.descriptionEditor,
 			description: string = this.encodeHtmlToDbString(el);
@@ -101,11 +126,6 @@ export class TestComponent implements OnInit {
 				day = this.form.get('Day').value,
 				type = this.form.get('Type').value;
 
-			let inputObj = {
-				description: description,
-				year: 1993,
-				month: month
-			};
 	
 			this.timelineService.createEvent(era, year, month, day, type, description).subscribe((message: string) => {
 				console.log("Message", message);
@@ -126,7 +146,7 @@ export class TestComponent implements OnInit {
 		this.closeMentions();
 	}
 
-	onMentionSettingsSaveClick() {
+	onMentionSettingsSaveClick(): void {
 		let el = this.editMentionTarget,
 		overrideName: string = this.editMentionForm.get('override').value;
 		
@@ -139,7 +159,7 @@ export class TestComponent implements OnInit {
 		this.editMentionTarget = null;
 	}
 
-	onMentionInput(event: InputEvent) {
+	onMentionInput(event: InputEvent): void {
 		let value = this.mentionForm.get('MentionQuery').value;
 
 		this.timelineService.getCharacters(this.timelineId, value).subscribe((message: any) => {
@@ -160,7 +180,7 @@ export class TestComponent implements OnInit {
 		}
 	}
 
-	onDescriptionChange(event: InputEvent) {
+	onDescriptionChange(event: InputEvent): void {
 		let dropdown = this.mentionsDropdown.nativeElement,
 			form = dropdown.querySelector('form');
 

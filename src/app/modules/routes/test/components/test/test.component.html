@@ -1,8 +1,14 @@
-<div class="content">
+<div class="content-wrapper">
 	<h1>Create event POC</h1>
 	<br /><br />
 
 	<form [formGroup]="form">
+		<label>Timeline</label>
+		<select formControlName="Timeline">
+			<option *ngFor="let timeline of timelineCards" [value]="timeline.id">{{timeline.title}}</option>
+		</select>
+		<br />
+
 		<label>Type</label>
 		<select formControlName="Type">
 			<option *ngFor="let type of types" [value]="type.id">{{type.title}}</option>

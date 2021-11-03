@@ -16,6 +16,7 @@
 	"@portal-app/*": [ "./src/app" ]
   },
   "angularCompilerOptions": {
+    "strictTemplates": false,
     "enableIvy": false
   }
 }

@@ -8,13 +8,22 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class WindowComponent implements OnInit {
 	public windowTitle: string = "Example";
+	public isAsideOpen: boolean = false;
 
 	constructor(private modalService: ModalService) { }
 
 	ngOnInit(): void {
 	}
 
-	onClickCloseBtn() {
+	onClickCloseBtn(): void {
 		this.modalService.close();
+	}
+
+	openAside(): void {
+		this.isAsideOpen = true;
+	}
+
+	closeAside(): void {
+		this.isAsideOpen  = false;
 	}
 }
