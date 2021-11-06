@@ -143,6 +143,24 @@ export interface IActorName {
 	endDate: IDate
 }
 
+export interface IActorNameCard {
+	actorName: IActorName,
+	isBeingEdited: boolean,
+	isNew: boolean
+}
+
+export interface IActorGender {
+	title: string,
+	startDate: IDate,
+	endDate: IDate
+}
+
+export interface IActorGenderCard {
+	gender: IActorGender,
+	isBeingEdited: boolean,
+	isNew: boolean
+}
+
 export interface IActorTitle {
 	title: string,
 	ordinalNumber: string,

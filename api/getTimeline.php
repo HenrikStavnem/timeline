@@ -274,6 +274,7 @@
 
 			$currentYear = null;
 			$currentMonth = null;
+			$currentMonthTitle = null;
 			$currentDay = null;
 			$currentYearExactness = null;
 			$currentMonthExactness = null;
@@ -299,11 +300,12 @@
 
 				$thisYear = $rowEvent['year'];
 				$thisMonth = $rowEvent['month'];
+				$thisMonthTitle = $rowEvent['monthTitle'];
 				$thisDay = $rowEvent['day'];
 				$thisYearExactness = $rowEvent['yearExactness'];
 				$thisMonthExactness = $rowEvent['monthExactness'];
 
-				$monthTitle = $rowEvent['monthTitle'];
+				//$monthTitle = $rowEvent['monthTitle'] . ": " . $rowEvent['month'] . " - " . $rowEvent['description'];
 
 				if ($i === 0) {
 					$isFirstIndex = true;
@@ -343,6 +345,7 @@
 		
 				if ($isFirstIndex) {
 					$currentMonth = $thisMonth;
+					$currentMonthTitle = $thisMonthTitle;
 					$currentYear = $thisYear;
 					$currentDay = $thisDay;
 					$currentYearExactness = $thisYearExactness;
@@ -361,12 +364,13 @@
 					$currentDay = $thisDay;
 
 					if ($isNewMonth && !$isFirstIndex) {
-						$newMonth = new Month($currentMonth, $monthTitle, $currentMonthExactness, $newDays);
+						$newMonth = new Month($currentMonth, $currentMonthTitle, $currentMonthExactness, $newDays);
 						array_push($newMonths, $newMonth);
 
 						$newDays = array();
 
 						$currentMonth = $thisMonth;
+						$currentMonthTitle = $thisMonthTitle;
 
 						if ($isNewYear && !$isFirstIndex) {
 							$newYear = new Year("yearTitle I: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths);
@@ -386,7 +390,7 @@
 					$newDay = new Day($currentDay, 'exact', $newEvents);
 					array_push($newDays, $newDay);
 
-					$newMonth = new Month($currentMonth, $monthTitle, $currentMonthExactness, $newDays);
+					$newMonth = new Month($currentMonth, $currentMonthTitle, $currentMonthExactness, $newDays);
 					array_push($newMonths, $newMonth);
 
 					$newYear = new Year("yearTitle II: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths);

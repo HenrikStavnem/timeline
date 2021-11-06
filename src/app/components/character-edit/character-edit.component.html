@@ -9,31 +9,54 @@
 	<br /><br />
 	-->
 
-	<div *ngFor="let name of names" class="data-block">
-		<span>
-			{{name.firstName}} {{name.lastName}}<br />
-			{{name.startDate?.year}}—{{name.endDate?.year}}
-		</span>
-		<button>Edit</button>
+	<div *ngIf="names.length === 0">
+		<button (click)="addNewNameField()">Add new name</button>
+	</div>
+	<ng-container *ngFor="let name of names">
+		<div *ngIf="!name.isBeingEdited" class="data-block">
+			<span>
+				<h1>{{name.actorName.firstName}} {{name.actorName.lastName}}</h1>
+				{{name.actorName.startDate?.year}}—{{name.actorName.endDate?.year}}
+			</span>
+			<button (click)="onNameEditClick(name)">Edit</button>
+		</div>
+		<div *ngIf="name.isBeingEdited" class="data-block">
+			<span>
+				<label>First name</label>
+				<input type="text"><br />
+				<label>Last name</label>
+				<input type="text">
+			</span>
+			<button (click)="onNameDeleteClick(name)">Delete</button>
+			<button (click)="onNameSaveClick(name)">Save</button>
+		</div>
+	</ng-container>
+	<div *ngIf="names.length > 0">
+		<button (click)="addNewNameField()">Add another name</button>
 	</div>
 	<br />
-	<button (click)="addNewNameField()">Add new name field</button>
-	<br /><br />
-
-	<!--Outcommented as it is getting replaced-->
-	<!--
-	<label>First name</label>
-	<input type="text">
 	<br /><br />
 	
-	<label>Middle name</label>
-	<input type="text">
-	<br /><br />
+	<div *ngIf="genders.length === 0">
+		<button (click)="addNewGenderCard()">Add new gender</button>
+	</div>
+	<ng-container *ngFor="let gender of genders">
+		<div *ngIf="!gender.isBeingEdited" class="data-block">
+			<span>
+				<h1>{{gender.gender.title}}</h1>
+				{{gender.gender.startDate?.year}}—{{gender.gender.endDate?.year}}
+			</span>
+			<button (click)="onNameEditClick(name)">Edit</button>
+		</div>
+		<div *ngIf="gender.isBeingEdited" class="data-block">
+			NYI
+		</div>
+	</ng-container>
+	<div *ngIf="genders.length > 0">
+		<button (click)="addNewGenderCard()">Add another gender</button>
+	</div>
 
-	<label>Last name</label>
-	<input type="text">
-	<br /><br />
-	-->
+	
 
 	<!--Outcommented below for visual sanity-->
 	<!--

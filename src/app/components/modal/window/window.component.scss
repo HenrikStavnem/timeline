@@ -7,8 +7,8 @@
 	box-shadow: 0 0 15px 0 $color-black;
 
 	@include breakpoint('large') {
-		width: 500px;
-		height: 500px;
+		width: 800px;
+		height: 800px;
 	}
 
 	.window {
@@ -66,4 +66,14 @@
 			}
 		}
 	}
+}
+
+.box {
+	width: 90%;
+	background-color: $color-gray-dark;
+	border-radius: 10px;
+	color: $color-white;
+	margin: 10px;
+	padding: 10px;
+	box-sizing: border-box;
 }

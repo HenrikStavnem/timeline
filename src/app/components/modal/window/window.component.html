@@ -5,14 +5,31 @@
 	</div>
 	<div class="window-content-wrapper" [ngClass]="{'asideIsOpen' : this.isAsideOpen}">
 		<div class="window-content a">
-			<character-edit></character-edit>
+			<!--<character-edit></character-edit>-->
+			<div class="box" (click)="openAside()">
+				<h1>Names</h1>
+				<p>Søren Sundby (1967—1998)</p>
+				<p>Sabine Sundby (1998—2009)</p>
+				<p>Sabine Sundby-Petersen (fra 2009)</p>
+			</div>
 
-			<button (click)="openAside()">Open aside</button>
+			<div class="box" (click)="openAside()">
+				<h1>Titles</h1>
+				<p>Studerende (1985—1989)</p>
+				<p>Lærer (1989—1998)</p>
+				<p>Lærerinde (1998—2005)</p>
+				<p>Frisørelev (2005—2006)</p>
+				<p>Frisør (2006—2009)</p>
+				<p>Professionel brokkehoved (fra 2009)</p>
+			</div>
+
+			<p>Other charcter creation related stuff</p>
+
+			<!--<button (click)="openAside()">Open aside</button>-->
 		</div>
 		<div class="window-content b">
-			<p>Aside</p>
-
 			<button (click)="closeAside()">Close aside</button>
+			<character-edit></character-edit>
 		</div>
 	</div>
 </div>
