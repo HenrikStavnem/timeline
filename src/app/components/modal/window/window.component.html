@@ -4,8 +4,9 @@
 		<button (click)="onClickCloseBtn()">X</button>
 	</div>
 	<div class="window-content-wrapper" [ngClass]="{'asideIsOpen' : this.isAsideOpen}">
+		<ng-content></ng-content>
+		<!--
 		<div class="window-content a">
-			<!--<character-edit></character-edit>-->
 			<div class="box" (click)="openAside()">
 				<h1>Names</h1>
 				<p>Søren Sundby (1967—1998)</p>
@@ -24,12 +25,11 @@
 			</div>
 
 			<p>Other charcter creation related stuff</p>
-
-			<!--<button (click)="openAside()">Open aside</button>-->
 		</div>
 		<div class="window-content b">
 			<button (click)="closeAside()">Close aside</button>
 			<character-edit></character-edit>
 		</div>
+		-->
 	</div>
 </div>

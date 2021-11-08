@@ -16,8 +16,4 @@ export class ModalComponent implements OnInit {
 			this.isModalOpen = isOpen;
 		});
 	}
-
-	openModal() {
-		this.isModalOpen = true;
-	}
 }

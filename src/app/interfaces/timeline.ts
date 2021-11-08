@@ -109,6 +109,15 @@ export interface IActorSettings {
 	showTitle?: boolean
 }
 
+export interface IActorAge {
+	isUnknown: boolean,
+	isBorn: boolean,
+	isDead: boolean,
+	daysOld: number,
+	monthsOld: number,
+	yearsOld: number
+}
+
 export interface IActorDndStats {
 	class: string,		// TODO: Might be changed to an array
 	level: number,		// TODO: Might be changed to an array

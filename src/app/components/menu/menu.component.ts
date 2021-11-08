@@ -39,5 +39,9 @@ export class MenuComponent implements OnInit {
 	onOpenDialogClick() {
 		const dialogRef = this.dialog.open(TestDialogComponent);
 	}
+	
+	onCreateEventClick() {
+		
+	}
 
 }

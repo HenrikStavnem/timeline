@@ -30,7 +30,13 @@
 	}
 
 	
-	$sqlCharacter = "SELECT id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description from tl_characters WHERE slug='$slug' LIMIT 1";
+	$sqlCharacter = "SELECT
+			id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, class, level, background, alignment, playerName, armorClass, initiative, speed, strength, dexterity, constitution, intelligence, wisdom, charisma
+		FROM tl_characters
+		LEFT JOIN tl_character_dnd_stats
+			ON tl_characters.id = tl_character_dnd_stats.characterId
+		WHERE slug='$slug'
+		LIMIT 1";
 
 	$queryCharacter = $connection->query($sqlCharacter);
 
@@ -38,8 +44,30 @@
 		$birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 
-		// TODO: Replace static D&D stats with data from db
-		$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 9, 20, 1, 16, 17, 15);
+		if ($row['strength'] !== null) { // TODO: Needs better check
+			$class = $row['class'];
+			$level = $row['level'];
+			$background = $row['background'];
+			$alignment = $row['alignment'];
+			$armorClass = $row['armorClass'];
+			$initiative = $row['initiative'];
+			$speed = $row['speed'];
+			$playerName = $row['playerName'];
+			$strength = $row['strength'] ? $row['strength'] : 10;
+			$dexterity = $row['dexterity'] ? $row['dexterity'] : 10;
+			$constitution = $row['constitution'] ? $row['constitution'] : 10;
+			$intelligence = $row['intelligence'] ? $row['intelligence'] : 10;
+			$wisdom = $row['wisdom'] ? $row['wisdom'] : 10;
+			$charisma = $row['charisma'] ? $row['charisma'] : 10;
+
+			// TODO: Replace static D&D stats with data from db
+			$dndStats = new CharacterDndStats($class, $level, $background, $playerName, $alignment, $armorClass, $initiative, $speed,
+			$strength, $dexterity, $constitution, $intelligence, $wisdom, $charisma);
+		}
+		else {
+			$dndStats = null;
+		}
+		//$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 10, 10, 10, 10, 10, 10);
 
 		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $dndStats);
 	}

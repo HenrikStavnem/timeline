@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IActor, IActorName, IActorSettings, IActorTitle, IDate, ITimeline } from '../interfaces/timeline';
+import { IActor, IActorAge, IActorName, IActorSettings, IActorTitle, IDate, ITimeline } from '../interfaces/timeline';
 
 @Injectable({
   providedIn: 'root'
@@ -278,6 +278,20 @@ export class TimelineMapper {
 	}
 
 	private getRefenceAge(currenDate: IDate, birthDate: IDate): string {
+		// TODO: Must be completely revisited. IActorAge must be used instead of returning strings
+
+		let age: IActorAge,
+			isBorn: boolean = false,
+			isDead: boolean = false,
+			yearsOld: number,
+			monthsOld: number,
+			daysOld: number;
+
+		// TODO: Must be able to handle circa dates
+		if (!birthDate.era || !birthDate.year || !birthDate.month || !birthDate.day) {
+			return "Unknown";
+		}
+
 		if (currenDate.era !== birthDate.era) { // TODO: Check for exactness
 			//console.log("era is not compatible", currenDate.era, birthDate.era);
 			return 'Born in a different era';
@@ -285,24 +299,102 @@ export class TimelineMapper {
 		}
 
 		if (currenDate.year === birthDate.year) {
+			yearsOld = 0;
+
 			if (currenDate.month === birthDate.month) {
+				monthsOld = 0;
+
 				if (currenDate.day === birthDate.day) {
 					// born today!
+					isBorn: true;
+					daysOld = 0;
 					return 'Born today!';
 				}
 				if (currenDate.day > birthDate.day) {
 					// born after today
+					isBorn: true;
+					daysOld = currenDate.day - birthDate.day;
 					return currenDate.day - birthDate.day + ' days old';
 				}
 				// born same year, month, but after current day = not born yet
 				return 'Born this year, but later';
 			}
+
+			if (currenDate.month > birthDate.month) {
+
+			}
 		}
 
 		if (currenDate.year > birthDate.year) {
+			if (currenDate.month === birthDate.month) {
+				if (currenDate.day === birthDate.day) {
+					// Has birthday this day
+					yearsOld = currenDate.year - birthDate.year;
+					monthsOld = 0;
+					daysOld = 0;
+				}
+			}
+			if (currenDate.month > birthDate.month) {
+				yearsOld = currenDate.year - birthDate.year;
+				monthsOld = currenDate.month - birthDate.month;
+				daysOld = currenDate.day - birthDate.day;
+
+				if (currenDate.day === birthDate.day) {
+					daysOld = 0;
+				}
+
+				//if (currenDate.day > )
+			}
 			return currenDate.year - birthDate.year + ' years old';
 		}
 
 		return 'Not born yet';
 	}
+
+	/*
+
+	// TODO: Use eras, monts and days too
+	if (currentDate.year > deathDate.year) {
+		isDead = true;
+		return -1;
+	}
+
+	// TODO: Instead, return {status: (alive, dead, unknown), age: age}
+
+	if (currentDate.year === birthDate.year) {
+		yearsOld = 0;
+
+		if (currentDate.month === birthDate.month) {
+			monthsOld = 0;
+
+			if (currentDate.day === birthDate.day) {
+				isBorn = true;
+				daysOld = 0;
+			}
+
+			if (currentDate.day > birthDate.day) {
+				isBorn = true;
+				daysOld = currentDate.day - birthDate.day;
+			}
+		}
+	}
+
+	if (currentDate.year > birthDate.year) {
+
+	}
+
+	age = {
+		isBorn: isBorn,
+		isDead: isDead,
+		yearsOld: yearsOld,
+		monthsOld: monthsOld,
+		daysOld: daysOld
+	}
+
+	console.log('age', age);
+
+
+
+	return currentDate.year - birthDate.year;
+	*/
 }

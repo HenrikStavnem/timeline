@@ -7,8 +7,8 @@
 	box-shadow: 0 0 15px 0 $color-black;
 
 	@include breakpoint('large') {
-		width: 800px;
-		height: 800px;
+		width: 700px;
+		height: 700px;
 	}
 
 	.window {
