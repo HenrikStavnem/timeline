@@ -7,7 +7,7 @@ import { ModalService } from 'src/app/services/modal.service';
 	styleUrls: ['./window.component.scss']
 })
 export class WindowComponent implements OnInit {
-	public windowTitle: string = "Example";
+	public windowTitle: string = "Create new character";
 	public isAsideOpen: boolean = false;
 
 	constructor(private modalService: ModalService) { }

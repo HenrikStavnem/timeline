@@ -62,7 +62,7 @@
 							</div>
 						</ng-container>
 						<ng-container *ngIf="month.days.length > 1">
-							<b *ngIf="month.exactness=='exact'">{{month.title ? month.title : 'Month title not found!'}} (month {{month.month}})</b>
+							<b *ngIf="month.exactness=='exact'">{{month.title ? month.title : 'Month title not found!'}}</b>
 							<b *ngIf="month.exactness=='circa'">Ca. Month {{month.month}}: {{month.title}}</b>
 							<b *ngIf="month.exactness=='unknown'">Unknown month</b>
 

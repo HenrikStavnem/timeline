@@ -24,9 +24,14 @@
 		die("Connection failed: " . $connection->connect_error);
 	}
 
-	$slug = null;
-	if (isset($_GET["slug"])) {
-		$slug = $_GET["slug"];
+	$timelineSlug = null;
+	if (isset($_GET["timelineSlug"])) {
+		$timelineSlug = $_GET["timelineSlug"];
+	}
+
+	$characterSlug = null;
+	if (isset($_GET["characterSlug"])) {
+		$characterSlug = $_GET["characterSlug"];
 	}
 
 	
@@ -35,7 +40,8 @@
 		FROM tl_characters
 		LEFT JOIN tl_character_dnd_stats
 			ON tl_characters.id = tl_character_dnd_stats.characterId
-		WHERE slug='$slug'
+		WHERE 
+			slug='$characterSlug'
 		LIMIT 1";
 
 	$queryCharacter = $connection->query($sqlCharacter);

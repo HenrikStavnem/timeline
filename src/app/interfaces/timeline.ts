@@ -7,6 +7,7 @@ export interface ITimeline {
 	statusCode: number,
 	eras: IEra[],
 	actors: IActor[],
+	slug: string
 }
 
 export interface IAuthor {

@@ -35,16 +35,17 @@
 		}
 	}
 
-	.window-content-wrapper {
+	.window-content-wrapperOLD {
 		display: flex;
 		flex-direction: row;
 		//padding: 30px;
 		font-family: $font-hoefler, sans-serif;
 		color: $color-black;
 		width: 100%;
-		height: 100%;
+		height: calc(100% - 55px); // 55 is accent height
 		//overflow: hidden;
 		transition: transform 0.15s ease-in-out;
+		box-sizing: border-box;
 
 		&.asideIsOpen {
 			transform: translateX(-100%);
@@ -56,6 +57,7 @@
 			width: 100%;
 			height: 100%;
 			box-sizing: border-box;
+			overflow-y: auto;
 
 			&.a {
 				background-color: aquamarine;

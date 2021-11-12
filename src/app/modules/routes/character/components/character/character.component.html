@@ -5,14 +5,13 @@
 			<p>{{character.birthDate.year}}—{{character.deathDate.year}}</p>
 		</div>
 	</div>
+	<div *ngIf="character.image" class="image-wrapper">
+		<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
+	</div>
 	<div class="content-wrapper has-header">
 
 
 		<div class="content" [ngClass]="{'has-image' : character.image}">
-			<div *ngIf="character.image" class="image-wrapper">
-				<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
-			</div>
-
 			<ng-container *ngIf="character.dndStats">
 			<div>
 				<p>Class: {{character.dndStats.class}} level {{character.dndStats.level}}</p>

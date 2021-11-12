@@ -49,6 +49,8 @@ export class TimelineMapper {
 										exactness: actor.birthDate.exactness
 									}
 
+									let timelineSlug: string = rawTimeline.slug;
+
 									let name: string;
 									if (actor.settings?.overrideName) {
 										name = actor.settings.overrideName;
@@ -71,7 +73,7 @@ export class TimelineMapper {
 										age: this.getRefenceAge(currentDate, birthDate),
 										showAge: actor.settings && 'showAge' in actor.settings ? actor.settings.showAge : true,
 										title: this.getActorTitle(currentDate, actor.titles),
-										url: `/character/${actor.slug}`
+										url: `/timeline/${timelineSlug}/${actor.slug}`
 									});
 								}
 							}
@@ -96,7 +98,8 @@ export class TimelineMapper {
 			id: rawTimeline.id,
 			image: rawTimeline.image,
 			statusCode: rawTimeline.statusCode,
-			title: rawTimeline.title
+			title: rawTimeline.title,
+			slug: rawTimeline.slug
 		};
 
 		console.log('transformed timeline', timeline);
@@ -350,51 +353,4 @@ export class TimelineMapper {
 
 		return 'Not born yet';
 	}
-
-	/*
-
-	// TODO: Use eras, monts and days too
-	if (currentDate.year > deathDate.year) {
-		isDead = true;
-		return -1;
-	}
-
-	// TODO: Instead, return {status: (alive, dead, unknown), age: age}
-
-	if (currentDate.year === birthDate.year) {
-		yearsOld = 0;
-
-		if (currentDate.month === birthDate.month) {
-			monthsOld = 0;
-
-			if (currentDate.day === birthDate.day) {
-				isBorn = true;
-				daysOld = 0;
-			}
-
-			if (currentDate.day > birthDate.day) {
-				isBorn = true;
-				daysOld = currentDate.day - birthDate.day;
-			}
-		}
-	}
-
-	if (currentDate.year > birthDate.year) {
-
-	}
-
-	age = {
-		isBorn: isBorn,
-		isDead: isDead,
-		yearsOld: yearsOld,
-		monthsOld: monthsOld,
-		daysOld: daysOld
-	}
-
-	console.log('age', age);
-
-
-
-	return currentDate.year - birthDate.year;
-	*/
 }

@@ -15,6 +15,12 @@
 		</select>
 		<br />
 
+		<label>Exactness (NYI)</label>
+		<select formControlName="Exactness">
+			<option *ngFor="let extactness of exactnessTypes" [value]="extactness">{{extactness}}</option>
+		</select>
+		<br />
+
 		<label>Era</label>
 		<select formControlName="Era">
 			<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
@@ -43,7 +49,7 @@
 					<button (click)="onMentionCloseClick()">X</button>
 				</div>
 				<form [formGroup]="mentionForm">
-					<input formControlName="MentionQuery" name="MentionQuery" type="text" (input)="onMentionInput($event)" autocomplete="off">
+					<input formControlName="MentionQuery" name="MentionQuery" type="text" (input)="onMentionInput($event)" (keyup)="onMentionFormKeyUp($event)" autocomplete="off">
 					<ng-container *ngIf="characters?.length">
 						<div class="mention-input" *ngFor="let character of characters">
 							<input formControlName="Mention" type="radio" name="Mention" value="{{character.id}}" id="{{'char-'+character.id}}">

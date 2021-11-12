@@ -17,13 +17,14 @@ export class CharacterComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		let slug: string;
+		let characterSlug: string;
 		this.route.paramMap.subscribe(params => {
-			slug = params.get('id');
+			console.log('params', params, params.get('id2'));
+			characterSlug = params.get('id2');
 		});
 
 		
-		this.timelineService.getCharacter(slug).subscribe((character: any) => {
+		this.timelineService.getCharacter(characterSlug).subscribe((character: any) => {
 			this.character = character.character;
 			console.log("this character", this.character);
 		},

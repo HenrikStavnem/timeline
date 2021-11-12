@@ -1,3 +1,4 @@
+import { Target } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IActor, IEra, IMonth, ITimeline } from 'src/app/interfaces/timeline';
@@ -20,6 +21,7 @@ export class TestComponent implements OnInit {
 	editMentionTarget: HTMLInputElement = null;
 	timelineCards: ITimelineCard[];		// TODO: Only for tempoary use
 	types: any;				// TODO: Convert to correct type
+	exactnessTypes: string[];
 	eras: IEra[];
 	months: IMonth[];
 	characters: IActor[];
@@ -64,6 +66,9 @@ export class TestComponent implements OnInit {
 				Validators.required,
 				Validators.minLength(1)
 			]),
+			Exactness: new FormControl('', [
+
+			]),
 			Era: new FormControl('', [
 				Validators.required,
 				Validators.minLength(1)
@@ -95,6 +100,25 @@ export class TestComponent implements OnInit {
 			override: new FormControl('', []),
 			showAge: new FormControl('', [])
 		});
+
+		// TODO: Below is just for show. Must be aligned with yearExactness and MonthExactness, etc.
+		this.exactnessTypes = [
+			'millenia',
+			'century',
+			'decade',
+			'season',
+			'beforeYear',
+			'year',
+			'afterYear',
+			'beforeMonth',
+			'month',
+			'afterMonth',
+			'relative',
+			'beforeDay',
+			'day',
+			'afterDay',
+			'unknown'
+		];
 	}
 
 	/**
@@ -338,13 +362,21 @@ export class TestComponent implements OnInit {
 	}
 
 	onKeyUp(event: KeyboardEvent) {
-		//console.log("Key down $event:", event);
+		console.log("Key down $event:", event);
 
 		let el: ElementRef = this.descriptionEditor, //document.querySelector("#custom"),
 			selection = window.getSelection(),
 			range = selection.getRangeAt(0),
 			rangeParentElement = range.startContainer.parentElement,
 			elementIsMention = rangeParentElement.classList.contains('mention');
+	}
+
+	onMentionFormKeyUp(event: KeyboardEvent) {
+		// TODO: Buggy. Doesn't add focus
+		let target: HTMLElement = event.target as HTMLElement;
+		if (target) {
+			target.parentNode.querySelector("input").focus()
+		}
 	}
 
 	onMentionKeyDown(event: KeyboardEvent): void {
