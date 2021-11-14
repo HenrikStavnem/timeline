@@ -1,3 +1,5 @@
+@import "../../../styles.scss";
+
 :host {
 	width: 100%; //500px;
 }
@@ -12,11 +14,37 @@
 	// TODO: Needs a better, more fiting name
 	.data-block {
 		display: flex;
+		flex-direction: column;
 		justify-content: space-between;
 		color :white;
 		background-color: #333333;
 		padding: 10px 20px;
 		border-radius: 10px;
 		margin-bottom: 10px;
+		width: 100%;
+		cursor: pointer;
+
+		.data-block-item {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			width: 100%;
+		}
+
+		h1, h2, h3 {
+			margin-block-start: 0;
+			margin-block-end: 0;
+		}
+
+		h2 {
+			font-family: $font-semplicita;
+		}
+		h3 {
+			font-family: $font-hoefler;
+		}
 	}
+}
+
+.window-padding {
+	padding: 30px;
 }

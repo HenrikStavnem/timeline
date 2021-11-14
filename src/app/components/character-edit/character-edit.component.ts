@@ -15,6 +15,37 @@ export class CharacterEditComponent implements OnInit {
 	genders: IActorGenderCard[] = [];
 
 	ngOnInit(): void {
+		this.names.push({
+			actorName: {
+				firstName: "FirstName", lastName: "LastName",
+				startDate: {day: 1, era: 1, exactness: 'day', month: 1, year: 1985},
+				endDate: {day: 1, era: 1, exactness: 'day', month: 1, year: 2000}
+			},
+			isBeingEdited: false,  //true
+			isNew: true
+		});
+
+		this.genders.push({
+			gender: {
+				title: 'Male',
+				startDate: {
+					era: 1,
+					year: 1975,
+					month: 1,
+					day: 1,
+					exactness: 'day'
+				},
+				endDate: {
+					era: 1,
+					year: 2013,
+					month: 1,
+					day: 1,
+					exactness: 'day'
+				}
+			},
+			isBeingEdited: false,
+			isNew: false
+		});
 	}
 
 	constructor(public toastService: ToastService) {

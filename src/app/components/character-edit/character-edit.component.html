@@ -1,25 +1,41 @@
 <div class="character-edit window-content-wrapper" [ngClass]="{'asideIsOpen' : this.isAsideOpen}">
 	<div class="window-content a">
-		<h2>Create character</h2>
-		<button (click)="openAside('names')">Edit names</button><br /><br />
-		<button (click)="openAside('genders')">Edit genders</button><br /><br />
-		
-		<h2>Names</h2>
-		<ng-container *ngFor="let name of names">
-			<span>
-				<h3>{{name.actorName.firstName}} {{name.actorName.lastName}}</h3>
-				{{name.actorName.startDate?.year}}—{{name.actorName.endDate?.year}}
-			</span>
-		</ng-container>
+		<div class="window-padding">
+			<h2>Create character</h2>
+			
+			<button class="data-block" (click)="openAside('names')">
+				<h2>Names</h2>
+				<div class="data-block-item" *ngFor="let name of names; index as i">
+					<h3>{{i+1}}: {{name.actorName.firstName}} {{name.actorName.lastName}}</h3>
+					<div>
+						<span *ngIf="name.actorName.startDate.exactness==='year'">{{name.actorName.startDate.year}}</span>
+						<span *ngIf="name.actorName.startDate.exactness==='month'">{{name.actorName.startDate.month}} {{name.actorName.startDate.year}}</span>
+						<span *ngIf="name.actorName.startDate.exactness==='day'">{{name.actorName.startDate.day}} {{name.actorName.startDate.month}} {{name.actorName.startDate.year}}</span>
+						
+						<span>—</span>
 
-		<br /><br />
-		<button (click)="onSaveCharacterClick()">Save character</button>
+						<span *ngIf="name.actorName.endDate.exactness==='year'">{{name.actorName.endDate.year}}</span>
+						<span *ngIf="name.actorName.endDate.exactness==='month'">{{name.actorName.endDate.month}} {{name.actorName.endDate.year}}</span>
+						<span *ngIf="name.actorName.endDate.exactness==='day'">{{name.actorName.endDate.day}} {{name.actorName.endDate.month}} {{name.actorName.endDate.year}}</span>
+					</div>
+				</div>
+			</button>
 
-		<!--
-		<br /><br />
-		<label>Url: /timeline/duke/</label>
-		<input type="text">
-		-->
+			<button class="data-block" (click)="openAside('genders')">
+				<h2>Genders</h2>
+				<div class="data-block-item" *ngFor="let gender of genders">
+					<h3>{{gender.gender.title}}</h3>
+				</div>
+			</button>
+
+			<button (click)="onSaveCharacterClick()">Save character</button>
+
+			<!--
+			<br /><br />
+			<label>Url: /timeline/duke/</label>
+			<input type="text">
+			-->
+		</div>
 	</div>
 	<div class="window-content b">
 		<character-edit-names *ngIf="openAsideId==='names'" [parentCloseAside]="this.closeAside" [setNames]="this.setNames" [parentNames]="this.names"></character-edit-names>
