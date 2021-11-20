@@ -145,13 +145,14 @@ export class TestComponent implements OnInit {
 		if (this.form.valid && description !== '') {
 
 			let era = this.form.get('Era').value,
+				exactness = this.form.get('Exactness').value,
 				year = this.form.get('Year').value,
 				month = this.form.get('Month').value,
 				day = this.form.get('Day').value,
 				type = this.form.get('Type').value;
 
 	
-			this.timelineService.createEvent(era, year, month, day, type, description).subscribe((message: string) => {
+			this.timelineService.createEvent(era, exactness, year, month, day, type, description).subscribe((message: string) => {
 				console.log("Message", message);
 				this.toastService.updateToast('Event saved');
 			},

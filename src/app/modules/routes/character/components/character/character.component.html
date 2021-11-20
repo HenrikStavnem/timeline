@@ -3,10 +3,11 @@
 		<div class="header-content">
 			<h1>{{character.firstName}} {{character.lastName}}</h1>
 			<p>{{character.birthDate.year}}—{{character.deathDate.year}}</p>
+
+			<div *ngIf="character.image" class="image-wrapper">
+				<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
+			</div>
 		</div>
-	</div>
-	<div *ngIf="character.image" class="image-wrapper">
-		<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
 	</div>
 	<div class="content-wrapper has-header">
 

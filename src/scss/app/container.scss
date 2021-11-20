@@ -14,7 +14,7 @@
 	//background-image: url(https://img.freepik.com/free-photo/dark-grey-black-slate-texture-with-high-resolution-background-natural-black-stone-wall_38607-444.jpg?size=626&ext=jpg);
 	background-color: #292a2d;
 	z-index: 10;
-	//overflow: hidden;
+	overflow: hidden;
 
 	@include breakpoint('xlarge') {
 		width: 800px;
@@ -56,7 +56,7 @@
 	//padding-bottom: 20px;
 	z-index: 20;
 	position: absolute;
-	bottom: 200px;
+	bottom: -400px;
 
 	.image {
 		width: 300px;

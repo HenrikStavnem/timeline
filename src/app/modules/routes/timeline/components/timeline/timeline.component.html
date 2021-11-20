@@ -33,10 +33,13 @@
 				<div class="era" [style.background-image]="'url(' + era.image + ')'">
 					<h1>{{era.title}}</h1>
 					<p>{{era.description}}</p>
+					<div class="image-fade"></div>
 				</div>
 
 				<div *ngFor="let year of era.years">
 					
+					<h2 *ngIf="year.exactness == yearExactnessType.millenia">{{year.year}}<sup>th</sup> millenia</h2>
+					<h2 *ngIf="year.exactness == yearExactnessType.century">{{year.year | century}}<sup>th</sup> century</h2>
 					<h2 *ngIf="year.exactness == yearExactnessType.exact">{{year.year}}</h2>
 					<h2 *ngIf="year.exactness == yearExactnessType.before">Before {{year.year}}</h2>
 					<h2 *ngIf="year.exactness == yearExactnessType.after">After {{year.year}}</h2>
@@ -50,7 +53,7 @@
 					<div *ngFor="let month of year.months">
 						<ng-container *ngIf="month.days.length == 1">
 							<div *ngFor="let day of month.days">
-								<i>{{month.title ? month.title : 'Month title not found!'}} {{day.day}}</i>
+								<i *ngIf="year.exactness === yearExactnessType.exact">{{month.title ? month.title : 'Month title not found!'}} {{day.day}}</i>
 								<!--TODO: Reintroduce relative dates. See old entrylist component-->
 
 								<div *ngFor="let entry of day.entries">

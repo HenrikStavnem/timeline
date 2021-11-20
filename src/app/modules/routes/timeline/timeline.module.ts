@@ -4,6 +4,7 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { ManageTimelineComponent } from './components/manage-timeline/manage-timeline.component';
 import { TimelineRoutingModule } from './timeline-routing.module';
 import { EntryComponent} from './components/timeline/entry/entry.component'
+import { CenturyPipe } from 'src/app/pipes/century.pipe'
 import { EntryDescriptionPipe } from 'src/app/pipes/entry-description.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,7 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		TimelineComponent,
 		ManageTimelineComponent,
 		EntryComponent,
-		EntryDescriptionPipe
+		EntryDescriptionPipe,
+		CenturyPipe
 	],
 	imports: [
 		CommonModule,

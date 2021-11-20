@@ -30,14 +30,15 @@
 	}
 
 	$eraId = $decodeObj['era'];
+	$exactness = $decodeObj['exactness'];
 	$year = $decodeObj['year'];
 	$month = $decodeObj['month'];
 	$day = $decodeObj['day'];
 	$type = $decodeObj['type'];
 	$description = $decodeObj['description'];
 
-	$stmt = $connection->prepare("INSERT INTO `tl_events` (`id`, `type`, `era`, `year`, `month`, `day`, `description`) VALUES (NULL, ?, ?, ?, ?, ?, ?)");
-	$stmt->bind_param('iiiiis', $type, $eraId, $year, $month, $day, $description);
+	$stmt = $connection->prepare("INSERT INTO `tl_events` (`id`, `type`, `era`, `exactness`, `year`, `month`, `day`, `description`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
+	$stmt->bind_param('iisiiis', $type, $eraId, $exactness, $year, $month, $day, $description);
 	$stmt->execute();
 
 	$message = new StdClass();
