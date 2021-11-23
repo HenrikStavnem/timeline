@@ -2,6 +2,8 @@
 	<div class="window-content a">
 		<div class="window-padding">
 			<h2>Create character</h2>
+
+			<div class="image" [style.background-image]="'url(' + portraitImage + ')'"></div>
 			
 			<button class="data-block" (click)="openAside('names')">
 				<h2>Names</h2>
@@ -28,13 +30,19 @@
 				</div>
 			</button>
 
-			<button (click)="onSaveCharacterClick()">Save character</button>
+			<form [formGroup]="form">
 
-			<!--
-			<br /><br />
-			<label>Url: /timeline/duke/</label>
-			<input type="text">
-			-->
+				<h2>Description</h2>
+				<textarea formControlName="Description"></textarea>
+
+				<br />
+				<label>Url: /timeline/duke/</label>
+				<input type="text" formControlName="Slug">
+
+				<br />
+				<button (click)="onSaveCharacterClick()">Save character</button>
+			</form>
+
 		</div>
 	</div>
 	<div class="window-content b">

@@ -16,19 +16,29 @@
 						<button (click)="onNameEditClick(name)">Edit</button>
 					</div>
 					<div *ngIf="name.isBeingEdited" class="data-block">
-						<span>
-							<label>First name</label>
-							<input type="text" formControlName="FirstName" [value]="name.actorName.firstName"><br />
-							<label>Last name</label>
-							<input type="text" formControlName="LastName" [value]="name.actorName.lastName"><br />
-
-							<label>Exactness</label>
-							<select (change)="onExactnessChange(name, $event)">
-								<option *ngFor="let extactness of exactnessTypes" [value]="extactness">{{extactness}}</option>
-							</select><br />
+						<div>
+							<div class="names-block">
+								<div>
+									<input id="firstname" type="text" formControlName="FirstName" [value]="name.actorName.firstName" placeholder="First name">
+									<label for="firstname">First name</label>
+								</div>
+								<div>
+									<input id="lastname" type="text" formControlName="LastName" [value]="name.actorName.lastName" placeholder="Last name">
+									<label for="lastname">Last name</label>
+								</div>
+							</div>
 							
 							<!--<ng-container *ngIf="name.actorName.startDate.exactness==='year'">-->
-							<ng-container>
+							<ng-container *ngIf="names.length === 1">
+								<p>If you add another name, you may set date restrictions.</p>
+							</ng-container>
+							<ng-container *ngIf="names.length > 1">
+								<h3>Name begins</h3>
+								<label>Exactness</label>
+								<select (change)="onExactnessChange(name, $event)">
+									<option *ngFor="let extactness of exactnessTypes" [value]="extactness">{{extactness}}</option>
+								</select><br />
+
 								<label>Era</label>
 								<select>
 									<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
@@ -45,7 +55,7 @@
 								<label>Day</label>
 								<input type="number">
 							</ng-container>
-						</span>
+						</div>
 						<button (click)="onNameDeleteClick(name)" [disabled]="names.length === 1">Delete</button>
 						<button (click)="onNameSaveClick(name)">Save</button>
 					</div>

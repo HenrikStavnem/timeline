@@ -6,10 +6,17 @@
 
 .character-edit {
 	width: 100%;
-	//height: 100%;
+	height: 100%;
 	box-sizing: border-box;
 	//padding: 30px;
 	background-color: white;
+
+	.image {
+		width: 200px;
+		height: 200px;
+		background-size: cover;
+		background-position: center;
+	}
 
 	// TODO: Needs a better, more fiting name
 	.data-block {
@@ -43,8 +50,16 @@
 			font-family: $font-hoefler;
 		}
 	}
+
+	textarea {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 10px;
+	}
 }
 
 .window-padding {
 	padding: 30px;
+	display: flex;
+	flex-direction: column;
 }

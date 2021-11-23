@@ -1,3 +1,5 @@
+@import "../../../../styles.scss";
+
 :host {
 	width: 100%; //500px;
 }
@@ -18,6 +20,50 @@
 		padding: 10px 20px;
 		border-radius: 10px;
 		margin-bottom: 10px;
+	}
+
+	.names-block {
+		display: flex;
+		flex-direction: row;
+
+		div {
+			display: flex;
+		}
+	}
+
+	.label {
+		color: blue;
+		display: flex;
+		transform: translate(10px, 40px);
+		transform-origin: 0 0;
+		transition: all 0.05s linear;
+	}
+
+	input[type="text"] + label {
+		color: blue;
+		display: flex;
+		font-family: $font-primary;
+		font-size: 15px;
+		position: absolute;
+		transform: translate(5px, 0px);
+		transform-origin: 0 0;
+		transition: all 0.05s linear;
+		width: fit-content;
+	}
+
+	input[type="text"]:placeholder-shown + label {
+		font-size: 20px;
+		transform: translate(5px, 12px);
+	}
+
+	input[type="text"] {
+		font-family: $font-primary;
+		font-size: 20px;
+		padding: 15px 5px 5px 5px;
+	}
+
+	::placeholder {
+		color: transparent;
 	}
 }
 

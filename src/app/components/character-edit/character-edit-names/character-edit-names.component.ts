@@ -107,7 +107,7 @@ export class CharacterEditNamesComponent implements OnInit {
 				startDate: {day: 1, era: 1, exactness: 'year', month: 1, year: 2000},
 				endDate: {day: 1, era: 1, exactness: 'month', month: 1, year: 2281}
 			},
-			isBeingEdited: false, //true
+			isBeingEdited: true, //true
 			isNew: true
 		});
 	}
