@@ -1,0 +1,27 @@
+<div class="character-edit window-content-wrapper" [ngClass]="{'asideIsOpen' : this.isAsideOpen}">
+	<div class="window-content a">
+		<div class="window-padding">
+			<h2>Create era</h2>
+			
+			<div class="cover-image-preview" [style.background-image]="'url(' + coverImage + ')'"></div>
+
+			<form [formGroup]="form">
+
+				<label>Title:</label>
+				<input formControlName="Title" type="text"><br />
+
+				<label>Description:</label>
+				<textarea formControlName="Description"></textarea><br />
+
+				<label>Cover image url:</label>
+				<input formControlName="CoverImage" type="url" /><button (click)="onSetImageClick()">Set image</button>
+			</form>
+
+			<p><br />https://cdna.artstation.com/p/assets/images/images/010/360/712/large/vanessa-palmer-bfa2018-cheshire2-ver7sm.jpg?1524011525</p>
+
+			<button (click)="onSaveEraClick()">Save era</button>
+		</div>
+	</div>
+	<div class="window-content b">
+	</div>
+</div>

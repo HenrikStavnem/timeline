@@ -1,0 +1,28 @@
+@import "../../../styles.scss";
+
+:host {
+	width: 100%; //500px;
+}
+
+.cover-image-preview {
+	width: 100%;
+	height: 150px;
+	background-color: $color-gray-dark;
+	border-radius: 5px;
+	margin-bottom: 10px;
+
+	background-size: cover;
+	background-position: center;
+}
+
+textarea {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px;
+}
+
+.window-padding {
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+}

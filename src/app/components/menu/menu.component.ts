@@ -32,8 +32,8 @@ export class MenuComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
-	onClickButton() {
-		this.modalService.toggle();
+	onClickButton(modalName: string) {
+		this.modalService.toggle(modalName);
 	}
 
 	onOpenDialogClick() {

@@ -5,7 +5,8 @@
 	</div>
 	<div class="window-content-wrapper" [ngClass]="{'asideIsOpen' : this.isAsideOpen}">
 		
-		<character-edit></character-edit>
+		<character-edit *ngIf="modalName === 'character-edit'"></character-edit>
+		<era-edit *ngIf="modalName === 'era-edit'"></era-edit>
 		
 		<!--<ng-content></ng-content>-->
 		<!--

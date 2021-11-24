@@ -9,6 +9,7 @@ import { AsideComponent } from './components/modal/aside/aside.component';
 import { CharacterEditComponent } from './components/character-edit/character-edit.component';
 import { CharacterEditGendersComponent } from './components/character-edit/character-edit-genders/character-edit-genders.component';
 import { CharacterEditNamesComponent } from './components/character-edit/character-edit-names/character-edit-names.component';
+import { EraEditComponent } from './components/era-edit/era-edit.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { ToastComponent } from './components/toast/toast.component';
@@ -31,6 +32,7 @@ import { TimelineService } from './services/timeline.service';
 		CharacterEditComponent,
 		CharacterEditGendersComponent,
 		CharacterEditNamesComponent,
+		EraEditComponent,
 		MenuComponent,
 		ModalComponent,
 		ToastComponent,

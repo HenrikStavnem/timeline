@@ -54,6 +54,12 @@ export class TimelineService {
 		return this.http.get('http://localhost:80/timeline/api/updateTimeline?obj='+obj);
 	}
 
+	createEra(eraOjb: Object) {
+		console.log("createEra in service");
+
+		return this.http.get('http://localhost:80/timeline/api/createEra?obj='+JSON.stringify(eraOjb));
+	}
+
 	createEvent(era: number, exactness: string, year: number, month: number, day: number, type: number, description: string) {
 		console.log("createEvent in service");
 

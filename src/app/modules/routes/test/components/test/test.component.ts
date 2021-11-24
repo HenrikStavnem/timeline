@@ -25,7 +25,7 @@ export class TestComponent implements OnInit {
 	eras: IEra[];
 	months: IMonth[];
 	characters: IActor[];
-	timelineId: number = 9;
+	timelineId: number = 11;
 	showMentions: boolean = false;
 	showMentionEditor: boolean = false;
 	textfieldRange: Range = null;

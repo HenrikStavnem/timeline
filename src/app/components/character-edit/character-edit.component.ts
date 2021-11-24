@@ -14,6 +14,7 @@ export class CharacterEditComponent implements OnInit {
 
 	isAsideOpen: boolean = false;
 	openAsideId: string = "";
+	
 	names: IActorNameCard[] = [];
 	genders: IActorGenderCard[] = [];
 	description: string = "";

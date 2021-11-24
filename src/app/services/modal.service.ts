@@ -6,11 +6,14 @@ import { Injectable, Output, EventEmitter } from '@angular/core'
 export class ModalService {
 	isOpen = false;
 
-	@Output() change: EventEmitter<boolean> = new EventEmitter();
+	@Output() change: EventEmitter<Object> = new EventEmitter();
 
-	toggle() {
+	toggle(modalName: string) {
 		this.isOpen = !this.isOpen;
-		this.change.emit(this.isOpen);
+		this.change.emit({
+			isOpen: this.isOpen,
+			modalName: modalName
+		});
 	}
 
 	close() {

@@ -5,8 +5,9 @@
 	</div>
 	<span *ngIf="hasConnection">Has connection to service</span>
 	<span *ngIf="!hasConnection">Connection failed</span> 
-	<button mat-raised-button color="accent" (click)="onClickButton()">Create character</button>
-	<button mat-raised-button color="accent" (click)="onCreateEventClick()">Create event</button>
+	<button mat-raised-button color="accent" (click)="onClickButton('character-edit')">Create character</button>
+	<button mat-raised-button color="accent" (click)="onClickButton('era-edit')">Create era</button>
+	<!--<button mat-raised-button color="accent" (click)="onCreateEventClick()">Create event</button>-->
 	<!--<button mat-raised-button color="accent" (click)="onOpenDialogClick()">Open Dialog</button>-->
 	<img src="http://tcg.dukendor.com/order-dev/res/user-images/red.png" alt="avatar" />
 </div>
