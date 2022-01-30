@@ -13,8 +13,8 @@ export class ModalComponent implements OnInit {
 	constructor(private modalService: ModalService) {}
 
 	ngOnInit(): void {
-		this.modalService.change.subscribe(eventData => {
-			console.log('isOpen obj', eventData)
+		this.modalService.change.subscribe((eventData: any) => {
+			console.log('isOpen obj', eventData);
 			this.isModalOpen = eventData.isOpen;
 			this.modalName = eventData.modalName;
 		});
