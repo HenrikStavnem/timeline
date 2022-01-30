@@ -1,7 +1,7 @@
 import { Target } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IActor, IEra, IMonth, ITimeline } from 'src/app/interfaces/timeline';
+import { IActor, IEra, IMonth, ISeason, ITimeline } from 'src/app/interfaces/timeline';
 import { ITimelineCard, ITimelineCards } from 'src/app/interfaces/timelinecard';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -25,7 +25,8 @@ export class TestComponent implements OnInit {
 	eras: IEra[];
 	months: IMonth[];
 	characters: IActor[];
-	timelineId: number = 11;
+	seasons: ISeason[];
+	timelineId: number = 9;
 	showMentions: boolean = false;
 	showMentionEditor: boolean = false;
 	textfieldRange: Range = null;
@@ -39,6 +40,7 @@ export class TestComponent implements OnInit {
 	ngOnInit(): void {
 		this.timelineService.getTimelines().subscribe((timelines: ITimelineCards) => {
 			this.timelineCards = timelines.timelines;
+			this.timelineId = this.timelineCards[0].id;
 		},
 		error => {
 			console.error('api error: ', error);
@@ -55,6 +57,7 @@ export class TestComponent implements OnInit {
 			this.eras = result.eras;
 			this.months = result.months;
 			this.characters = result.characters;
+			this.seasons = result.seasons;
 		});
 
 		this.form = new FormGroup({
@@ -70,19 +73,21 @@ export class TestComponent implements OnInit {
 
 			]),
 			Era: new FormControl('', [
-				Validators.required,
+				//Validators.required,
 				Validators.minLength(1)
 			]),
 			Year: new FormControl('', [
-				Validators.required,
+				//Validators.required,
 				Validators.minLength(1)
 			]),
+			Season: new FormControl('', [
+			]),
 			Month: new FormControl('', [
-				Validators.required,
+				//Validators.required,
 				Validators.minLength(1)
 			]),
 			Day: new FormControl('', [
-				Validators.required,
+				//Validators.required,
 				Validators.minLength(1)
 			])
 		});
@@ -134,6 +139,20 @@ export class TestComponent implements OnInit {
 		this.toastService.updateToast('Check console');
 	}
 
+	onTimelineChange(): void {
+		console.log('change');
+		this.timelineId = this.form.get('Timeline').value;
+
+		this.timelineService.getMonths(this.timelineId).subscribe((result:any) => {
+			console.log(result);
+			this.types = result.types;
+			this.eras = result.eras;
+			this.months = result.months;
+			this.characters = result.characters;
+			this.seasons = result.seasons;
+		});
+	}
+
 	/**
 	 * CreateEventBtnClick
 	 */
@@ -144,13 +163,12 @@ export class TestComponent implements OnInit {
 
 		if (this.form.valid && description !== '') {
 
-			let era = this.form.get('Era').value,
+			let era = 14, //this.form.get('Era').value,
 				exactness = this.form.get('Exactness').value,
 				year = this.form.get('Year').value,
 				month = this.form.get('Month').value,
 				day = this.form.get('Day').value,
 				type = this.form.get('Type').value;
-
 	
 			this.timelineService.createEvent(era, exactness, year, month, day, type, description).subscribe((message: string) => {
 				console.log("Message", message);
@@ -162,6 +180,7 @@ export class TestComponent implements OnInit {
 			});
 		}
 		else {
+			console.log(this.form);
 			this.toastService.updateToast('Please fill out every field');
 			//alert("Please fill out every field.");
 		}

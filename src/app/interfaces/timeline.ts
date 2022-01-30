@@ -136,6 +136,11 @@ export interface IActorDndStats {
 	charisma: number
 }
 
+export interface ISeason {
+	id: number,
+	title: string
+}
+
 export interface IDate {
 	era: number,
 	year: number,

@@ -35,6 +35,13 @@
 		}
 	}
 
+	class Season {
+		public function __construct($id, $title) {
+			$this->id = $id;
+			$this->title = $title;
+		}
+	}
+
 	$connection = new mysqli($servername, $username, $password, $database);
 	$connection->set_charset('utf8');
 
@@ -79,6 +86,20 @@
 		array_push($types, $type);
 	}
 
+	//
+
+	$sqlSeasons = "SELECT id, title FROM tl_seasons WHERE timeline=$timelineId ORDER BY seasonOrder";
+	$querySeasons = $connection->query($sqlSeasons);
+
+	$seasons = array();
+
+	while ($row = $querySeasons->fetch_assoc()) {
+		$season = new Season($row['id'], $row['title']);
+		array_push($seasons, $season);
+	}
+
+	//
+
 	$sqlCharacters = "SELECT id, firstname, lastname, description FROM tl_characters ORDER BY firstname, lastname";
 	$queryCharacters = $connection->query($sqlCharacters);
 
@@ -95,6 +116,7 @@
 	$result->months = $months;
 	$result->types = $types;
 	$result->characters = $characters;
+	$result->seasons = $seasons;
 	$result->statusCode = 200;
 
 	if (false) {

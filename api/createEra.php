@@ -40,7 +40,7 @@
 	$eraOrder = 0;
 
 	while ($row = $queryEraOrder->fetch_assoc()) {
-		$eraOrder = $row['eraOrder'];
+		$eraOrder = $row['eraOrder'] + 1;
 	}
 	
 	$stmt = $connection->prepare("INSERT INTO `tl_eras` (`title`, `description`, `image`, `timeline`, `eraOrder`) VALUES (?, ?, ?, ?, ?)");

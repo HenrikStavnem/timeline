@@ -14,7 +14,8 @@
 	}
 
 	class TimelineCard {
-		public function __construct($title, $image, $author, $slug) {
+		public function __construct($id, $title, $image, $author, $slug) {
+			$this->id = $id;
 			$this->title = $title;
 			$this->image = $image;
 			$this->author = $author;
@@ -30,14 +31,14 @@
 	}
 
 	
-	$sqlTimeline = "SELECT title, tl_timelines.description as description, tl_timelines.image as image, tl_timelines.url as url, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id ORDER BY title";
+	$sqlTimeline = "SELECT tl_timelines.id, title, tl_timelines.description as description, tl_timelines.image as image, tl_timelines.url as url, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id ORDER BY title";
 
 	$queryTimeline = $connection->query($sqlTimeline);
 
 	$timelines = array();
 
 	while ($row = $queryTimeline->fetch_assoc()) {
-		array_push($timelines, new TimelineCard($row["title"], $row["image"], $row["authorname"], $row["url"] ));
+		array_push($timelines, new TimelineCard($row["id"], $row["title"], $row["image"], $row["authorname"], $row["url"] ));
 	}
 
 	$timelineList = new TimelineList($timelines, 200);

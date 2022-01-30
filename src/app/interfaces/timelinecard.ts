@@ -4,6 +4,7 @@ export interface ITimelineCards {
 }
 
 export interface ITimelineCard {
+	id: number,
 	title: string,
 	image: string,
 	author: string,

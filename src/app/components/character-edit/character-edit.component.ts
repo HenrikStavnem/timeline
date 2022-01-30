@@ -19,7 +19,7 @@ export class CharacterEditComponent implements OnInit {
 	genders: IActorGenderCard[] = [];
 	description: string = "";
 	slug: string = "";
-	portraitImage: string = "https://cdna.artstation.com/p/assets/images/images/004/163/690/4k/maxence-burgel-gul-dan.jpg?1522843583";
+	portraitImage: string = "https://tokens.dukendor.com/graphics/avatars/visitor.png";
 	coverImage: string;
 
 	ngOnInit(): void {

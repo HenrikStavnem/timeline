@@ -36,7 +36,7 @@
 					<div class="image-fade"></div>
 				</div>
 
-				<div *ngFor="let year of era.years">
+				<div *ngFor="let year of era.years" class="container-margin">
 					
 					<h2 *ngIf="year.exactness == yearExactnessType.millenia">{{year.year}}<sup>th</sup> millenia</h2>
 					<h2 *ngIf="year.exactness == yearExactnessType.century">{{year.year | century}}<sup>th</sup> century</h2>
@@ -49,6 +49,8 @@
 					
 					<!--<h3>{{year.year}} {{year.exactness}} ::: {{year.title}}</h3>-->
 					<!--<p *ngIf="year.exactness === yearExactnessType.exact">Exact year</p>-->
+
+					<!--TODO: Add seasons for loop here once API supports it-->
 
 					<div *ngFor="let month of year.months">
 						<ng-container *ngIf="month.days.length == 1">

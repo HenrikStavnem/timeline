@@ -1,12 +1,14 @@
 <div class="content-wrapper">
-	<h1>Index</h1>
+	<div class="container-margin">
+		<h1>Index</h1>
 
-	<div *ngFor="let timelineCard of timelineCards">
-		<a [routerLink]="'/timeline/' + timelineCard.slug">
-			<div class="timeline-card" [style.background-image]="'url(' + timelineCard.image + ')'">
-				<div class="title">{{timelineCard.title}}</div>
-				<div class="by-line">by {{timelineCard.author}}</div>
-			</div>
-		</a>
+		<div *ngFor="let timelineCard of timelineCards">
+			<a [routerLink]="'/timeline/' + timelineCard.slug">
+				<div class="timeline-card" [style.background-image]="'url(' + timelineCard.image + ')'">
+					<div class="title">{{timelineCard.title}}</div>
+					<div class="by-line">by {{timelineCard.author}}</div>
+				</div>
+			</a>
+		</div>
 	</div>
 </div>

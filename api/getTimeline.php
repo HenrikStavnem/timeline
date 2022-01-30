@@ -134,12 +134,14 @@
 		public $exactness;
 		//public $dates = array();
 		public $months = array();
+		public $seasons = array();
 
-		public function __construct($title, $year, $exactness/*, $dates,*/, $months) {
+		public function __construct($title, $year, $exactness/*, $dates,*/, $months, $seasons) {
 			$this->title = $title;
 			$this->year = intval($year);
 			$this->exactness = $exactness;
 			$this->months = $months;
+			$this->seasons = $seasons;
 		}
 	}
 
@@ -261,18 +263,21 @@
 
 			$newEra = new Era($eraId, $row["title"], $row["description"], $row['image']);
 
-			$sqlEvents = "SELECT tl_events.id, year, tl_events.month as month, tl_months.title as monthTitle, day, description, image, yearExactness, monthExactness, exactness
+			$sqlEvents = "SELECT tl_events.id, year, tl_seasons.title as season, tl_events.month as month, tl_months.title as monthTitle, day, description, image, yearExactness, monthExactness, exactness
 				FROM tl_events
 				INNER JOIN tl_event_types
 					ON tl_events.type = tl_event_types.id
 				LEFT JOIN tl_months
 					ON tl_events.month = tl_months.month AND tl_months.timeline_id = $timelineId
+				LEFT JOIN tl_seasons
+					ON tl_events.season = tl_events.id AND tl_seasons.timeline = $timelineId
 				WHERE era=$eraId
-				ORDER BY era, year, yearExactness, month, day, exactness";
+				ORDER BY era, year, yearExactness, month, day, exactness, id";
 
 			$queryEvents = $connection->query($sqlEvents);
 
 			$currentYear = null;
+			$currentSeason = null;
 			$currentMonth = null;
 			$currentMonthTitle = null;
 			$currentDay = null;
@@ -280,6 +285,7 @@
 			$currentMonthExactness = null;
 
 			$newYears = array();
+			$newSeasons = array();
 			$newMonths = array();
 			$newDays = array();
 			$newEvents = array();
@@ -289,6 +295,7 @@
 
 			while($rowEvent = $queryEvents->fetch_assoc()) {
 				$isNewYear = false;
+				$isNewSeason = false;
 				$isNewMonth = false;
 				$isNewDay = false;
 				
@@ -299,6 +306,7 @@
 				$isLastIndex = false;
 
 				$thisYear = $rowEvent['year'];
+				$thisSeason = $rowEvent['season'];
 				$thisMonth = $rowEvent['month'];
 				$thisMonthTitle = $rowEvent['monthTitle'];
 				$thisDay = $rowEvent['day'];
@@ -331,6 +339,10 @@
 					$isNewYearExactness = true;
 					$isNewMonthExactness = true;
 				}
+
+				if ($currentSeason != $thisSeason) {
+					$isNewSeason = true;
+				}
 		
 				if ($currentMonth != $thisMonth || $isNewMonthExactness) {
 					$isNewMonth = true;
@@ -355,6 +367,8 @@
 				extractReferences($rowEvent['description']);
 				$newEvent = new Event($rowEvent['description'], $rowEvent['image']);
 
+				// TODO: Add seasons
+
 				if ($isNewDay && !$isFirstIndex) {
 					$newDay = new Day($currentDay, 'exact', $newEvents);
 
@@ -373,7 +387,7 @@
 						$currentMonthTitle = $thisMonthTitle;
 
 						if ($isNewYear && !$isFirstIndex) {
-							$newYear = new Year("yearTitle I: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths);
+							$newYear = new Year("yearTitle I: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths, $newSeasons);
 
 							array_push($newYears, $newYear);
 
@@ -393,7 +407,7 @@
 					$newMonth = new Month($currentMonth, $currentMonthTitle, $currentMonthExactness, $newDays);
 					array_push($newMonths, $newMonth);
 
-					$newYear = new Year("yearTitle II: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths);
+					$newYear = new Year("yearTitle II: ".$currentYearExactness, $currentYear, $currentYearExactness, $newMonths, $newSeasons);
 
 					array_push($newYears, $newYear);
 				}

@@ -13,27 +13,29 @@
 
 
 		<div class="content" [ngClass]="{'has-image' : character.image}">
-			<ng-container *ngIf="character.dndStats">
-			<div>
-				<p>Class: {{character.dndStats.class}} level {{character.dndStats.level}}</p>
-				<p>Background: {{character.dndStats.background}}</p>
-				<p>Alignment: {{character.dndStats.alignment}}</p>
-				<p>Armor class: {{character.dndStats.armorClass}}, initiative: {{character.dndStats.initiative}}, speed: {{character.dndStats.speed}}</p>
-				<p>Played by {{character.dndStats.playerName}}</p>
-				<br />
-			</div>
-			<div class="grid">
-				<div class="tile">STR: {{character.dndStats.strength}} ({{getModifier(character.dndStats.strength)}})</div>
-				<div class="tile">DEX: {{character.dndStats.dexterity}} ({{getModifier(character.dndStats.dexterity)}})</div>
-				<div class="tile">CON: {{character.dndStats.constitution}} ({{getModifier(character.dndStats.constitution)}})</div>
-				<div class="tile">INT: {{character.dndStats.intelligence}} ({{getModifier(character.dndStats.intelligence)}})</div>
-				<div class="tile">WIS: {{character.dndStats.wisdom}} ({{getModifier(character.dndStats.wisdom)}})</div>
-				<div class="tile">CHA: {{character.dndStats.charisma}} ({{getModifier(character.dndStats.charisma)}})</div>
-			</div>
-			</ng-container>
-			<div>
-				<h3>Description</h3>
-				<p>{{character.description ? character.description : "No description"}}</p>
+			<div class="container-margin">
+				<ng-container *ngIf="character.dndStats">
+				<div>
+					<p>Class: {{character.dndStats.class}} level {{character.dndStats.level}}</p>
+					<p>Background: {{character.dndStats.background}}</p>
+					<p>Alignment: {{character.dndStats.alignment}}</p>
+					<p>Armor class: {{character.dndStats.armorClass}}, initiative: {{character.dndStats.initiative}}, speed: {{character.dndStats.speed}}</p>
+					<p>Played by {{character.dndStats.playerName}}</p>
+					<br />
+				</div>
+				<div class="grid">
+					<div class="tile">STR: {{character.dndStats.strength}} ({{getModifier(character.dndStats.strength)}})</div>
+					<div class="tile">DEX: {{character.dndStats.dexterity}} ({{getModifier(character.dndStats.dexterity)}})</div>
+					<div class="tile">CON: {{character.dndStats.constitution}} ({{getModifier(character.dndStats.constitution)}})</div>
+					<div class="tile">INT: {{character.dndStats.intelligence}} ({{getModifier(character.dndStats.intelligence)}})</div>
+					<div class="tile">WIS: {{character.dndStats.wisdom}} ({{getModifier(character.dndStats.wisdom)}})</div>
+					<div class="tile">CHA: {{character.dndStats.charisma}} ({{getModifier(character.dndStats.charisma)}})</div>
+				</div>
+				</ng-container>
+				<div>
+					<h3>Description</h3>
+					<p>{{character.description ? character.description : "No description"}}</p>
+				</div>
 			</div>
 		</div>
 	</div>

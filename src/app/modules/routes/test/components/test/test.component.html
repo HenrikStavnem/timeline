@@ -4,7 +4,7 @@
 
 	<form [formGroup]="form">
 		<label>Timeline</label>
-		<select formControlName="Timeline">
+		<select formControlName="Timeline" (change)="onTimelineChange()">
 			<option *ngFor="let timeline of timelineCards" [value]="timeline.id">{{timeline.title}}</option>
 		</select>
 		<br />
@@ -30,6 +30,14 @@
 		<label>Year</label>
 		<input type="number" formControlName="Year" />
 		<br />
+
+		<ng-container *ngIf="form.get('Exactness').value === 'season'">
+			<label>Season</label>
+			<select formControlName="Season">
+				<option *ngFor="let season of seasons" [value]="season.id">{{season.title}}</option>
+			</select>
+			<br />
+		</ng-container>
 
 		<label>Month</label>
 		<select formControlName="Month">
