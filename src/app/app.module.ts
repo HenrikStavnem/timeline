@@ -26,39 +26,36 @@ import { TestDialogComponent } from './components/dialogs/test-dialog/test-dialo
 import { TimelineService } from './services/timeline.service';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		AsideComponent,
-		CharacterEditComponent,
-		CharacterEditGendersComponent,
-		CharacterEditNamesComponent,
-		EraEditComponent,
-		MenuComponent,
-		ModalComponent,
-		ToastComponent,
-		WindowComponent,
-		TestDialogComponent
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		HttpClientModule,
-		BrowserAnimationsModule,
-		MatButtonModule,
-		MatDialogModule,
-		MatTabsModule,
-		MatInputModule,
-		ReactiveFormsModule
-	],
-	exports: [
-		ReactiveFormsModule
-	],
-	entryComponents: [
-		TestDialogComponent
-	],
-	providers: [
-		TimelineService
-	],
-	bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        AsideComponent,
+        CharacterEditComponent,
+        CharacterEditGendersComponent,
+        CharacterEditNamesComponent,
+        EraEditComponent,
+        MenuComponent,
+        ModalComponent,
+        ToastComponent,
+        WindowComponent,
+        TestDialogComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatTabsModule,
+        MatInputModule,
+        ReactiveFormsModule
+    ],
+    exports: [
+        ReactiveFormsModule
+    ],
+    providers: [
+        TimelineService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

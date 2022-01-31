@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Timeline } from '../classes/timeline';
 import { Observable } from 'rxjs';
-import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
+//import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
 
 @Injectable()
 export class TimelineService {
