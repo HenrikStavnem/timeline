@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TimelineService } from 'src/app/services/timeline.service'
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -9,6 +10,10 @@ import { ToastService } from 'src/app/services/toast.service';
 	providers: [TimelineService, ToastService]
 })
 export class AppComponent {
-	constructor() {
+	constructor(
+		translate: TranslateService
+	) {
+		translate.setDefaultLang('en');
+		translate.use('en');
 	}	
 }

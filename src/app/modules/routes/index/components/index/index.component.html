@@ -1,6 +1,6 @@
 <div class="content-wrapper">
 	<div class="container-margin">
-		<h1>Index</h1>
+		<h1>{{ 'index.title' | translate }}</h1>
 
 		<div *ngFor="let timelineCard of timelineCards">
 			<a [routerLink]="'/timeline/' + timelineCard.slug">

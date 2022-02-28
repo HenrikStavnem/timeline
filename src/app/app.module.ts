@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,11 @@ import {MatInputModule} from '@angular/material/input';
 
 import { TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
 import { TimelineService } from './services/timeline.service';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+	return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     declarations: [
@@ -48,7 +54,15 @@ import { TimelineService } from './services/timeline.service';
         MatDialogModule,
         MatTabsModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+		TranslateModule.forRoot({
+			defaultLanguage: 'en',
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
     ],
     exports: [
         ReactiveFormsModule
