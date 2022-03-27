@@ -3,6 +3,10 @@
 		top: -75px;
 	}
 
+	&.no-padding {
+		padding: 0;
+	}
+
 	position: relative;
 	top: 100px;
 	box-sizing: border-box;
@@ -15,6 +19,7 @@
 	background-color: #292a2d;
 	z-index: 10;
 	overflow: hidden;
+	padding: 1rem;
 
 	@include breakpoint('xlarge') {
 		width: 800px;

@@ -9,7 +9,7 @@ h2 {
 	flex-direction: row;
 	height: auto;
 	background-color: #3b270e;
-	background-image: url('http://www.dark-legacy.info/Parchment.jpg');
+	background-image: url('../../../../../../../assets/images/Parchment.jpg');
 	background-size: cover;
 	color: $color-white;
 	font-family: $font-primary;
@@ -86,6 +86,8 @@ a {
 }
 
 .tooltip {
+	display: flex;
+	flex-direction: column;
 	visibility: hidden;
 	background-color: $color-black;
 	color: $color-white;
@@ -113,5 +115,18 @@ a {
 		max-height: 200px;
 		background-size: cover;
 		background-position: center;
+	}
+
+	.name {
+		margin: 5px 0;
+		font-family: $font-secondary;
+
+		&.character {
+			color: $color-yellow;
+		}
+
+		&.location {
+			color: $color-green;
+		}
 	}
 }

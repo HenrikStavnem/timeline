@@ -1,4 +1,8 @@
+@import "../../../../../../styles.scss";
+
 .content-wrapper {
+	margin-bottom: 10rem;
+
 	a {
 		text-decoration: none;
 	}
@@ -13,6 +17,7 @@
 		background-position: 50% 50%;
 		margin-bottom: 15px;
 		user-select: none;
+		box-shadow: 0 1px 4px black, 0 0 80px rgb(0 0 0 / 50%);
 
 		.title {
 			font-family: 'Semplicita';

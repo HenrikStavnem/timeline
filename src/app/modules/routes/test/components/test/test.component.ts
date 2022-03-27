@@ -218,7 +218,7 @@ export class TestComponent implements OnInit {
 	}
 
 	private selectFirstMention(): void {
-		let form = this.mentionForm.get('Mention');		
+		let form = this.mentionForm.get('Mention');
 		if (this.characters[0]) {
 			form.setValue(this.characters[0].id);
 		}
@@ -239,6 +239,8 @@ export class TestComponent implements OnInit {
 			this.atSymbolRange = range;
 			dropdown.style.top = 0 - editor.nativeElement.height - range.getBoundingClientRect().height - 50 + 'px';
 			dropdown.style.left = range.getBoundingClientRect().left + 'px';
+
+			console.log('left', event, range.getBoundingClientRect().x);
 			
 			this.mentionForm.get('MentionQuery').setValue('');
 			this.characters = [];

@@ -1,96 +1,98 @@
 <div class="content-wrapper">
-	<h1>Create event POC</h1>
-	<br /><br />
+	<div class="container-margin">
+		<h1>Create event POC</h1>
+		<br /><br />
 
-	<form [formGroup]="form">
-		<label>Timeline</label>
-		<select formControlName="Timeline" (change)="onTimelineChange()">
-			<option *ngFor="let timeline of timelineCards" [value]="timeline.id">{{timeline.title}}</option>
-		</select>
-		<br />
-
-		<label>Type</label>
-		<select formControlName="Type">
-			<option *ngFor="let type of types" [value]="type.id">{{type.title}}</option>
-		</select>
-		<br />
-
-		<label>Exactness (NYI)</label>
-		<select formControlName="Exactness">
-			<option *ngFor="let extactness of exactnessTypes" [value]="extactness">{{extactness}}</option>
-		</select>
-		<br />
-
-		<label>Era</label>
-		<select formControlName="Era">
-			<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
-		</select>
-		<br />
-
-		<label>Year</label>
-		<input type="number" formControlName="Year" />
-		<br />
-
-		<ng-container *ngIf="form.get('Exactness').value === 'season'">
-			<label>Season</label>
-			<select formControlName="Season">
-				<option *ngFor="let season of seasons" [value]="season.id">{{season.title}}</option>
+		<form [formGroup]="form">
+			<label>Timeline</label>
+			<select formControlName="Timeline" (change)="onTimelineChange()">
+				<option *ngFor="let timeline of timelineCards" [value]="timeline.id">{{timeline.title}}</option>
 			</select>
 			<br />
-		</ng-container>
 
-		<label>Month</label>
-		<select formControlName="Month">
-			<option *ngFor="let month of months" [value]="month.month">{{month.month}}: {{month.title}}</option>
-		</select>
-		<br />
+			<label>Type</label>
+			<select formControlName="Type">
+				<option *ngFor="let type of types" [value]="type.id">{{type.title}}</option>
+			</select>
+			<br />
 
-		<label>Day</label>
-		<input type="number" formControlName="Day" />
-		<br />
+			<label>Exactness (NYI)</label>
+			<select formControlName="Exactness">
+				<option *ngFor="let extactness of exactnessTypes" [value]="extactness">{{extactness}}</option>
+			</select>
+			<br />
 
-		<br /><br />
-		<label>New description</label>
-		<div class="mention-component">
-			<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'" (keydown)="onMentionKeyDown($event)" >
-				<div class="mention-container-top">
-					<button (click)="onMentionCloseClick()">X</button>
+			<label>Era</label>
+			<select formControlName="Era">
+				<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
+			</select>
+			<br />
+
+			<label>Year</label>
+			<input type="number" formControlName="Year" />
+			<br />
+
+			<ng-container *ngIf="form.get('Exactness').value === 'season'">
+				<label>Season</label>
+				<select formControlName="Season">
+					<option *ngFor="let season of seasons" [value]="season.id">{{season.title}}</option>
+				</select>
+				<br />
+			</ng-container>
+
+			<label>Month</label>
+			<select formControlName="Month">
+				<option *ngFor="let month of months" [value]="month.month">{{month.month}}: {{month.title}}</option>
+			</select>
+			<br />
+
+			<label>Day</label>
+			<input type="number" formControlName="Day" />
+			<br />
+
+			<br /><br />
+			<label>New description</label>
+			<div class="mention-component">
+				<div #mentionsDropdown [class]="showMentions ? 'mention-container show' : 'mention-container'" (keydown)="onMentionKeyDown($event)" >
+					<div class="mention-container-top">
+						<button (click)="onMentionCloseClick()">X</button>
+					</div>
+					<form [formGroup]="mentionForm">
+						<input formControlName="MentionQuery" name="MentionQuery" type="text" (input)="onMentionInput($event)" (keyup)="onMentionFormKeyUp($event)" autocomplete="off">
+						<ng-container *ngIf="characters?.length">
+							<div class="mention-input" *ngFor="let character of characters">
+								<input formControlName="Mention" type="radio" name="Mention" value="{{character.id}}" id="{{'char-'+character.id}}">
+								<label for="{{'char-'+character.id}}">{{character.firstName}} {{character.lastName}}</label>
+							</div>
+						</ng-container>
+						<ng-container *ngIf="characters?.length === 0">
+							No characters with that query.
+						</ng-container>
+						<button (click)="onAddMention()">Add mention</button>
+					</form>
+					<!--<ul>
+						<li (click)="insert(character.id)">{{character.firstName}} {{character.lastName}}</li>
+					</ul>-->
 				</div>
-				<form [formGroup]="mentionForm">
-					<input formControlName="MentionQuery" name="MentionQuery" type="text" (input)="onMentionInput($event)" (keyup)="onMentionFormKeyUp($event)" autocomplete="off">
-					<ng-container *ngIf="characters?.length">
-						<div class="mention-input" *ngFor="let character of characters">
-							<input formControlName="Mention" type="radio" name="Mention" value="{{character.id}}" id="{{'char-'+character.id}}">
-							<label for="{{'char-'+character.id}}">{{character.firstName}} {{character.lastName}}</label>
-						</div>
-					</ng-container>
-					<ng-container *ngIf="characters?.length === 0">
-						No characters with that query.
-					</ng-container>
-					<button (click)="onAddMention()">Add mention</button>
-				</form>
-				<!--<ul>
-					<li (click)="insert(character.id)">{{character.firstName}} {{character.lastName}}</li>
-				</ul>-->
+				<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
+					<form [formGroup]="editMentionForm">
+						<label>Override name</label>
+						<input formControlName="override" name="overide" type="text" /><br />
+						
+						<label>Show title</label>
+						<input formControlName="showAge" name="showAge" type="checkbox" />
+						
+						<br />
+						<button (click)="onMentionSettingsCancelClick()">Cancel</button>
+						<button (click)="onMentionSettingsSaveClick()">Save</button>
+					</form>
+				</div>
+				<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
+				<!--<button (click)="getDescriptionValue()">Get contenteditable html</button>-->
+				<button (click)="createEventBtnClick()">Save</button>
+				<button (click)="testBtnClick()">Test</button>
 			</div>
-			<div #mentionEditor class="mention-editor" [class]="showMentionEditor ? 'mention-editor show' : 'mention-editor'">
-				<form [formGroup]="editMentionForm">
-					<label>Override name</label>
-					<input formControlName="override" name="overide" type="text" /><br />
-					
-					<label>Show title</label>
-					<input formControlName="showAge" name="showAge" type="checkbox" />
-					
-					<br />
-					<button (click)="onMentionSettingsCancelClick()">Cancel</button>
-					<button (click)="onMentionSettingsSaveClick()">Save</button>
-				</form>
-			</div>
-			<div #descriptionEditor class="text-input" contenteditable="true" (input)="onDescriptionChange($event)" (keyup)="onKeyUp($event)" (blur)="onBlur()"></div>
-			<!--<button (click)="getDescriptionValue()">Get contenteditable html</button>-->
-			<button (click)="createEventBtnClick()">Save</button>
-			<button (click)="testBtnClick()">Test</button>
-		</div>
-		<!--<button (click)="insert('from insert button')">INSERT</button>-->
-	</form>
+			<!--<button (click)="insert('from insert button')">INSERT</button>-->
+		</form>
+	</div>
 </div>

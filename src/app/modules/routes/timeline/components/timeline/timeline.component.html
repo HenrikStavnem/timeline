@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<div class="content-wrapper has-header">
+	<div class="content-wrapper has-header no-padding">
 		<div *ngFor="let era of timeline.eras">
 			<ng-container *ngIf="era.years.length > 0">
 				<div class="era" [style.background-image]="'url(' + era.image + ')'">
@@ -51,6 +51,10 @@
 					<!--<p *ngIf="year.exactness === yearExactnessType.exact">Exact year</p>-->
 
 					<!--TODO: Add seasons for loop here once API supports it-->
+
+					<div *ngFor="let season of year.seasons">
+						<i>{{season.title}}</i>
+					</div>
 
 					<div *ngFor="let month of year.months">
 						<ng-container *ngIf="month.days.length == 1">

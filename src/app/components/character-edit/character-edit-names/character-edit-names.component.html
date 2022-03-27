@@ -4,7 +4,7 @@
 			<button (click)="parentCloseAside()">&lt;</button>
 		</div>
 		<div class="window-padding">
-			<h2>Edit names</h2>
+			<h2>{{ "dialogs.names-edit.headlines.edit-names" | translate }}</h2>
 
 			<form [formGroup]="form">
 				<ng-container *ngFor="let name of names">
@@ -13,24 +13,24 @@
 							<h1>{{name.actorName.firstName}} {{name.actorName.lastName}}</h1>
 							{{name.actorName.startDate?.year}}—{{name.actorName.endDate?.year}}
 						</span>
-						<button (click)="onNameEditClick(name)">Edit</button>
+						<button (click)="onNameEditClick(name)">{{ "dialogs.names-edit.buttons.edit" | translate }}</button>
 					</div>
 					<div *ngIf="name.isBeingEdited" class="data-block">
 						<div>
 							<div class="names-block">
 								<div>
 									<input id="firstname" type="text" formControlName="FirstName" [value]="name.actorName.firstName" placeholder="First name">
-									<label for="firstname">First name</label>
+									<label for="firstname">{{ "dialogs.names-edit.inputs.first-name" | translate }}</label>
 								</div>
 								<div>
 									<input id="lastname" type="text" formControlName="LastName" [value]="name.actorName.lastName" placeholder="Last name">
-									<label for="lastname">Last name</label>
+									<label for="lastname">{{ "dialogs.names-edit.inputs.first-name" | translate }}</label>
 								</div>
 							</div>
 							
 							<!--<ng-container *ngIf="name.actorName.startDate.exactness==='year'">-->
 							<ng-container *ngIf="names.length === 1">
-								<p>If you add another name, you may set date restrictions.</p>
+								<p>{{ "dialogs.names-edit.date-restrictions" | translate }}</p>
 							</ng-container>
 							<ng-container *ngIf="names.length > 1">
 								<h3>Name begins</h3>
@@ -56,13 +56,13 @@
 								<input type="number">
 							</ng-container>
 						</div>
-						<button (click)="onNameDeleteClick(name)" [disabled]="names.length === 1">Delete</button>
-						<button (click)="onNameSaveClick(name)">Save</button>
+						<button (click)="onNameDeleteClick(name)" [disabled]="names.length === 1">{{ "dialogs.names-edit.buttons.delete" | translate }}</button>
+						<button (click)="onNameSaveClick(name)">{{ "dialogs.names-edit.buttons.save" | translate }}</button>
 					</div>
 				</ng-container>
 			</form>
-			<button (click)="addNewNameField()">Add another name</button><br />
-			<button (click)="insertNames()">Save name(s)</button>
+			<button (click)="addNewNameField()">{{ "dialogs.names-edit.buttons.add-name" | translate }}</button><br />
+			<button (click)="insertNames()">{{ "dialogs.names-edit.buttons.save-names" | translate }}</button>
 
 			<br /><br /><br /><br />
 			<button (click)="openAside()">Open Aside</button><br />

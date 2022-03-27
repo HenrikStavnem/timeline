@@ -47,8 +47,23 @@
 	$queryCharacter = $connection->query($sqlCharacter);
 
 	while ($row = $queryCharacter->fetch_assoc()) {
+		$characterId = $row['id'];
 		$birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
+
+		$sqlCharacterTitles = "SELECT
+			title
+			FROM tl_character_titles
+			WHERE characterId = $characterId
+		";
+
+		$queryCharacterTitles = $connection->query($sqlCharacterTitles);
+
+		$titles = array();
+
+		while ($titleRow = $queryCharacterTitles->fetch_assoc()) {
+			array_push($titles, $titleRow['title']);
+		}
 
 		if ($row['strength'] !== null) { // TODO: Needs better check
 			$class = $row['class'];
@@ -76,6 +91,7 @@
 		//$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 10, 10, 10, 10, 10, 10);
 
 		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $dndStats);
+		$character->titles = $titles;
 	}
 
 	http_response_code(200);

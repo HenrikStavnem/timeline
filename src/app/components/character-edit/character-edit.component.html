@@ -1,12 +1,12 @@
 <div class="character-edit window-content-wrapper" [ngClass]="{'asideIsOpen' : this.isAsideOpen}">
 	<div class="window-content a">
 		<div class="window-padding">
-			<h2>Create character</h2>
+			<h2>{{ "dialogs.character-edit.headlines.create-character" | translate }}</h2>
 
 			<div class="image" [style.background-image]="'url(' + portraitImage + ')'"></div>
 			
 			<button class="data-block" (click)="openAside('names')">
-				<h2>Names</h2>
+				<h2>{{ "dialogs.character-edit.components.names" | translate }}</h2>
 				<div class="data-block-item" *ngFor="let name of names; index as i">
 					<h3>{{i+1}}: {{name.actorName.firstName}} {{name.actorName.lastName}}</h3>
 					<div>
@@ -24,7 +24,7 @@
 			</button>
 
 			<button class="data-block" (click)="openAside('genders')">
-				<h2>Genders</h2>
+				<h2>{{ "dialogs.character-edit.components.genders" | translate }}</h2>
 				<div class="data-block-item" *ngFor="let gender of genders">
 					<h3>{{gender.gender.title}}</h3>
 				</div>
@@ -32,7 +32,7 @@
 
 			<form [formGroup]="form">
 
-				<h2>Description</h2>
+				<h2>{{ "dialogs.character-edit.headlines.description" | translate }}</h2>
 				<textarea formControlName="Description"></textarea>
 
 				<br />
@@ -40,7 +40,7 @@
 				<input type="text" formControlName="Slug">
 
 				<br />
-				<button (click)="onSaveCharacterClick()">Save character</button>
+				<button (click)="onSaveCharacterClick()">{{ "dialogs.character-edit.save-btn" | translate }}</button>
 			</form>
 
 		</div>

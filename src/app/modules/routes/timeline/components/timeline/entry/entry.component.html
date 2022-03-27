@@ -18,8 +18,9 @@
 						<div *ngIf="element.coverImage" class="cover-image" [style.background-image]="'url(' + element.coverImage + ')'">
 							<div *ngIf="element.image" class="image" [style.background-image]="'url(' + element.image + ')'"></div>
 						</div>
-						{{element.title}} {{element.name}}<br />
+						<div [classList]="'name ' + element.type">{{element.title}} {{element.name}}</div>
 						{{element.age}}<br />
+						{{element.description}}<br />
 					</span>
 				</a>
 				<span *ngIf="element.showAge" class="gray">&nbsp;({{element.age}})</span>

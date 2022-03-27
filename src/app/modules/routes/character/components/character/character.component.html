@@ -1,8 +1,9 @@
 <ng-container *ngIf="character">
 	<div class="header" [style.background-image]="character.coverImage ? 'url('+character.coverImage+')' : 'url(https://cdnb.artstation.com/p/assets/images/images/034/991/557/large/will-murai-barrens-keyart-008.jpg?1613802083)'">
 		<div class="header-content">
+			<span class="title" *ngIf="character.titles">{{character.titles[character.titles.length - 1]}}</span>
 			<h1>{{character.firstName}} {{character.lastName}}</h1>
-			<p>{{character.birthDate.year}}—{{character.deathDate.year}}</p>
+			<p *ngIf="character.birthDate.year || character.deathDate.year">{{character.birthDate.year}}—{{character.deathDate.year}}</p>
 
 			<div *ngIf="character.image" class="image-wrapper">
 				<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>

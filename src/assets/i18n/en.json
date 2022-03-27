@@ -1,5 +1,51 @@
 {
-	"index": {
-		"title": "Index"
+	"dialogs": {
+		"character-edit": {
+			"title": "Create new character",
+			"save-btn": "Save character",
+			"headlines": {
+				"create-character": "Create character",
+				"description": "Description"
+			},
+			"components": {
+				"genders": "Genders",
+				"names": "Names"
+			}
+		},
+		"names-edit": {
+			"title": "Edit names",
+			"date-restriction": "If you add another name, you may set date restrictions.",
+			"buttons": {
+				"add-name": "Add another name",
+				"delete": "Delete",
+				"edit": "Edit",
+				"save": "Save",
+				"save-names": "Save name(s)"
+			},
+			"headlines": {
+				"edit-names": "Edit names"
+			},
+			"inputs": {
+				"first-name": "First name",
+				"last-name": "Last name"
+			}
+		}
+	},
+	"navigation": {
+		"title": "HOME",
+		"buttons": {
+			"create-character": "Create character",
+			"create-era": "Create era",
+			"new-event": "New event"
+		},
+		"connection": {
+			"failure": "Connection failed",
+			"success": "Has connection to service"
+		}
+	},
+	"routes": {
+		"index": {
+			"title": "Index"
+		}
 	}
 }
