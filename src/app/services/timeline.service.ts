@@ -19,6 +19,15 @@ export class TimelineService {
 
 	getTimeline(slug?: string) {
 		if (slug !== undefined) {
+
+			// TODO: For testing purposes, the SLUG 'test' will use another API endpoint
+
+			/*
+			if (slug === 'test') {
+				return this.http.get('http://localhost:80/timeline/api/getTimelineNew?slug='+slug);
+			}
+			*/
+
 			return this.http.get('http://localhost:80/timeline/api/getTimeline?slug='+slug);
 		}
 		else {
