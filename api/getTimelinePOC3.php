@@ -5,11 +5,16 @@ mb_internal_encoding('UTF-8');
 mb_http_output('UTF-8');
 mb_http_input('UTF-8');
 
+$charactersIndexList = array();
+$itemsIndexList = array();
+
 init();
 
 class RawEvent {
 	public $description;
 	public $accuracy;
+	public $eventType;
+	public $eventTypeImage;
 	public $millennium;
 	public $century;
 	public $decade;
@@ -20,9 +25,11 @@ class RawEvent {
 	public $monthTitle;
 	public $day;
 
-	public function __construct($description, $accuracy, $millennium, $century, $decade, $year, $season, $seasonTitle, $month, $monthTitle, $day) {
+	public function __construct($description, $accuracy, $eventType, $eventTypeImage, $millennium, $century, $decade, $year, $season, $seasonTitle, $month, $monthTitle, $day) {
 		$this->description = $description;
 		$this->accuracy = $accuracy;
+		$this->eventType = $eventType;
+		$this->eventTypeImage = $eventTypeImage;
 		$this->millennium = $millennium;
 		$this->century = $century;
 		$this->decade = $decade;
@@ -47,51 +54,59 @@ class Event {
 	}
 }
 
-class Date {
-	public $accuracy;
-	public $millennium;
-	public $year;
+class Character {
 
-	public function __construct($accuracy, $millennium, $year) {
-		$this->accuracy = $accuracy;
-		$this->millennium = $millennium;
+}
+
+class Date {
+	public $era;
+	public $year;
+	public $month;
+
+	public function __construct($era, $year, $month, $day) {
+		$this->era = $era;
 		$this->year = $year;
+		$this->month = $month;
+		$this->day = $day;
 	}
 }
 
 class Season {
 	public $season;
-	public $name;
+	public $title;
 
-	public function __construct($season, $name) {
+	public function __construct($season, $title) {
 		$this->season = $season;
-		$this->name = $name;
+		$this->title = $title;
 	}
 }
 
 class Month {
 	public $month;
-	public $name;
+	public $title;
 	public $accuracy;
 	public $days = array();
 
-	public function __construct($month, $name, $accuracy) {
+	public function __construct($month, $title, $accuracy) {
 		$this->month = $month;
-		$this->name = $name;
+		$this->title = $title;
 		$this->accuracy = $accuracy;
 	}
 }
 
 class Era {
 	public $id;
+	public $era;
 	public $title;
 	public $description;
 	public $image;
-	public $unknown = array();
+	public $unknownBefore = array();
+	public $unknownAfter = array();
 	public $years = array();
 
-	public function __construct($id, $title, $description, $image) {
+	public function __construct($id, $era, $title, $description, $image) {
 		$this->id = $id;
+		$this->era = $era;
 		$this->title = $title;
 		$this->description = $description;
 		$this->image = $image;
@@ -155,6 +170,7 @@ function testData() {
 }
 
 function init() {
+	global $charactersIndexList;
 	//testData();
 
 	$connection = getConnection();
@@ -163,7 +179,10 @@ function init() {
 
 	$eras = fetchEras($connection, $timeline->id);
 
+	$characters = getCharacters($connection);
+
 	$timeline->eras = $eras;
+	$timeline->characters = $characters;
 
 	echo json_encode($timeline);
 }
@@ -187,16 +206,18 @@ function getConnection() {
 }
 
 function fetchTimeline($connection) {
+	// TODO: Handle empty slugs
+
 	$slug = null;
 	if (isset($_GET["slug"])) {
 		$slug = $_GET["slug"];
 	}
 
-	if ($slug) {
-		$sqlTimeline = "SELECT tl_timelines.id as id, title, tl_timelines.description as description, tl_timelines.image as image, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id WHERE url='$slug' LIMIT 1";
+	if ($slug != null) {
+		$sqlTimeline = "SELECT tl_timelines.id as id, title, tl_timelines.description as description, tl_timelines.image as image, tl_users.name as authorname, tl_users.image as authorimage, tl_timelines.url as slug from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id WHERE url='$slug' LIMIT 1";
 	}
 	else {
-		$sqlTimeline = "SELECT tl_timelines.id as id, title, tl_timelines.description as description, tl_timelines.image as image, tl_users.name as authorname, tl_users.image as authorimage from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id WHERE tl_timelines.id=9 LIMIT 1";
+		$sqlTimeline = "SELECT tl_timelines.id as id, title, tl_timelines.description as description, tl_timelines.image as image, tl_users.name as authorname, tl_users.image as authorimage, tl_timelines.url as slug from tl_timelines INNER JOIN tl_users ON tl_timelines.owner=tl_users.id WHERE tl_timelines.id = 9 LIMIT 1";
 	}
 
 	$queryTimeline = $connection->query($sqlTimeline);
@@ -210,25 +231,21 @@ function fetchTimeline($connection) {
 		$timeline->image = $row['image'];
 		$timeline->authorName = $row['authorname'];
 		$timeline->authorImage = $row['authorimage'];
+		$timeline->slug = $row['slug'];
 	}
 
 	return $timeline;
 }
 
 function fetchEras($connection, $timelineId) {
-	$sqlEras = "SELECT id, title, description, image FROM tl_eras WHERE timeline=$timelineId ORDER BY eraOrder, era";
+	$sqlEras = "SELECT id, era, title, description, image FROM tl_eras WHERE timeline=$timelineId ORDER BY eraOrder, era";
 	$queryEras = $connection->query($sqlEras);
 
 	$eras = array();
 
 	if ($queryEras && $queryEras->num_rows > 0) {
 		while($row = $queryEras->fetch_assoc()) {
-			$newEra = new Era($row['id'], $row['title'], $row['description'], $row['image']);
-
-			//$newEra = fetchEraEvents($connection, $timelineId, $newEra);
-			//fetchEraEvents($connection, $timelineId, $newEra);
-
-			//$newEra->events = fetchEraEvents($connection, $timelineId, $newEra);
+			$newEra = new Era($row['id'], $row['era'], $row['title'], $row['description'], $row['image']);
 			$newEra = fetchEraEvents($connection, $timelineId, $newEra);
 
 			array_push($eras, $newEra);
@@ -241,7 +258,7 @@ function fetchEras($connection, $timelineId) {
 function fetchEraEvents($connection, $timelineId, $era) {
 	$eraId = $era->id;
 
-	$sql = "SELECT tl_events.id, year, tl_seasons.id as season, tl_seasons.title as seasonTitle, tl_events.month as month, tl_months.title as monthTitle, day, description, 		image, yearExactness, monthExactness, exactness
+	$sql = "SELECT tl_events.id, year, tl_seasons.id as season, tl_seasons.title as seasonTitle, tl_events.month as month, tl_months.title as monthTitle, day, description, tl_event_types.title as eventType, tl_event_types.image as eventTypeImage, yearExactness, monthExactness, exactness
 		FROM tl_events
 		INNER JOIN tl_event_types
 			ON tl_events.type = tl_event_types.id
@@ -257,12 +274,12 @@ function fetchEraEvents($connection, $timelineId, $era) {
 	$events = array();
 
 	while($row = $query->fetch_assoc()) {
-		//array_push($dbEvents, new RawEvent('DAY 1',		'day',			1, 1, 1, 1, null, null,	1,		'January', 1));
-		$dbEvent = new RawEvent($row['description'], $row['exactness'], 8, 83, 835, $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day']);	// TODO: db changes needed for hardcoded values
+		$dbEvent = new RawEvent($row['description'], $row['exactness'], $row['eventType'], $row['eventTypeImage'], 8, 83, 835, $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day']);	// TODO: db changes needed for hardcoded values
 
 		$era = mapEvent($dbEvent, $era);
 
-		//array_push($events, $row['description']);
+		extractReferences($row['description']);
+
 		array_push($events, $dbEvent);
 	}
 
@@ -270,11 +287,101 @@ function fetchEraEvents($connection, $timelineId, $era) {
 	return $era;
 }
 
+function extractReferences($string) {
+	$needle = "{";
+	$lastPos = 0;
+	$startPositions = array();
+
+	// get all start brackets
+	while (($lastPos = strPos($string, $needle, $lastPos)) !== false) {
+		$startPositions[] = $lastPos;
+		$lastPos = $lastPos + strlen($needle);
+	}
+
+	$lastPos = 0;
+	$endPositions = array();
+	$needle = "}";
+
+	// get all end brackets {
+	while (($lastPos = strpos($string, $needle, $lastPos))!== false) {
+		$endPositions[] = $lastPos;
+		$lastPos = $lastPos + strlen($needle);
+	}
+
+	foreach ($startPositions as $key=>$value) {
+		$endPos = $endPositions[$key]-1 - $startPositions[$key];
+		$substr = substr($string, $startPositions[$key]+1, $endPos);
+		indexReferences($substr);
+	}
+}
+
+function indexReferences($string) {
+	global $charactersIndexList, $itemsIndexList, $locationsIndexList, $characterSettingsList;
+	
+	$parts = explode("-", $string);
+	$type = $parts[0];
+	$parts = explode("|", $parts[1]);
+	$index = $parts[0];
+
+	switch ($type) {
+		case "char":
+			if (!in_array($index, $charactersIndexList)) {
+				array_push($charactersIndexList, $index);
+			}
+			break;
+		case "item": 
+			if (!in_array($index, $itemsIndexList)) {
+				array_push($itemsIndexList, $index);
+			}
+			break;
+		case "location": 
+			if (!in_array($index, $locationsIndexList)) {
+				array_push($locationsIndexList, $index);
+			}
+			break;
+		default: echo "Error: Not recognized type '$type'<br />";
+	}
+}
+
+function getCharacters($connection) {
+	global $charactersIndexList;
+
+	$characters = array();
+
+	if (count($charactersIndexList) > 0) {
+		sort($charactersIndexList);
+
+		$ids = join(',',$charactersIndexList);
+		$sql = "SELECT id, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, slug from tl_characters WHERE id IN ($ids)";
+		$query = $connection->query($sql);
+
+		while($row = $query->fetch_assoc()) {
+			$character = new Character();
+			$character->id = $row['id'];
+			$character->firstName = $row['firstname'];
+			$character->lastName = $row['lastname'];
+			$character->birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
+			$character->deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
+			$character->image = $row['image'];
+			$character->coverImage = $row['coverImage'];
+			$character->slug = $row['slug'];
+
+			array_push($characters, $character);
+		}
+	}
+
+	return $characters;
+}
+
 function mapEvent($dbEvent, $result) {
 	$accuracy = $dbEvent->accuracy;
 
-	if ($accuracy == 'unknown') {
-		$result = createUnknown($result, $dbEvent);
+	if ($accuracy == 'unknown-before') {
+		$result = createUnknownBefore($result, $dbEvent);
+	}
+
+	if ($accuracy == 'unknown-after') {
+		$result = createUnknownAfter($result, $dbEvent);
 	}
 
 	if (in_array($accuracy, getValidYearTypes())) {
@@ -297,14 +404,23 @@ function mapEvent($dbEvent, $result) {
 }
 
 function createEvent($dbEvent) {
-	return new Event($dbEvent->description, 'Birth', 'birth.png');
+	return new Event($dbEvent->description, $dbEvent->eventType, $dbEvent->eventTypeImage);
 }
 
-function createUnknown($era, $dbEvent) {
-	$unknowns = $era->unknown;
+function createUnknownBefore($era, $dbEvent) {
+	$unknowns = $era->unknownBefore;
 
 	array_push($unknowns, createEvent($dbEvent));
-	$era->unknown = $unknowns;
+	$era->unknownBefore = $unknowns;
+
+	return $era;
+}
+
+function createUnknownAfter($era, $dbEvent) {
+	$unknowns = $era->unknownAfter;
+
+	array_push($unknowns, createEvent($dbEvent));
+	$era->unknownAfter = $unknowns;
 
 	return $era;
 }
@@ -325,7 +441,7 @@ function createYear($era, $dbEvent) {
 		}
 	}
 	else {
-		$newYearaccuracy = in_array($dbEvent->accuracy, $validYearTypes) ? $dbEvent->accuracy : 'year';
+		$newYearAccuracy = in_array($dbEvent->accuracy, $validYearTypes) ? $dbEvent->accuracy : 'year';
 
 		$newYearValue = $dbEvent->year;
 
@@ -339,7 +455,7 @@ function createYear($era, $dbEvent) {
 			case 'decade':		$newYearValue = $dbEvent->decade;		break;
 		}
 
-		$newYear = new Year($newYearValue, $newYearaccuracy);
+		$newYear = new Year($newYearValue, $newYearAccuracy);
 
 		if (in_array($dbEvent->accuracy, $validYearTypes)) {
 			$newYear->events = [createEvent($dbEvent)];
@@ -365,8 +481,6 @@ function createSeason($era, $dbEvent) {
 	$seasons = is_countable($seasons) ? $seasons : [];
 
 	$existingSeasonIndex = array_search($dbEvent->season, array_column($seasons, 'season'), true);
-
-	// TODO: Do rest
 
 	if ($existingSeasonIndex !== false) {
 		$existingSeason = $seasons[$existingSeasonIndex];
@@ -499,7 +613,7 @@ function getExistingMonthIndex($months, $dbEvent) {
 	$existingMonthIndex = false;
 
 	foreach($months as $month) {
-		if ($month->month == $dbEvent->month && $month->accuracy == $dbEvent->accuracy) {
+		if ($month->month == $dbEvent->month /*&& $month->accuracy == $dbEvent->accuracy*/) {
 			$existingMonthIndex = $index;
 			break;
 		}

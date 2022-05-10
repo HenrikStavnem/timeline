@@ -1,5 +1,5 @@
 export enum YearExactnessType {
-	millenia = 'millenia',
+	millennium = 'millennium',
 	century = 'century',
 	decade = 'decade',
 	before = 'before',
@@ -10,7 +10,7 @@ export enum YearExactnessType {
 }
 
 export enum ExactnessType {
-	millenia = 'millenia',
+	millennium = 'millennium',
 	century = 'century',
 	decade = 'decade',
 	beforeYear = 'beforeYear',

@@ -38,8 +38,12 @@ export class TimelineComponent implements OnInit {
 
 			console.log('timeline from db', timeline);
 
-			this.timeline = timelineMapper.transformTimeline(timeline);
-			console.log('timeline',timeline);
+			//this.timeline = timelineMapper.transformTimeline(timeline);
+
+
+			this.timeline = timeline;
+
+			//console.log('timeline',timeline);
 
 			this.headerForm = new FormGroup({
 				Title: new FormControl(this.timeline?.title, [
@@ -101,6 +105,19 @@ export class TimelineComponent implements OnInit {
 
 	public get YearExactnessType() {
 		return null;
+	}
+
+	showTitle(year) {
+		// TODO: Add i18n and expand to include all types
+
+		switch (year.accuracy) {
+			case 'millennium': return `${year.year} millennium`;
+			case 'century': return `${year.year} century`;
+			case 'decade': return `${year.year}s`;
+			case 'year-circa': return `Circa ${year.year}`;
+			case 'year': return `${year.year}`;
+		}
+		return "TEST";
 	}
 
 }

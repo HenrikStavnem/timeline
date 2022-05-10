@@ -108,12 +108,14 @@ export class TestComponent implements OnInit {
 
 		// TODO: Below is just for show. Must be aligned with yearExactness and MonthExactness, etc.
 		this.exactnessTypes = [
+			'unknown-before',
 			'millenia',
 			'century',
 			'decade',
 			'season',
 			'beforeYear',
 			'year',
+			'year-circa',
 			'afterYear',
 			'beforeMonth',
 			'month',
@@ -122,7 +124,7 @@ export class TestComponent implements OnInit {
 			'beforeDay',
 			'day',
 			'afterDay',
-			'unknown'
+			'unknown-after'
 		];
 	}
 

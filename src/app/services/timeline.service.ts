@@ -22,13 +22,12 @@ export class TimelineService {
 
 			// TODO: For testing purposes, the SLUG 'test' will use another API endpoint
 
-			/*
 			if (slug === 'test') {
-				return this.http.get('http://localhost:80/timeline/api/getTimelineNew?slug='+slug);
+				return this.http.get('http://localhost:80/timeline/api/getTimelinePOC3');
 			}
-			*/
 
-			return this.http.get('http://localhost:80/timeline/api/getTimeline?slug='+slug);
+			return this.http.get('http://localhost:80/timeline/api/getTimelinePOC3?slug='+slug);
+			//return this.http.get('http://localhost:80/timeline/api/getTimeline?slug='+slug);
 		}
 		else {
 			return this.http.get('http://localhost:80/timeline/api/getTimeline');
