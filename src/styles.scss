@@ -7,6 +7,12 @@ body {
 	color: $color-yellow;
 	font-family: $font-hoefler;
 	margin: 0px;
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+
+	&[data-sidebar-is-open="true"] {
+		overflow-y: hidden;
+	}
 }
 
 .mention {
@@ -48,3 +54,112 @@ h1, p {
 }
 //html, body { height: 100%; }
 //body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+$aside-width: 600px;
+
+.content-container {
+	transition: margin-left .15s linear;
+	// display: flex;
+	// flex-direction: row;
+	position: relative;
+	//transition: filter 0.15s ease-in-out;
+
+	&.aside-open {
+		margin-left: $aside-width;
+		pointer-events: none;
+		user-select: none;
+	}
+}
+
+aside.sidebar {
+	display: flex;
+	position: fixed;
+	flex-direction: row;
+	box-sizing: border-box;
+	top: 50px;
+	min-width: $aside-width;
+	max-width: $aside-width;
+	height: 100%;
+	background-color: white;
+	border-right: rgba(0, 0, 0, .5) 1px solid;
+	z-index: 100;
+	transition: margin-left $duration-short ease-in-out;
+	margin-left: calc(-1px - $aside-width); // TODO: Change into calculation based on a variable
+	color: $color-black;
+	//overflow-x: hidden;
+	overflow-y: auto;
+
+	pointer-events: none;
+	user-select: none;
+
+	&.aside-open {
+		margin-left: 0;
+		pointer-events: all;
+		user-select: unset;
+	}
+
+	.aside-top {
+		display: flex;
+		flex-direction: row-reverse;
+
+		button {
+			width: 100px;
+		}
+	}
+
+	.aside-content {
+		display: flex;
+		flex-direction: column;
+		padding: 50px;
+		box-sizing: border-box;
+		row-gap: 1rem;
+
+		button {
+			//font-family: $font-primary;
+			font-size: 14px;
+		}
+	}
+
+	> div {
+		transition: transform $duration-short ease-in-out;
+		background-color: lightblue;
+		display: flex;
+		flex-direction: row;
+		
+		> div {
+			min-width: $aside-width;
+			max-width: $aside-width;
+		}
+
+		&.aside-open {
+			transform: translateX(calc(-1px - $aside-width));
+		}
+	}
+
+	aside {
+		padding: 50px;
+		min-width: $aside-width;
+		max-width: $aside-width;
+		box-sizing: border-box;
+		background-color: $color-green;
+	}
+}
+
+.aside-backdrop {
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0);
+	z-index: 20;
+	transition: background-color $duration-short ease-in-out;
+	user-select: none;
+	pointer-events: none;
+
+	&.aside-open {
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+}

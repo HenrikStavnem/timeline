@@ -4,6 +4,7 @@ import { Input } from '@angular/core';
 //import { Person } from '../../classes/person';
 import { Reference } from '@angular/compiler/src/render3/r3_ast';
 import { IActor, IActorName, IActors, IDate, IEntry } from 'src/app/interfaces/timeline';
+import { SidebarService } from 'src/app/services/sidebar.service';
 
 @Component({
 	selector: 'entry',
@@ -17,14 +18,21 @@ export class EntryComponent implements OnInit {
 	@Input() timelineSlug: string;
 
 	elements: any[];
+	isBeingEdited: boolean = false;
 
 	ngOnInit(): void {
 		this.elements = new Array();
 
 		this.mapDescription();
+
+		this.sidebarService.change.subscribe((eventData: any) => {
+			if (eventData.isOpen === false) {
+				this.isBeingEdited = false;
+			}
+		});
 	}
 
-	constructor() {
+	constructor(private sidebarService: SidebarService) {
 	}
 
 	private mapDescription() {
@@ -78,7 +86,7 @@ export class EntryComponent implements OnInit {
 				// 	name = this.getActorName(currentDate, actor.names)
 				// }
 				// else {
-					name = `${actor.firstName} ${actor.lastName} (*)`;
+					name = `${actor.firstName} ${actor.lastName}`;
 				// }
 
 				this.elements.push({
@@ -172,10 +180,14 @@ export class EntryComponent implements OnInit {
 
 		let ageInYears: number = -1;
 
+		if (!birthDate.year || birthDate.year == 0) {
+			return "Age unknown";
+		}
+
 		if (currentDate.id == birthDate.id) {
 			ageInYears = (currentDate.year - birthDate.year);
 		}
-		return ageInYears;
+		return ageInYears + " years old";
 	}
 
 	private validateDate(startDate: IDate, endDate: IDate, currentDate: IDate): boolean {
@@ -241,5 +253,16 @@ export class EntryComponent implements OnInit {
 
 		//isEndDateValid = true; //TODO: just testing
 		return (isStartDateValid && isEndDateValid);
+	}
+
+	onEditBtnClick() {
+		this.isBeingEdited = !this.isBeingEdited;
+
+		if (this.isBeingEdited) {
+			this.sidebarService.openSidebarPage('event-edit');
+		}
+		else {
+			this.sidebarService.close();
+		}
 	}
 }

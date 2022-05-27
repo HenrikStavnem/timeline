@@ -39,6 +39,7 @@ export class TimelineService {
 	}
 
 	getCharacter(slug: string) {
+		return this.http.get('http://localhost:80/timeline/api/character/get.php?characterSlug='+slug);
 		return this.http.get('http://localhost:80/timeline/api/getCharacter?characterSlug='+slug);
 	}
 

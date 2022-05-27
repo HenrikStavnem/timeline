@@ -1,0 +1,37 @@
+<aside class="sidebar" [ngClass]="{'aside-open' : isAsideOpen}">
+	<div [ngClass]="{'aside-open' : isAsideBOpen}">
+		<div>
+			<div class="aside-top">
+				<button (click)="closeAside()">Close</button>
+				<!-- TODO: This page should not have a close button -->
+			</div>
+			<div class="aside-content">
+				<h2>Title</h2>
+		
+				<button (click)="onAsideBOpenClick('test1')">Create event</button>
+				<button (click)="onAsideBOpenClick('test2')">Create character</button>
+
+				<button (click)="onAsideBOpenClick('era-create')">Create era</button>
+
+				<button (click)="onAsideBOpenClick('event-edit')">Edit event</button>
+			</div>
+		</div>
+
+		<aside [ngClass]="{'aside-open' : isAsideBOpen}">
+			<ng-container *ngIf="page=='test1'">
+				<h2>Create event</h2>
+			</ng-container>
+			<ng-container *ngIf="page=='test2'">
+				<h2>Create character</h2>
+			</ng-container>
+
+			<ng-container *ngIf="page=='event-edit'">
+				<h2>Edit event</h2>
+			</ng-container>
+
+			<br />Aside content
+	
+			<button (click)="onAsideBCloseClick()">Close this</button>
+		</aside>
+	</div>
+</aside>

@@ -404,8 +404,25 @@ export class TestComponent implements OnInit {
 	}
 
 	onMentionKeyDown(event: KeyboardEvent): void {
+		let target: HTMLElement = event.target as HTMLElement;
+
+		console.log('nodeType', target.nodeType, target.nodeName);
+
 		if (event.key === "Escape") {
 			this.closeMentions();
+			return;
+		}
+
+		if (event.key === 'ArrowDown') {
+			let firstListItem: HTMLElement = target.parentElement.querySelector('input[type="radio"]');
+			if (firstListItem) {
+				firstListItem.focus();
+			}
+			return;
+		}
+
+		if (event.key === 'ArrowUp') {
+
 		}
 	}
 

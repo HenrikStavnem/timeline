@@ -1,6 +1,10 @@
 .content-wrapper {
 	&.has-header {
 		top: -75px;
+
+		// .container-margin {
+		// 	margin-top: -60px;
+		// }
 	}
 
 	&.no-padding {
@@ -11,13 +15,14 @@
 	top: 100px;
 	box-sizing: border-box;
 	width: 100%; //800px;
+	min-width: 600px;
 	background-color: rgb(50,50,50);
 	//padding: 20px;
 	margin: 0 auto;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 1), 0 0 80px rgba(0, 0, 0, 0.5) inset;
 	//background-image: url(https://img.freepik.com/free-photo/dark-grey-black-slate-texture-with-high-resolution-background-natural-black-stone-wall_38607-444.jpg?size=626&ext=jpg);
 	background-color: #292a2d;
-	z-index: 10;
+	//z-index: 10;
 	overflow: hidden;
 	padding: 1rem;
 

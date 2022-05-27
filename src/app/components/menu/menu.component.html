@@ -3,6 +3,7 @@
 		<a routerLink="/">{{ "navigation.title" | translate }}</a> ● 
 		<a routerLink="/test">{{ "navigation.buttons.new-event" | translate }}</a>
 	</div>
+	<button (click)="onToggleSidebarClick()">Sidebar Toggle</button>
 	<span *ngIf="hasConnection">{{ "navigation.connection.success" | translate }}</span>
 	<span *ngIf="!hasConnection">{{ "navigation.connection.failure" | translate }}</span> 
 	<button mat-raised-button color="accent" (click)="onClickButton('character-edit')">{{ "navigation.buttons.create-character" | translate }}</button>

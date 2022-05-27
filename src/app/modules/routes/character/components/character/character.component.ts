@@ -33,8 +33,10 @@ export class CharacterComponent implements OnInit {
 		});
 	}
 
-	getModifier(value: number): number {
-		return Math.floor((value - 10) / 2);
+	getModifier(value: number): string {
+		const modifierValue =  Math.floor((value - 10) / 2);
+
+		return ((modifierValue > -1) ? "+" : "") + modifierValue;
 	}
 
 }

@@ -17,6 +17,7 @@ import { ToastComponent } from './components/toast/toast.component';
 import { WindowComponent } from './components/modal/window/window.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         EraEditComponent,
         MenuComponent,
         ModalComponent,
+		SidebarComponent,
         ToastComponent,
         WindowComponent,
         TestDialogComponent

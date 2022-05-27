@@ -8,7 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
 	declarations: [
 		IndexComponent,
-		
 	],
 	imports: [
 		CommonModule,

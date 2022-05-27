@@ -1,6 +1,12 @@
 <menu></menu>
 
-<router-outlet></router-outlet>
+<sidebar></sidebar>
+
+<div class="aside-backdrop" [ngClass]="{'aside-open' : isAsideOpen}"></div>
+
+<div class="content-container" [ngClass]="{'aside-open' : isAsideOpen}">	
+	<router-outlet></router-outlet>
+</div>
 
 <modal></modal>
 

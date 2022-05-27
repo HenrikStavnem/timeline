@@ -1,4 +1,4 @@
-<div class="entry">
+<div class="entry" [ngClass]="{'edit-mode' : isBeingEdited}">
 	<div class="entry-icon" [style.background-image]="'url(' + item.eventTypeImage + ')'"></div>
 	<div class="entry-text">
 		<!--<p [outerHTML]="item.description | entryDescription : references : date"></p>-->
@@ -19,13 +19,18 @@
 							<div *ngIf="element.image" class="image" [style.background-image]="'url(' + element.image + ')'"></div>
 						</div>
 						<div [classList]="'name ' + element.type">{{element.title}} {{element.name}}</div>
-						{{element.age}}<br />
-						{{element.description}}<br />
+						<div>{{element.age}}</div>
+						<div>{{element.description}}</div>
 					</span>
 				</a>
-				<span *ngIf="element.showAge" class="gray">&nbsp;({{element.age}})</span>
+				<!-- Age -->
+				<!-- <span *ngIf="element.showAge" class="gray">&nbsp;({{element.age}})</span> -->
 			</ng-container>
 
 		</ng-container>
+
+		<div class="button-container">
+			<button (click)="onEditBtnClick()">Edit</button>
+		</div>
 	</div>
 </div>
