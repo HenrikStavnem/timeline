@@ -19,14 +19,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatInputModule} from '@angular/material/input';
+// import {MatButtonModule} from '@angular/material/button';
+// import {MatDialogModule} from '@angular/material/dialog';
+// import {MatTabsModule} from '@angular/material/tabs';
+// import {MatInputModule} from '@angular/material/input';
 
 import { TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
 import { TimelineService } from './services/timeline.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CharacterSidebarPageComponent } from './components/sidebar/pages/character-sidebar-page.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http);
@@ -39,6 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         CharacterEditComponent,
         CharacterEditGendersComponent,
         CharacterEditNamesComponent,
+		CharacterSidebarPageComponent,
         EraEditComponent,
         MenuComponent,
         ModalComponent,
@@ -52,10 +54,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatTabsModule,
-        MatInputModule,
+        // MatButtonModule,
+        // MatDialogModule,
+        // MatTabsModule,
+        // MatInputModule,
         ReactiveFormsModule,
 		TranslateModule.forRoot({
 			defaultLanguage: 'en',

@@ -1,0 +1,51 @@
+<!-- <div class="padding">
+	<h2>Character</h2>
+	<h3>{{routeParamId}}</h3>
+</div> -->
+
+<div class="preview">
+	<div class="cover-image" [style.background-image]="'url(' + coverImage + ')'">
+		<h1>{{character.firstName}} {{character.lastName}}</h1>
+	</div>
+
+	<div class="image-wrapper">
+		<div class="image" [style.background-image]="'url(' + portraitImage + ')'"></div>
+	</div>
+</div>
+
+<div class="padding">
+	<form [formGroup]="form">
+		
+		<label>First name</label>
+		<input type="text" formControlName="Firstname" name="Firstname" /><br />
+
+		<label>Last name</label>
+		<input type="text" formControlName="Lastname" name="Lastname" /><br />
+
+		<label>Era</label>
+		<select formControlName="Era">
+			<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
+		</select><br />
+
+		<label>Description</label>
+		<textarea formControlName="Description" name="Description"></textarea><br />
+
+		<label>Image URL</label>
+		<input type="text" formControlName="ImageUrl" name="ImageUrl" />
+		<button (click)="setImageClick()">Set image</button><br />
+
+		<label>Cover image URL</label>
+		<input type="text" formControlName="CoverImageUrl" name="CoverImageUrl" />
+		<button (click)="setCoverImageClick()">Set image</button><br />
+
+		<label>URL</label>
+		<input type="text" formControlName="Url" name="Url" /><br />
+
+		<br /><br />
+		<button type="submit" (click)="saveCharacterClick()">Save new</button>
+		<button *ngIf="character !== null" type="submit" (click)="saveCharacterChangesClick()">Save changes</button>
+
+		<br /><br />
+		<br /><br />
+	</form>
+</div>

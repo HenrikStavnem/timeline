@@ -1,4 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core'
+import { IActor } from '../interfaces/timeline';
 
 @Injectable({
 	providedIn: 'root',
@@ -46,9 +47,19 @@ export class SidebarService {
 		this.change.emit({
 			isOpen: this.isOpen,
 			pageId: pageId
-		})
+		});
 
 		this.setBodySidebarData();
+	}
+
+	openCharacterPage(character: IActor) {
+		this.isOpen = true;
+
+		this.change.emit({
+			isOpen: this.isOpen,
+			pageId: 'test2',
+			character: character
+		});
 	}
 
 	private setBodySidebarData() {

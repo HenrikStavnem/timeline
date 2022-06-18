@@ -15,6 +15,7 @@
 				<h1>{{timeline.title}}</h1>
 				<h2>By {{timeline.authorName}}</h2>
 				<p>{{timeline.description}}</p>
+				<a [routerLink]="'characters'">Characters</a>
 			</ng-container>
 			<ng-container *ngIf="isEditingHeader">
 				<form [formGroup]="headerForm">

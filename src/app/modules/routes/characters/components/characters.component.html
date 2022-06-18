@@ -1,0 +1,17 @@
+<div class="content-wrapper">
+	<div class="container-margin">
+		<h2>Character list</h2>
+
+		<div class="character-card-grid">
+			<ng-container *ngFor="let characterCard of characterCards">
+				<div class="character-card">
+					<a [routerLink]="'//timeline/duke/' + characterCard.slug">
+						<img src="{{characterCard.image ? characterCard.image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
+					</a>
+					<h3>{{characterCard.firstName}} {{characterCard.lastName}}</h3>
+					<button (click)="onEditCharacterClick(characterCard)">Edit</button>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+</div>

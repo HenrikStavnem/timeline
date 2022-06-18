@@ -14,6 +14,11 @@ const routes: Routes = [
 		data: {pageType: 'timeline'}
 	},
 	{
+		path: 'timeline/:id/characters',
+		loadChildren: () => import('src/app/modules/routes/characters/characters.module').then(module => module.CharactersModule),
+		data: {pageType: 'character-list'}
+	},
+	{
 		path: 'timeline/:id/:id2',
 		loadChildren: () => import('src/app/modules/routes/character/character.module').then(module => module.CharacterModule),
 		data: {pageType: 'character'}

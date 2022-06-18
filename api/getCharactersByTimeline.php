@@ -24,13 +24,20 @@
 		die("Connection failed: " . $connection->connect_error);
 	}
 
-	$timelineId = null;
+	$timelineId = 2;
+
+	$timelineSlug = 'test';
 	if (isset($_GET["timeline"])) {
-		$timelineId = $_GET["timeline"];
+		$timelineSlug = $_GET["timeline"];
 	}
 
+	$sqlTimeline = "SELECT id FROM tl_timelines WHERE url = '$timelineSlug' LIMIT 1";
+	$queryTimeline = $connection->query($sqlTimeline);
+	while ($row = $queryTimeline->fetch_assoc()) {
+		$timelineId = $row['id'];
+	}
 	
-	$sqlCharacter = "SELECT id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description from tl_characters WHERE timelineId='$timelineId'";
+	$sqlCharacter = "SELECT id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, slug from tl_characters WHERE timelineId='$timelineId' ORDER BY firstname, lastname, birthYear, birthMonth, birthDay";
 
 	$queryCharacter = $connection->query($sqlCharacter);
 
@@ -40,14 +47,15 @@
 		$birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description']);
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], null);
+		$character->slug = $row['slug'];
 
 		array_push($characters, $character);
 	}
 
 	http_response_code(200);
 	$result = new StdClass();
-	$result->character = $characters;
+	$result->characters = $characters;
 	$result->statusCode = 200;
 
 	if (false) {

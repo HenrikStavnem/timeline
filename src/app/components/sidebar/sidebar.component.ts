@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
+import { IActor } from 'src/app/interfaces/timeline';
 import { SidebarService } from 'src/app/services/sidebar.service';
 
 @Component({
@@ -7,12 +9,21 @@ import { SidebarService } from 'src/app/services/sidebar.service';
 	styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+	@Input() routeString: string;
+	@Input() routePageType: string;
+	@Input() routeParamId: string;
+
 	isAsideOpen: boolean = false;
 	isAsideBOpen: boolean = false;
 
 	page: string = "";
 
-	constructor(private sidebarService: SidebarService) {
+	// page specific values
+	character: IActor = null;
+
+	name: string;
+
+	constructor(private sidebarService: SidebarService, public route: ActivatedRoute, private router: Router) {
 	}
 
 	ngOnInit(): void {
@@ -25,19 +36,36 @@ export class SidebarComponent implements OnInit {
 				this.page = eventData.pageId;
 				this.isAsideBOpen = true;
 			}
+
+			if (eventData.character) {
+				this.character = eventData.character;
+			}
+			else {
+				this.character = null;
+			}
 		});
+
+		// this.router.events.subscribe(val => {
+		// 	if (val instanceof RoutesRecognized) {
+		// 		console.log(val.state.root.firstChild.params);
+		// 	}
+		// });
+
+		console.log('char', this.character);
 	}
 
-	closeAside() {
+	closeAside(): void {
+		this.isAsideBOpen = false;
+		this.page = "";
 		this.sidebarService.close();
 	}
 
-	onAsideBOpenClick(page: string) {
+	onAsideBOpenClick(page: string): void {
 		this.page = page;
 		this.isAsideBOpen = true;
 	}
 
-	onAsideBCloseClick() {
+	onAsideBCloseClick(): void {
 		this.isAsideBOpen = false;
 	}
 }

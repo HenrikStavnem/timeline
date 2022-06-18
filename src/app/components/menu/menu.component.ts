@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalService } from '../../services/modal.service';
 import { SidebarService } from '../../services/sidebar.service';
 import { TimelineService } from '../../services/timeline.service';
-import { MatDialog } from '@angular/material/dialog';
+//import { MatDialog } from '@angular/material/dialog';
 import { TestDialogComponent } from '../dialogs/test-dialog/test-dialog.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { TestDialogComponent } from '../dialogs/test-dialog/test-dialog.componen
 export class MenuComponent implements OnInit {
 	public hasConnection: boolean = false;
 
-	constructor(private timelineService: TimelineService, private modalService: ModalService, private sidebarService: SidebarService, public dialog: MatDialog) {
+	constructor(private timelineService: TimelineService, private modalService: ModalService, private sidebarService: SidebarService, /*public dialog: MatDialog*/) {
 		interface testInfo {
 			statusCode: number
 		}
@@ -38,7 +38,7 @@ export class MenuComponent implements OnInit {
 	}
 
 	onOpenDialogClick() {
-		const dialogRef = this.dialog.open(TestDialogComponent);
+		//const dialogRef = this.dialog.open(TestDialogComponent);
 	}
 	
 	onCreateEventClick() {

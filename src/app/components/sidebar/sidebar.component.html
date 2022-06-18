@@ -1,12 +1,14 @@
+
 <aside class="sidebar" [ngClass]="{'aside-open' : isAsideOpen}">
+	<div class="sidebar-top">
+		<button (click)="closeAside()">Close</button>
+	</div>
 	<div [ngClass]="{'aside-open' : isAsideBOpen}">
 		<div>
-			<div class="aside-top">
-				<button (click)="closeAside()">Close</button>
-				<!-- TODO: This page should not have a close button -->
-			</div>
 			<div class="aside-content">
 				<h2>Title</h2>
+				<h3>{{routeString}}</h3>
+				<h3>{{routePageType}} ::: {{routeParamId}}</h3>
 		
 				<button (click)="onAsideBOpenClick('test1')">Create event</button>
 				<button (click)="onAsideBOpenClick('test2')">Create character</button>
@@ -22,16 +24,16 @@
 				<h2>Create event</h2>
 			</ng-container>
 			<ng-container *ngIf="page=='test2'">
-				<h2>Create character</h2>
+				<character-sidebar-page [character]="character" [routePageType]="routePageType" [routeParamId]="routeParamId" ></character-sidebar-page>
 			</ng-container>
 
 			<ng-container *ngIf="page=='event-edit'">
 				<h2>Edit event</h2>
 			</ng-container>
-
+<!-- 
 			<br />Aside content
 	
-			<button (click)="onAsideBCloseClick()">Close this</button>
+			<button (click)="onAsideBCloseClick()">Close this</button> -->
 		</aside>
 	</div>
 </aside>

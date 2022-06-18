@@ -258,7 +258,7 @@ function fetchEras($connection, $timelineId) {
 function fetchEraEvents($connection, $timelineId, $era) {
 	$eraId = $era->id;
 
-	$sql = "SELECT tl_events.id, year, tl_seasons.id as season, tl_seasons.title as seasonTitle, tl_events.month as month, tl_months.title as monthTitle, day, description, tl_event_types.title as eventType, tl_event_types.image as eventTypeImage, yearExactness, monthExactness, exactness
+	$sql = "SELECT tl_events.id, millennium, century, decade, year, tl_seasons.id as season, tl_seasons.title as seasonTitle, tl_events.month as month, tl_months.title as monthTitle, day, description, tl_event_types.title as eventType, tl_event_types.image as eventTypeImage, yearExactness, monthExactness, exactness
 		FROM tl_events
 		INNER JOIN tl_event_types
 			ON tl_events.type = tl_event_types.id
@@ -274,7 +274,7 @@ function fetchEraEvents($connection, $timelineId, $era) {
 	$events = array();
 
 	while($row = $query->fetch_assoc()) {
-		$dbEvent = new RawEvent($row['description'], $row['exactness'], $row['eventType'], $row['eventTypeImage'], 8, 83, 835, $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day']);	// TODO: db changes needed for hardcoded values
+		$dbEvent = new RawEvent($row['description'], $row['exactness'], $row['eventType'], $row['eventTypeImage'], 8, $row['century'], 835, $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day']);	// TODO: db changes needed for hardcoded values
 
 		$era = mapEvent($dbEvent, $era);
 

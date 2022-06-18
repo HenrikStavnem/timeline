@@ -74,12 +74,12 @@ $aside-width: 600px;
 aside.sidebar {
 	display: flex;
 	position: fixed;
-	flex-direction: row;
+	flex-direction: column; //row;
 	box-sizing: border-box;
 	top: 50px;
 	min-width: $aside-width;
 	max-width: $aside-width;
-	height: 100%;
+	height: calc(100% - 50px);
 	background-color: white;
 	border-right: rgba(0, 0, 0, .5) 1px solid;
 	z-index: 100;
@@ -88,6 +88,7 @@ aside.sidebar {
 	color: $color-black;
 	//overflow-x: hidden;
 	overflow-y: auto;
+	overflow-x: hidden;
 
 	pointer-events: none;
 	user-select: none;
@@ -98,13 +99,14 @@ aside.sidebar {
 		user-select: unset;
 	}
 
-	.aside-top {
+	.sidebar-top {
+		position: absolute;
 		display: flex;
-		flex-direction: row-reverse;
-
-		button {
-			width: 100px;
-		}
+		flex-grow: 0;
+		justify-content: flex-end;
+		width: 100%;
+		//background-color: $color-yellow;
+		z-index: 1; // TODO: This migth be enough, but verify
 	}
 
 	.aside-content {
@@ -113,6 +115,7 @@ aside.sidebar {
 		padding: 50px;
 		box-sizing: border-box;
 		row-gap: 1rem;
+		flex-grow: 1;
 
 		button {
 			//font-family: $font-primary;
@@ -125,6 +128,7 @@ aside.sidebar {
 		background-color: lightblue;
 		display: flex;
 		flex-direction: row;
+		flex-grow: 1;
 		
 		> div {
 			min-width: $aside-width;
@@ -137,11 +141,14 @@ aside.sidebar {
 	}
 
 	aside {
-		padding: 50px;
+		position: relative;
+		top: 21px;
+		display: flex;
+		flex-direction: column;
 		min-width: $aside-width;
 		max-width: $aside-width;
 		box-sizing: border-box;
-		background-color: $color-green;
+		background-color: $color-gray-lighter;// $color-green;
 	}
 }
 

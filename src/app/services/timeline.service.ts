@@ -47,6 +47,10 @@ export class TimelineService {
 		return this.http.get(`http://localhost:80/timeline/api/getCharacters?timeline=${timelineId}&query=${query}`);
 	}
 
+	getCharactersByTimeline(timelineSlug: string, query: string) {
+		return this.http.get(`http://localhost:80/timeline/api/getCharactersByTimeline?timeline=${timelineSlug}&query=${query}`);
+	}
+
 	getTimelineInfo() {
 		return this.http.get('http://localhost:80/timeline/api/getTimelineInfo');
 	}
@@ -87,7 +91,39 @@ export class TimelineService {
 		return this.http.get('http://localhost:80/timeline/api/createEvent?obj='+obj);
 	}
 
+	createCharacter(timelineId: number, firstName: string, lastName: string, description: string, imageUrl: string, coverImageUrl: string, slug: string) {
+		var obj = JSON.stringify({
+			'timelineId': timelineId,
+			'firstName': firstName,
+			'lastName': lastName,
+			'description': description,
+			'imageUrl': imageUrl,
+			'coverImageUrl': coverImageUrl,
+			'slug': slug
+		});
+
+		return this.http.get('http://localhost:80/timeline/api/character/create.php?obj='+obj);
+	}
+
+	updateCharacter(characterId: number, firstName: string, lastName: string, description: string, imageUrl: string, coverImageUrl: string, slug: string) {
+		var obj = JSON.stringify({
+			'characterId': characterId,
+			'firstName': firstName,
+			'lastName': lastName,
+			'description': description,
+			'imageUrl': imageUrl,
+			'coverImageUrl': coverImageUrl,
+			'slug': slug
+		});
+
+		return this.http.get('http://localhost:80/timeline/api/character/update.php?obj='+obj);
+	}
+
 	getMonths(timelineId: number) {
 		return this.http.get('http://localhost:80/timeline/api/getEventInputs?timeline='+timelineId);
+	}
+
+	getTimelineId(timelineSlug: string) {
+		return this.http.get(`http://localhost:80/timeline/api/timeline/getId.php?timelineSlug=${timelineSlug}`);
 	}
 }
