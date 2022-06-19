@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { IActor, IActorGenderCard, IActorName, IActorNameCard } from 'src/app/interfaces/timeline';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -10,7 +10,7 @@ import { ToastService } from 'src/app/services/toast.service';
 	styleUrls: ['./character-edit.component.scss']
 })
 export class CharacterEditComponent implements OnInit {
-	form: FormGroup;
+	form: UntypedFormGroup;
 
 	isAsideOpen: boolean = false;
 	openAsideId: string = "";
@@ -23,10 +23,10 @@ export class CharacterEditComponent implements OnInit {
 	coverImage: string;
 
 	ngOnInit(): void {
-		this.form = new FormGroup({
-			Description: new FormControl('', [
+		this.form = new UntypedFormGroup({
+			Description: new UntypedFormControl('', [
 			]),
-			Slug: new FormControl('', [
+			Slug: new UntypedFormControl('', [
 			]),
 		});
 

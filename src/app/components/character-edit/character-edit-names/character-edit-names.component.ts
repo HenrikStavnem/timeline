@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { IActorName, IActorNameCard, IEra, IMonth } from 'src/app/interfaces/timeline';
 import { TimelineService } from 'src/app/services/timeline.service';
 
@@ -18,7 +18,7 @@ export class CharacterEditNamesComponent implements OnInit {
 
 	timelineId: number = 9;
 
-	form: FormGroup;
+	form: UntypedFormGroup;
 	
 	isAsideOpen: boolean = false;
 	names: IActorNameCard[] = [];
@@ -54,10 +54,10 @@ export class CharacterEditNamesComponent implements OnInit {
 	ngOnInit(): void {
 		this.names = this.parentNames;
 
-		this.form = new FormGroup({
-			FirstName: new FormControl('', [
+		this.form = new UntypedFormGroup({
+			FirstName: new UntypedFormControl('', [
 			]),
-			LastName: new FormControl('', [
+			LastName: new UntypedFormControl('', [
 			]),
 		});
 	}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { ITimeline } from 'src/app/interfaces/timeline'
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { TimelineMapper } from 'src/app/mapper/timeline.mapper';
 import { YearExactnessType} from 'src/app/stores/exactness-type.store';
 
@@ -16,7 +16,7 @@ export class TimelineComponent implements OnInit {
 	canEdit: boolean = true; // TODO: Depends on logged-in user privileges
 	isEditingHeader: boolean = false;
 
-	headerForm: FormGroup;
+	headerForm: UntypedFormGroup;
 	isFormDirty: boolean = false;
 
 	yearExactnessType = YearExactnessType;
@@ -45,12 +45,12 @@ export class TimelineComponent implements OnInit {
 
 			//console.log('timeline',timeline);
 
-			this.headerForm = new FormGroup({
-				Title: new FormControl(this.timeline?.title, [
+			this.headerForm = new UntypedFormGroup({
+				Title: new UntypedFormControl(this.timeline?.title, [
 					Validators.required,
 					Validators.minLength(2)
 				]),
-				Description: new FormControl(this.timeline?.description, [ 
+				Description: new UntypedFormControl(this.timeline?.description, [ 
 				])
 			});
 

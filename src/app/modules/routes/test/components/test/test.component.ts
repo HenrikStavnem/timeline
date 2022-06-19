@@ -1,6 +1,6 @@
 import { Target } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { IActor, IEra, IMonth, ISeason, ITimeline } from 'src/app/interfaces/timeline';
 import { ITimelineCard, ITimelineCards } from 'src/app/interfaces/timelinecard';
 import { TimelineService } from 'src/app/services/timeline.service';
@@ -15,9 +15,9 @@ export class TestComponent implements OnInit {
 	@ViewChild('descriptionEditor') descriptionEditor: ElementRef;
 	@ViewChild('mentionsDropdown') mentionsDropdown: ElementRef;
 
-	form: FormGroup;
-	mentionForm: FormGroup;
-	editMentionForm: FormGroup;
+	form: UntypedFormGroup;
+	mentionForm: UntypedFormGroup;
+	editMentionForm: UntypedFormGroup;
 	editMentionTarget: HTMLInputElement = null;
 	timelineCards: ITimelineCard[];		// TODO: Only for tempoary use
 	types: any;				// TODO: Convert to correct type
@@ -60,50 +60,50 @@ export class TestComponent implements OnInit {
 			this.seasons = result.seasons;
 		});
 
-		this.form = new FormGroup({
-			Timeline: new FormControl('', [
+		this.form = new UntypedFormGroup({
+			Timeline: new UntypedFormControl('', [
 				Validators.required,
 				Validators.minLength(1)
 			]),
-			Type: new FormControl('', [
+			Type: new UntypedFormControl('', [
 				Validators.required,
 				Validators.minLength(1)
 			]),
-			Exactness: new FormControl('', [
+			Exactness: new UntypedFormControl('', [
 
 			]),
-			Era: new FormControl('', [
+			Era: new UntypedFormControl('', [
 				//Validators.required,
 				Validators.minLength(1)
 			]),
-			Year: new FormControl('', [
+			Year: new UntypedFormControl('', [
 				//Validators.required,
 				Validators.minLength(1)
 			]),
-			Season: new FormControl('', [
+			Season: new UntypedFormControl('', [
 			]),
-			Month: new FormControl('', [
+			Month: new UntypedFormControl('', [
 				//Validators.required,
 				Validators.minLength(1)
 			]),
-			Day: new FormControl('', [
+			Day: new UntypedFormControl('', [
 				//Validators.required,
 				Validators.minLength(1)
 			])
 		});
 
-		this.mentionForm = new FormGroup({
-			Mention: new FormControl('', [
+		this.mentionForm = new UntypedFormGroup({
+			Mention: new UntypedFormControl('', [
 			]),
-			MentionQuery: new FormControl('', [
+			MentionQuery: new UntypedFormControl('', [
 			])
 		});
 
-		this.editMentionForm = new FormGroup({
+		this.editMentionForm = new UntypedFormGroup({
 			//Mention: new FormControl('', [
 			//])
-			override: new FormControl('', []),
-			showAge: new FormControl('', [])
+			override: new UntypedFormControl('', []),
+			showAge: new UntypedFormControl('', [])
 		});
 
 		// TODO: Below is just for show. Must be aligned with yearExactness and MonthExactness, etc.

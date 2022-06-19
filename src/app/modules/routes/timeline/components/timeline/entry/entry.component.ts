@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 //import { Entry } from '../../classes/entry/entry';
 //import { Person } from '../../classes/person';
-import { Reference } from '@angular/compiler/src/render3/r3_ast';
+//import { Reference } from '@angular/compiler/src/render3/r3_ast';
 import { IActor, IActorName, IActors, IDate, IEntry } from 'src/app/interfaces/timeline';
 import { SidebarService } from 'src/app/services/sidebar.service';
 

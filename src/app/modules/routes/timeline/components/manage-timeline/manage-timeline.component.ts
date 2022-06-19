@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TimelineService } from 'src/app/services/timeline.service';
 
@@ -9,19 +9,19 @@ import { TimelineService } from 'src/app/services/timeline.service';
 	styleUrls: ['./manage-timeline.component.scss']
 })
 export class ManageTimelineComponent implements OnInit {
-	form: FormGroup;
+	form: UntypedFormGroup;
 
 	constructor(
 		private timelineService: TimelineService
 	) { }
 
 	ngOnInit(): void {
-		this.form = new FormGroup({
-			Title: new FormControl('', [ //title = form.title
+		this.form = new UntypedFormGroup({
+			Title: new UntypedFormControl('', [ //title = form.title
 				Validators.required,
 				Validators.minLength(2)
 			]),
-			Description: new FormControl('', [ //title = form.title
+			Description: new UntypedFormControl('', [ //title = form.title
 				Validators.required,
 				Validators.minLength(2)
 			])

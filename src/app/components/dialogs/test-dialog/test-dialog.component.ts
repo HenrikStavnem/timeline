@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, UntypedFormControl } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { Timeline } from 'src/app/classes/timeline';
@@ -10,7 +10,7 @@ import { Timeline } from 'src/app/classes/timeline';
 	styleUrls: ['./test-dialog.component.scss'],
 })
 export class TestDialogComponent implements OnInit {
-	testFormControl = new FormControl('');
+	testFormControl = new UntypedFormControl('');
 
 	constructor(private timelineService: TimelineService) {
 	}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -9,7 +9,7 @@ import { ToastService } from 'src/app/services/toast.service';
 	styleUrls: ['./era-edit.component.scss']
 })
 export class EraEditComponent implements OnInit {
-	form: FormGroup;
+	form: UntypedFormGroup;
 
 	isAsideOpen: boolean = false;
 	openAsideId: string = "";
@@ -17,12 +17,12 @@ export class EraEditComponent implements OnInit {
 	coverImage: string = "";
 
 	ngOnInit(): void {
-		this.form = new FormGroup({
-			Title: new FormControl('', [
+		this.form = new UntypedFormGroup({
+			Title: new UntypedFormControl('', [
 			]),
-			Description: new FormControl('', [
+			Description: new UntypedFormControl('', [
 			]),
-			CoverImage: new FormControl('', [
+			CoverImage: new UntypedFormControl('', [
 			]),
 		});
 	}

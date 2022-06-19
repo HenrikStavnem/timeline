@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IActor, IEra } from 'src/app/interfaces/timeline';
 import { SidebarService } from 'src/app/services/sidebar.service';
@@ -28,22 +28,22 @@ export class CharacterSidebarPageComponent implements OnInit {
 	portraitImage: string = "https://tokens.dukendor.com/graphics/avatars/visitor.png";
 	coverImage: string;
 	
-	form: FormGroup = new FormGroup({
-		Firstname: new FormControl('', [
+	form: UntypedFormGroup = new UntypedFormGroup({
+		Firstname: new UntypedFormControl('', [
 			Validators.required,
 			Validators.minLength(1)
 		]),
-		Lastname: new FormControl('', [
+		Lastname: new UntypedFormControl('', [
 			Validators.required,
 			Validators.minLength(1)
 		]),
-		Era: new FormControl('', [
+		Era: new UntypedFormControl('', [
 		]),
-		Description: new FormControl('', [
+		Description: new UntypedFormControl('', [
 		]),
-		ImageUrl: new FormControl('', []),
-		CoverImageUrl: new FormControl('', []),
-		Url: new FormControl('', [
+		ImageUrl: new UntypedFormControl('', []),
+		CoverImageUrl: new UntypedFormControl('', []),
+		Url: new UntypedFormControl('', [
 			Validators.required,
 			Validators.minLength(1)
 		]),
