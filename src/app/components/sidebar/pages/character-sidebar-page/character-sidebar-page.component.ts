@@ -12,9 +12,12 @@ import { ToastService } from 'src/app/services/toast.service';
 	styleUrls: ['./character-sidebar-page.component.scss']
 })
 export class CharacterSidebarPageComponent implements OnInit {
-	@Input() character: IActor = null;
+	@Input() existingCharacter: IActor = null;
 	@Input() routePageType: string;
 	@Input() routeParamId: string;
+
+	firstName: string = "";
+	lastName: string = "";
 
 	isAsideOpen: boolean = false;
 	isAsideBOpen: boolean = false;
@@ -61,11 +64,13 @@ export class CharacterSidebarPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getTimelineData();
+
+		console.log('character is', this.existingCharacter);
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('changes', changes);
-		if (this.character) {
+		if (this.existingCharacter) {
 			this.setFormData();
 		}
 
@@ -97,17 +102,20 @@ export class CharacterSidebarPageComponent implements OnInit {
 	}
 
 	setFormData(): void {
-		console.log('character data', this.character);
+		console.log('character data', this.existingCharacter);
 
-		this.form.get('Firstname').setValue(this.character.firstName);
-		this.form.get('Lastname').setValue(this.character.lastName);
-		this.form.get('Description').setValue(this.character.description);
-		this.form.get('CoverImageUrl').setValue(this.character.coverImage);
-		this.form.get('ImageUrl').setValue(this.character.image);
-		this.form.get('Url').setValue(this.character.slug);
+		this.form.get('Firstname').setValue(this.existingCharacter.firstName);
+		this.form.get('Lastname').setValue(this.existingCharacter.lastName);
+		this.form.get('Description').setValue(this.existingCharacter.description);
+		this.form.get('CoverImageUrl').setValue(this.existingCharacter.coverImage);
+		this.form.get('ImageUrl').setValue(this.existingCharacter.image);
+		this.form.get('Url').setValue(this.existingCharacter.slug);
 
 		this.setImage();
 		this.setCoverImage();
+
+		this.firstName = this.form.get('Firstname').value;
+		this.lastName = this.form.get('Lastname').value;
 		
 	}
 
@@ -152,9 +160,19 @@ export class CharacterSidebarPageComponent implements OnInit {
 			era: number = this.form.get('Era').value,
 			slug: string = this.form.get('Url').value;
 
-		this.timelineService.updateCharacter(this.character.id, firstName, lastName, description, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
+		this.timelineService.updateCharacter(this.existingCharacter.id, firstName, lastName, description, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
 			console.log(result);
 			this.toastService.updateToast('Changes saved');
+
+			this.timelineService.getCharactersByTimeline(this.routeParamId, '').lift;
 		});
+	}
+
+	onFirstNameKeyup() {
+		this.firstName = this.form.get('Firstname').value;
+	}
+
+	onLastNameKeyup() {
+		this.lastName = this.form.get('Lastname').value;
 	}
 }

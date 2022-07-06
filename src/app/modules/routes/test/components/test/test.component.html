@@ -62,7 +62,10 @@
 						<ng-container *ngIf="characters?.length">
 							<div class="mention-input" *ngFor="let character of characters">
 								<input formControlName="Mention" type="radio" name="Mention" value="{{character.id}}" id="{{'char-'+character.id}}">
-								<label for="{{'char-'+character.id}}">{{character.firstName}} {{character.lastName}}</label>
+								<label for="{{'char-'+character.id}}">
+									<img src="{{character.image}}" alt="" />
+									{{character.firstName}} {{character.lastName}}
+								</label>
 							</div>
 						</ng-container>
 						<ng-container *ngIf="characters?.length === 0">

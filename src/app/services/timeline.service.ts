@@ -19,15 +19,7 @@ export class TimelineService {
 
 	getTimeline(slug?: string) {
 		if (slug !== undefined) {
-
-			// TODO: For testing purposes, the SLUG 'test' will use another API endpoint
-
-			if (slug === 'test') {
-				return this.http.get('http://localhost:80/timeline/api/getTimelinePOC3');
-			}
-
 			return this.http.get('http://localhost:80/timeline/api/getTimelinePOC3?slug='+slug);
-			//return this.http.get('http://localhost:80/timeline/api/getTimeline?slug='+slug);
 		}
 		else {
 			return this.http.get('http://localhost:80/timeline/api/getTimeline');
@@ -48,6 +40,7 @@ export class TimelineService {
 	}
 
 	getCharactersByTimeline(timelineSlug: string, query: string) {
+		console.log('timelineService getCharactersByTimeline');
 		return this.http.get(`http://localhost:80/timeline/api/getCharactersByTimeline?timeline=${timelineSlug}&query=${query}`);
 	}
 
@@ -125,5 +118,9 @@ export class TimelineService {
 
 	getTimelineId(timelineSlug: string) {
 		return this.http.get(`http://localhost:80/timeline/api/timeline/getId.php?timelineSlug=${timelineSlug}`);
+	}
+
+	getEras(timelineId: number) {
+		return this.http.get(`http://localhost:80/timeline/api/eras/get?timeline=${timelineId}`);
 	}
 }

@@ -17,6 +17,14 @@
 		}
 	}
 
+	class DnDClass {
+		public function __construct($class, $subclass, $level) {
+			$this->class = $class;
+			$this->subclass = $subclass;
+			$this->level = intval($level);
+		}
+	}
+
 	$connection = new mysqli($servername, $username, $password, $database);
 	$connection->set_charset('utf8');
 
@@ -88,10 +96,25 @@
 		else {
 			$dndStats = null;
 		}
+
+		$sqlCharacterClasses = "SELECT class, subclass, level
+			FROM tl_character_dnd_classes
+			WHERE characterId = $characterId
+		";
+
+		$classes = array();
+
+		$queryCharacterClasses = $connection->query($sqlCharacterClasses);
+
+		while ($classRow = $queryCharacterClasses->fetch_assoc()) {
+			array_push($classes, new DnDClass($classRow['class'], $classRow['subclass'], $classRow['level']));
+		}
+
 		//$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 10, 10, 10, 10, 10, 10);
 
 		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $dndStats);
 		$character->titles = $titles;
+		$character->classes = $classes;
 	}
 
 	http_response_code(200);

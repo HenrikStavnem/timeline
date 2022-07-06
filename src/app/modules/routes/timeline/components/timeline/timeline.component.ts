@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { TimelineMapper } from 'src/app/mapper/timeline.mapper';
 import { YearExactnessType} from 'src/app/stores/exactness-type.store';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-timeline',
@@ -23,7 +24,8 @@ export class TimelineComponent implements OnInit {
 
 	constructor(
 		private timelineService: TimelineService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private translate: TranslateService
 	) { }
 
 	ngOnInit(): void {
@@ -111,8 +113,8 @@ export class TimelineComponent implements OnInit {
 		// TODO: Add i18n and expand to include all types
 
 		switch (year.accuracy) {
-			case 'millennium': return `${year.year} millennium`;
-			case 'century': return `${year.year} century`;
+			case 'millennium': return this.translate.instant('timeline.millennium', {value: year.year});
+			case 'century': return this.translate.instant('timeline.century', {value: year.year});
 			case 'decade': return `${year.year}s`;
 			case 'year-circa': return `Circa ${year.year}`;
 			case 'year': return `${year.year}`;

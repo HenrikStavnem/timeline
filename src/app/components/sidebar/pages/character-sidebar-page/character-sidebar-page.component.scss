@@ -1,4 +1,4 @@
-@import "../../../../styles.scss";
+@import "../../../../../styles.scss";
 
 .padding {
 	padding-left: 50px;
@@ -17,7 +17,7 @@
 	//margin: 20px 20px 120px 20px;
 
 	.cover-image {
-		background-color: $color-gray-light;
+		background-color: $color-gray-dark;
 		//height: 100px;
 		width: 100%;
 		background-size: cover;
@@ -34,7 +34,7 @@
 			text-shadow: 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
 			letter-spacing: 15px;
 			font-family: $font-secondary;
-			font-size: 20px;
+			font-size: 28px;
 			max-width: 400px;
 			
 			top: -40px;

@@ -34,6 +34,9 @@ export class CharactersComponent implements OnInit {
 
 	onEditCharacterClick(character: IActor) {
 		console.log('character', character);
+
+		character.isBeingEdited = true;
+
 		//this.sidebarService.openSidebarPage('test2');
 		this.sidebarService.openCharacterPage(character);
 	}

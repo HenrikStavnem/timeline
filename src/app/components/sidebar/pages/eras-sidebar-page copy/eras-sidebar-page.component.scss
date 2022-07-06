@@ -1,0 +1,59 @@
+@import "../../../../../styles.scss";
+
+:host {
+	height: 100%;
+	background-color: $color-yellow;
+	
+	min-width: $aside-width;
+	max-width: $aside-width;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+	
+	> div {
+		display: flex;
+		flex-direction: column;
+		transition: margin-left $duration-short ease-in-out;
+	}
+
+	div.aside-open {
+		background-color: $color-green;
+
+		//margin-left: calc(-1px - $aside-width);
+	}
+}
+
+.padding {
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.era-card-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.era-card {
+	display: flex;
+	flex-direction: column;
+	background-size: cover;
+	background-position: center;
+	padding: 20px 30px;
+	border-radius: 5px;
+	color: $color-white;
+	text-shadow: 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
+
+	h2 {
+		font-family: $font-secondary;
+		font-size: 20px;
+		margin-block-start: 0;
+		margin-block-end: 0;
+	}
+
+	span {
+		display: block;
+		font-family: $font-primary;
+		font-size: 18px;
+	}
+}

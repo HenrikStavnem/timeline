@@ -86,7 +86,6 @@ aside.sidebar {
 	transition: margin-left $duration-short ease-in-out;
 	margin-left: calc(-1px - $aside-width); // TODO: Change into calculation based on a variable
 	color: $color-black;
-	//overflow-x: hidden;
 	overflow-y: auto;
 	overflow-x: hidden;
 
@@ -103,9 +102,8 @@ aside.sidebar {
 		position: absolute;
 		display: flex;
 		flex-grow: 0;
-		justify-content: flex-end;
+		justify-content: space-between;
 		width: 100%;
-		//background-color: $color-yellow;
 		z-index: 1; // TODO: This migth be enough, but verify
 	}
 

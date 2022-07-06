@@ -30,7 +30,7 @@
 	}
 
 	
-	$sqlCharacters = "SELECT id, type, firstname, lastname from tl_characters WHERE timelineId=$timelineId AND (firstname LIKE '$query%' OR lastname LIKE '$query%') ORDER BY firstname, lastname";
+	$sqlCharacters = "SELECT id, type, firstname, lastname, image from tl_characters WHERE timelineId=$timelineId AND (firstname LIKE '$query%' OR lastname LIKE '$query%') ORDER BY firstname, lastname";
 
 	$queryCharacters = $connection->query($sqlCharacters);
 
@@ -40,6 +40,7 @@
 		$character->id  = $row['id'];
 		$character->firstName  = $row['firstname'];
 		$character->lastName  = $row['lastname'];
+		$character->image  = $row['image'];
 		
 		array_push($characters, $character);
 	}

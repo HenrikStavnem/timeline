@@ -1,6 +1,7 @@
 
 <aside class="sidebar" [ngClass]="{'aside-open' : isAsideOpen}">
 	<div class="sidebar-top">
+		<button *ngIf="page!==''" (click)="closePage()"><--</button>
 		<button (click)="closeAside()">Close</button>
 	</div>
 	<div [ngClass]="{'aside-open' : isAsideBOpen}">
@@ -13,7 +14,7 @@
 				<button (click)="onAsideBOpenClick('test1')">Create event</button>
 				<button (click)="onAsideBOpenClick('test2')">Create character</button>
 
-				<button (click)="onAsideBOpenClick('era-create')">Create era</button>
+				<button (click)="onAsideBOpenClick('era-create')">Eras</button>
 
 				<button (click)="onAsideBOpenClick('event-edit')">Edit event</button>
 			</div>
@@ -24,7 +25,11 @@
 				<h2>Create event</h2>
 			</ng-container>
 			<ng-container *ngIf="page=='test2'">
-				<character-sidebar-page [character]="character" [routePageType]="routePageType" [routeParamId]="routeParamId" ></character-sidebar-page>
+				<character-sidebar-page [existingCharacter]="character" [routePageType]="routePageType" [routeParamId]="routeParamId" ></character-sidebar-page>
+			</ng-container>
+
+			<ng-container *ngIf="page === 'era-create'">
+				<eras-sidebar-page [routeParamId]="routeParamId"></eras-sidebar-page>
 			</ng-container>
 
 			<ng-container *ngIf="page=='event-edit'">

@@ -209,7 +209,8 @@ export class TestComponent implements OnInit {
 		let value = this.mentionForm.get('MentionQuery').value;
 
 		this.timelineService.getCharacters(this.timelineId, value).subscribe((message: any) => {
-			//console.log('reply', this.timelineId, message);
+			console.log('getCharacters', this.timelineId, message);
+
 			if (message?.characters) {
 				this.characters = message.characters;
 				if (this.characters.length > 0) {

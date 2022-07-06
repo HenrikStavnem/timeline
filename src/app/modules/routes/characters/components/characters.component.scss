@@ -20,6 +20,13 @@
 		border-radius: 3px;
 		overflow: hidden;
 
+		&.edit-mode {
+			border: 1px solid gold;
+			box-shadow: 0 0 4px gold, 0 0 80px rgba(0, 0, 0, 0.5) inset;
+			z-index: 25;
+			pointer-events: visible;
+		}
+
 		a {
 			display: contents;
 		}

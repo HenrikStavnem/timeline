@@ -45,12 +45,31 @@
 	.mention-container-top {
 		display: flex;
 		flex-direction: row;
-		justify-content: flex-end;		
+		justify-content: flex-end;
+		flex-grow: 1;
+	}
+
+	form {
+		max-height: 150px;
+		overflow-y: scroll;
 	}
 
 	.mention-input {
 		display: flex;
 		flex-direction: row;
+		align-items: center;
+		
+		label {
+			display: flex;
+			align-items: center;
+			line-height: 1.5;
+			margin-right: 0;
+
+			img {
+				max-height: 28px;
+				max-width: 28px;
+			}
+		}
 	}
 
 	&.show {
@@ -68,10 +87,6 @@
 	}
 	*/
 
-	label {
-		display: block;
-		line-height: 1.5;
-	}
 
 	input[type=radio]:checked+label {
 		background-color: rgb(127, 199, 195);

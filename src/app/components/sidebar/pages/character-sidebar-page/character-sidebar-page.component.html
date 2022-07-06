@@ -5,7 +5,7 @@
 
 <div class="preview">
 	<div class="cover-image" [style.background-image]="'url(' + coverImage + ')'">
-		<h1>{{character.firstName}} {{character.lastName}}</h1>
+		<h1>{{firstName}} {{lastName}}</h1>
 	</div>
 
 	<div class="image-wrapper">
@@ -17,10 +17,10 @@
 	<form [formGroup]="form">
 		
 		<label>First name</label>
-		<input type="text" formControlName="Firstname" name="Firstname" /><br />
+		<input type="text" formControlName="Firstname" name="Firstname" (keyup)="onFirstNameKeyup()" /><br />
 
 		<label>Last name</label>
-		<input type="text" formControlName="Lastname" name="Lastname" /><br />
+		<input type="text" formControlName="Lastname" name="Lastname"  (keyup)="onLastNameKeyup()" /><br />
 
 		<label>Era</label>
 		<select formControlName="Era">
@@ -42,8 +42,8 @@
 		<input type="text" formControlName="Url" name="Url" /><br />
 
 		<br /><br />
-		<button type="submit" (click)="saveCharacterClick()">Save new</button>
-		<button *ngIf="character !== null" type="submit" (click)="saveCharacterChangesClick()">Save changes</button>
+		<button  *ngIf="existingCharacter === null" type="submit" (click)="saveCharacterClick()">Save new</button>
+		<button *ngIf="existingCharacter !== null" type="submit" (click)="saveCharacterChangesClick()">Save changes</button>
 
 		<br /><br />
 		<br /><br />

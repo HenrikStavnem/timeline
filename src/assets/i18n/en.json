@@ -1,4 +1,8 @@
 {
+	"timeline": {
+		"century": "{{value}}th century",
+		"millennium": "{{value}}th millennium"
+	},
 	"dialogs": {
 		"character-edit": {
 			"title": "Create new character",

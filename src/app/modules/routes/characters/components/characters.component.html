@@ -4,7 +4,7 @@
 
 		<div class="character-card-grid">
 			<ng-container *ngFor="let characterCard of characterCards">
-				<div class="character-card">
+				<div class="character-card" (class)="characterCard.isBeingEdited ? 'edit-mode' : ''">
 					<a [routerLink]="'//timeline/duke/' + characterCard.slug">
 						<img src="{{characterCard.image ? characterCard.image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
 					</a>

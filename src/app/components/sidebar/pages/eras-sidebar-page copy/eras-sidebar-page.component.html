@@ -1,0 +1,17 @@
+<div [ngClass]="{'aside-open' : isAsideOpen}">
+
+	<div class="padding" [ngClass]="{'aside-open' : isAsideOpen}">
+		Eras :: {{routeParamId}} :: {{timelineId}}
+		<div class="era-card-list">
+			<button class="era-card" *ngFor="let era of eras"  [style.background-image]="'url(' + era.image + ')'" (click)="onEraClick(era)">
+				<h2>{{era.title}}</h2>
+				<span>{{era.description}}</span>
+			</button>
+		</div>
+	</div>
+
+	<aside [ngClass]="{'aside-open' : isAsideOpen}">
+		<era-sidebar-page [era]="selectedEra"></era-sidebar-page>
+		<button (click)="onEraCloseClick()">Close aside</button>
+	</aside>
+</div>

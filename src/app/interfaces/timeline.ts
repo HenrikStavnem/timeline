@@ -96,7 +96,8 @@ export interface IActor {
 	slug: string,
 	shield: string,	// TODO: will be changed to an array
 	dndStats?: IActorDndStats,
-	settings?: IActorSettings
+	settings?: IActorSettings,
+	isBeingEdited?: boolean // TODO: remove when characters module uses CharacterCard interface
 }
 
 export interface IActorCompact {

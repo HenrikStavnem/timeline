@@ -54,6 +54,11 @@ export class SidebarComponent implements OnInit {
 		console.log('char', this.character);
 	}
 
+	closePage(): void {
+		this.isAsideBOpen = false;
+		this.page = "";
+	}
+
 	closeAside(): void {
 		this.isAsideBOpen = false;
 		this.page = "";

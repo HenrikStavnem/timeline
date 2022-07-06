@@ -27,7 +27,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
 import { TimelineService } from './services/timeline.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { CharacterSidebarPageComponent } from './components/sidebar/pages/character-sidebar-page.component';
+import { CharacterSidebarPageComponent } from './components/sidebar/pages/character-sidebar-page/character-sidebar-page.component';
+import { EraSidebarPageComponent } from './components/sidebar/pages/era-sidebar-page/era-sidebar-page.component';
+import { ErasSidebarPageComponent } from './components/sidebar/pages/eras-sidebar-page copy/eras-sidebar-page.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http);
@@ -42,6 +44,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         CharacterEditNamesComponent,
 		CharacterSidebarPageComponent,
         EraEditComponent,
+		EraSidebarPageComponent,
+		ErasSidebarPageComponent,
         MenuComponent,
         ModalComponent,
 		SidebarComponent,
