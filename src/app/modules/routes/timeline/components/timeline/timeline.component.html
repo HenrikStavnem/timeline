@@ -38,7 +38,7 @@
 				</div>
 
 				<div *ngFor="let event of era.unknownBefore" class="container-margin">
-					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: null, month: null, day: null}"></entry>
+					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: null, month: null, day: null}" [isBeingReordered]="false"></entry>
 				</div>
 
 				<div *ngFor="let year of era.years" class="container-margin">
@@ -57,18 +57,18 @@
 					<h2>{{showTitle(year)}}</h2>
 
 					<div *ngFor="let event of year.events">
-						<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: null, day: null}"></entry>
+						<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: null, day: null}" [isBeingReordered]="false"></entry>
 					</div>
 
 					<div *ngFor="let season of year.seasons">
 						<h3>{{season.title}}</h3>
 						<div *ngFor="let event of season.events">
-							<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: null, day: null}"></entry>
+							<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: null, day: null}" [isBeingReordered]="false"></entry>
 						</div>
 					</div>
 
 					<div *ngFor="let month of year.months">
-						<h3>Month: {{month.title}}</h3>
+						<h3>{{month.title}}</h3>
 						
 						<div *ngFor="let event of month.events">
 							<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: month.month, day: null}"></entry>

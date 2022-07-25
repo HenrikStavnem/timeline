@@ -16,6 +16,7 @@ export class EntryComponent implements OnInit {
 	@Input() references: IActors;//Array<Reference>;
 	@Input() date: IDate;
 	@Input() timelineSlug: string;
+	@Input() isBeingReordered: boolean = false;
 
 	elements: any[];
 	isBeingEdited: boolean = false;

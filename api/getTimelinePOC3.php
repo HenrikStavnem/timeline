@@ -24,8 +24,9 @@ class RawEvent {
 	public $month;
 	public $monthTitle;
 	public $day;
+	public $eventOrder;
 
-	public function __construct($description, $accuracy, $eventType, $eventTypeImage, $millennium, $century, $decade, $year, $season, $seasonTitle, $month, $monthTitle, $day) {
+	public function __construct($description, $accuracy, $eventType, $eventTypeImage, $millennium, $century, $decade, $year, $season, $seasonTitle, $month, $monthTitle, $day, $eventOrder) {
 		$this->description = $description;
 		$this->accuracy = $accuracy;
 		$this->eventType = $eventType;
@@ -39,6 +40,7 @@ class RawEvent {
 		$this->month = $month;
 		$this->monthTitle = $monthTitle;
 		$this->day = $day;
+		$this->eventOrder = $eventOrder;
 	}
 }
 
@@ -47,10 +49,11 @@ class Event {
 	public $eventTypeTitle;
 	public $eventTypeImage;
 
-	public function __construct($description, $eventTypeTitle, $eventTypeImage) {
+	public function __construct($description, $eventTypeTitle, $eventTypeImage, $eventOrder) {
 		$this->description = $description;
 		$this->eventTypeTitle = $eventTypeTitle;
 		$this->eventTypeImage = $eventTypeImage;
+		$this->eventOrder = $eventOrder;
 	}
 }
 
@@ -258,7 +261,7 @@ function fetchEras($connection, $timelineId) {
 function fetchEraEvents($connection, $timelineId, $era) {
 	$eraId = $era->id;
 
-	$sql = "SELECT tl_events.id, millennium, century, decade, year, tl_seasons.id as season, tl_seasons.title as seasonTitle, tl_events.month as month, tl_months.title as monthTitle, day, description, tl_event_types.title as eventType, tl_event_types.image as eventTypeImage, yearExactness, monthExactness, exactness
+	$sql = "SELECT tl_events.id, millennium, century, decade, year, tl_seasons.id as season, tl_seasons.title as seasonTitle, tl_events.month as month, tl_months.title as monthTitle, day, description, tl_event_types.title as eventType, tl_event_types.image as eventTypeImage, yearExactness, monthExactness, exactness, eventOrder
 		FROM tl_events
 		INNER JOIN tl_event_types
 			ON tl_events.type = tl_event_types.id
@@ -267,14 +270,14 @@ function fetchEraEvents($connection, $timelineId, $era) {
 		LEFT JOIN tl_seasons
 			ON tl_events.season = tl_seasons.id AND tl_seasons.timeline = $timelineId
 		WHERE era=$eraId
-		ORDER BY era, year, yearExactness, season, month, day, exactness, id";
+		ORDER BY era, year, yearExactness, season, month, day, eventOrder, exactness, id";
 
 	$query = $connection->query($sql);
 
 	$events = array();
 
 	while($row = $query->fetch_assoc()) {
-		$dbEvent = new RawEvent($row['description'], $row['exactness'], $row['eventType'], $row['eventTypeImage'], 8, $row['century'], 835, $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day']);	// TODO: db changes needed for hardcoded values
+		$dbEvent = new RawEvent($row['description'], $row['exactness'], $row['eventType'], $row['eventTypeImage'], 8, $row['century'], 835, $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day'], $row['eventOrder']);	// TODO: db changes needed for hardcoded values
 
 		$era = mapEvent($dbEvent, $era);
 
@@ -404,7 +407,7 @@ function mapEvent($dbEvent, $result) {
 }
 
 function createEvent($dbEvent) {
-	return new Event($dbEvent->description, $dbEvent->eventType, $dbEvent->eventTypeImage);
+	return new Event($dbEvent->description, $dbEvent->eventType, $dbEvent->eventTypeImage, $dbEvent->eventOrder);
 }
 
 function createUnknownBefore($era, $dbEvent) {

@@ -49,7 +49,8 @@ export interface IEntry {
 	description: string,
 	type: string,		// TODO: Use IEventType instead, when BE delivers
 	eventTypeImage?: string,
-	elements?: IEntryElements[]
+	elements?: IEntryElements[],
+	eventOrder: number
 }
 
 export interface IEntryElements {

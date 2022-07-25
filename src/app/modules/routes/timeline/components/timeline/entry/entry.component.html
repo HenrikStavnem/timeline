@@ -4,6 +4,8 @@
 		<!--<p [outerHTML]="item.description | entryDescription : references : date"></p>-->
 		<!--<p [outerHTML]="item.description"></p>-->
 		<!--<span *ngFor="let element of item.elements">{{element.description}}</span>-->
+		<span style="color: lightgray;">({{item.eventOrder}})</span>
+
 		<ng-container *ngFor="let element of elements">
 
 			<ng-container *ngIf="element.type ==='text'">
@@ -30,6 +32,7 @@
 		</ng-container>
 
 		<div class="button-container">
+			<button *ngIf="isBeingReordered">Up</button>
 			<button (click)="onEditBtnClick()">Edit</button>
 		</div>
 	</div>
