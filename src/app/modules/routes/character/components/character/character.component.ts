@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IActor } from 'src/app/interfaces/timeline';
+import { SidebarService } from 'src/app/services/sidebar.service';
 import { TimelineService } from 'src/app/services/timeline.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class CharacterComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private sidebarService: SidebarService,
 		private timelineService: TimelineService
 	) { }
 
@@ -37,6 +39,10 @@ export class CharacterComponent implements OnInit {
 		const modifierValue =  Math.floor((value - 10) / 2);
 
 		return ((modifierValue > -1) ? "+" : "") + modifierValue;
+	}
+
+	onEditClick() {
+		this.sidebarService.openCharacterPage(this.character);
 	}
 
 }

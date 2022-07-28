@@ -44,7 +44,7 @@
 
 	
 	$sqlCharacter = "SELECT
-			id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, class, level, background, alignment, playerName, armorClass, initiative, speed, strength, dexterity, constitution, intelligence, wisdom, charisma
+			id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, slug, class, level, background, alignment, playerName, armorClass, initiative, speed, strength, dexterity, constitution, intelligence, wisdom, charisma
 		FROM tl_characters
 		LEFT JOIN tl_character_dnd_stats
 			ON tl_characters.id = tl_character_dnd_stats.characterId
@@ -112,7 +112,7 @@
 
 		//$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 10, 10, 10, 10, 10, 10);
 
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $dndStats);
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $row['slug'], $dndStats);
 		$character->titles = $titles;
 		$character->classes = $classes;
 	}

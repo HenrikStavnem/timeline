@@ -12,14 +12,24 @@
 	
 	> div {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		transition: margin-left $duration-short ease-in-out;
 	}
 
-	div.aside-open {
-		background-color: $color-green;
+	// div.aside-open {
+	// 	//background-color: $color-green;
 
-		//margin-left: calc(-1px - $aside-width);
+	// 	//margin-left: calc(-1px - $aside-width);
+	// }
+}
+
+.page {
+	min-width: 100%;
+	box-sizing: border-box;
+	transition: transform $duration-short ease-in-out;
+
+	&.aside-open {
+		transform: translateX(-100%);
 	}
 }
 
@@ -51,7 +61,7 @@
 		margin-block-end: 0;
 	}
 
-	span {
+	p {
 		display: block;
 		font-family: $font-primary;
 		font-size: 18px;

@@ -31,8 +31,10 @@
 
 	$title = $decodeObj['title'];
 	$description = $decodeObj['description'];
-	$coverImage = $decodeObj['coverImage'];
+	$coverImage = $decodeObj['image'];
 	$timelineId = $decodeObj['timelineId'];
+
+	echo $timelineId;
 
 	$sqlEraOrder = "SELECT eraOrder FROM tl_eras WHERE timeline = $timelineId  ORDER BY eraOrder DESC LIMIT 1";
 	$queryEraOrder = $connection->query($sqlEraOrder);

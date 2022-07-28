@@ -1,6 +1,6 @@
 <?php
 	class Character {
-		public function __construct($id, $firstname, $lastname, $birthDate, $deathDate, $image, $coverImage, $description, $dndStats) {
+		public function __construct($id, $firstname, $lastname, $birthDate, $deathDate, $image, $coverImage, $description, $slug, $dndStats) {
 			$this->id = $id;
 			$this->firstName = $firstname;
 			$this->lastName = $lastname;
@@ -9,6 +9,7 @@
 			$this->image = $image;
 			$this->coverImage = $coverImage;
 			$this->description = $description;
+			$this->slug = $slug;
 			$this->dndStats = $dndStats;
 		}
 	}

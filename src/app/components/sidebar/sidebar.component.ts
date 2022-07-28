@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
 import { IActor } from 'src/app/interfaces/timeline';
 import { SidebarService } from 'src/app/services/sidebar.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
 	selector: 'sidebar',
@@ -23,7 +24,7 @@ export class SidebarComponent implements OnInit {
 
 	name: string;
 
-	constructor(private sidebarService: SidebarService, public route: ActivatedRoute, private router: Router) {
+	constructor(private sidebarService: SidebarService, public route: ActivatedRoute, private router: Router, private toastService: ToastService) {
 	}
 
 	ngOnInit(): void {
@@ -72,5 +73,9 @@ export class SidebarComponent implements OnInit {
 
 	onAsideBCloseClick(): void {
 		this.isAsideBOpen = false;
+	}
+
+	onNotYetImplementedClick(): void {
+		this.toastService.updateToast('Not yet implemented');
 	}
 }

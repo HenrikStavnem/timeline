@@ -1,6 +1,15 @@
 <div class="padding">
-	<ng-container *ngIf="era">
-		<h2>{{era.title}}</h2>
-		<p>{{era.description}}</p>
-	</ng-container>
+	<form [formGroup]="form">
+		<label>Title</label>
+		<input type="text" formControlName="Title" name="title" /><br />
+
+		<label>Description</label>
+		<textarea formControlName="Description" name="description"></textarea><br />
+
+		<label>Image url</label>
+		<input type="text" formControlName="ImageUrl" name="imageurl" /><br />
+
+		<button *ngIf="era" (click)="onSaveChangesClick()">Save changes</button>
+		<button *ngIf="!era" (click)="onSaveNewClick()">Create new</button>
+	</form>
 </div>

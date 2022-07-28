@@ -53,6 +53,8 @@ export class SidebarService {
 	}
 
 	openCharacterPage(character: IActor) {
+		console.log('openCharacterPage', character);
+		
 		this.isOpen = true;
 
 		this.change.emit({

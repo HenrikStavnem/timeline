@@ -100,13 +100,13 @@
 
 	//
 
-	$sqlCharacters = "SELECT id, firstname, lastname, description FROM tl_characters ORDER BY firstname, lastname";
+	$sqlCharacters = "SELECT id, firstname, lastname, description, slug FROM tl_characters ORDER BY firstname, lastname";
 	$queryCharacters = $connection->query($sqlCharacters);
 
 	$characters = array();
 
 	while ($row = $queryCharacters->fetch_assoc()) {
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], null, null, null, null, $row['description'], null);
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], null, null, null, null, $row['description'], $row['slug'], null);
 		array_push($characters, $character);
 	}
 
