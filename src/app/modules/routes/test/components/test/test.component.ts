@@ -152,6 +152,9 @@ export class TestComponent implements OnInit {
 			this.months = result.months;
 			this.characters = result.characters;
 			this.seasons = result.seasons;
+
+			// Select first era to have default value
+			this.form.get('Era').setValue(result.eras[0].id);
 		});
 	}
 
@@ -165,7 +168,7 @@ export class TestComponent implements OnInit {
 
 		if (this.form.valid && description !== '') {
 
-			let era = 14, //this.form.get('Era').value,
+			let era = this.form.get('Era').value,
 				exactness = this.form.get('Exactness').value,
 				year = this.form.get('Year').value,
 				month = this.form.get('Month').value,
