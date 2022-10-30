@@ -30,6 +30,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CharacterSidebarPageComponent } from './components/sidebar/pages/character-sidebar-page/character-sidebar-page.component';
 import { EraSidebarPageComponent } from './components/sidebar/pages/era-sidebar-page/era-sidebar-page.component';
 import { ErasSidebarPageComponent } from './components/sidebar/pages/eras-sidebar-page copy/eras-sidebar-page.component';
+import { MonthsSidebarPageComponent } from './components/sidebar/pages/months-sidebar-page/months-sidebar-page.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http);
@@ -46,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         EraEditComponent,
 		EraSidebarPageComponent,
 		ErasSidebarPageComponent,
+		MonthsSidebarPageComponent,
         MenuComponent,
         ModalComponent,
 		SidebarComponent,

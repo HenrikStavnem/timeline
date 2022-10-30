@@ -91,7 +91,7 @@ export class CharacterSidebarPageComponent implements OnInit {
 
 			console.log('timelineId', this.timelineId, timelineSlug);
 
-			this.timelineService.getMonths(this.timelineId).subscribe((result: any) => {
+			this.timelineService.getEventInputDate(this.timelineId).subscribe((result: any) => {
 				// this.types = result.types;
 				this.eras = result.eras;
 				// this.months = result.months;
@@ -145,6 +145,8 @@ export class CharacterSidebarPageComponent implements OnInit {
 			era: number = this.form.get('Era').value,
 			slug: string = this.form.get('Url').value;
 
+		console.log('save new', firstName, lastName, description, imageUrl, coverImageUrl, era, slug);
+
 		this.timelineService.createCharacter(this.timelineId, firstName, lastName, description, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
 			console.log(result);
 			this.toastService.updateToast('Character saved');
@@ -159,6 +161,8 @@ export class CharacterSidebarPageComponent implements OnInit {
 			coverImageUrl: string = this.form.get('CoverImageUrl').value,
 			era: number = this.form.get('Era').value,
 			slug: string = this.form.get('Url').value;
+
+		console.log('save changes', firstName, lastName, description, imageUrl, coverImageUrl, era, slug);
 
 		this.timelineService.updateCharacter(this.existingCharacter.id, firstName, lastName, description, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
 			console.log(result);

@@ -45,7 +45,7 @@ export class CharacterEditNamesComponent implements OnInit {
 	];
 
 	constructor(private timelineService: TimelineService) {
-		this.timelineService.getMonths(this.timelineId).subscribe((result:any) => {
+		this.timelineService.getEventInputDate(this.timelineId).subscribe((result:any) => {
 			this.eras = result.eras;
 			this.months = result.months;
 		});

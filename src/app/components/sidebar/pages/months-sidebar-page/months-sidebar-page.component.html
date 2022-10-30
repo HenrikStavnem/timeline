@@ -1,0 +1,26 @@
+<div [ngClass]="{'aside-open' : isAsideOpen}">
+	<div class="page padding" [ngClass]="{'aside-open' : isAsideOpen}">
+		Months :: {{routeParamId}} :: {{timelineId}}
+		<div style="margin: 20px 0;">
+			<!-- <button (click)="onEraClick(null)">Create new month</button>			 -->
+		</div>
+
+		<div class="era-card-list">
+			<div
+				*ngFor="let month of dirtyMonths; index as i; first as isFirst; last as isLast;"
+				class="month-container"
+				[ngClass]="{'animate-down' : month.animateDown}"
+				[ngClass]="{'animate-up' : month.animateUp}"
+				[ngClass]="{'just-moved' : month.justMoved}"
+			>
+				<input type="text" [value]="month.title">
+				<div class="order-btn-container">
+					<button (click)="onMoveUpClick(i)" [disabled]="isFirst || month.animateDown || month.animateUp">↑</button>
+					<button (click)="onMoveDownClick(i)" [disabled]="isLast || month.animateDown || month.animateUp">↓</button>
+				</div>
+			</div>
+			<button (click)="onResetClick()">Reset</button>
+			<button (click)="onSaveChangesClick()">Save changes</button>
+		</div>
+	</div>
+</div>

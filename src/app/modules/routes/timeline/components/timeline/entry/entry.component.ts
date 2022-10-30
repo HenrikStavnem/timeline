@@ -86,9 +86,9 @@ export class EntryComponent implements OnInit {
 				// else if (actor.names.length > 0) {
 				// 	name = this.getActorName(currentDate, actor.names)
 				// }
-				// else {
+				else {
 					name = `${actor.firstName} ${actor.lastName}`;
-				// }
+				}
 
 				this.elements.push({
 					type: 'character',

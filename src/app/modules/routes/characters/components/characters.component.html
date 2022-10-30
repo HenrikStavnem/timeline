@@ -1,15 +1,23 @@
 <div class="content-wrapper">
 	<div class="container-margin">
 		<h2>Character list</h2>
+		<a [routerLink]="'//timeline/' + timelineSlug">Back to timeline</a>
+		<br />
+		<br />
 
 		<div class="character-card-grid">
 			<ng-container *ngFor="let characterCard of characterCards">
-				<div class="character-card" (class)="characterCard.isBeingEdited ? 'edit-mode' : ''">
-					<a [routerLink]="'//timeline/duke/' + characterCard.slug">
-						<img src="{{characterCard.image ? characterCard.image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
+				<div class="character-card" [ngClass]="characterCard.isBeingEdited ? 'edit-mode' : ''">
+					<a [routerLink]="'//timeline/' + timelineSlug + '/' + characterCard.slug">
+						<div class="image-container">
+							<img src="{{characterCard.image ? characterCard.image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
+						</div>
+						<div class="name-container">
+							<h3>{{characterCard.firstName}} {{characterCard.lastName}}</h3>
+							<p *ngIf="characterCard.birthDate.year || characterCard.deathDate.year">{{characterCard.birthDate.year}}—{{characterCard.deathDate.year}}</p>
+						</div>
 					</a>
-					<h3>{{characterCard.firstName}} {{characterCard.lastName}}</h3>
-					<button (click)="onEditCharacterClick(characterCard)">Edit</button>
+					<button class="edit-btn" (click)="onEditCharacterClick(characterCard)">Edit</button>
 				</div>
 			</ng-container>
 		</div>

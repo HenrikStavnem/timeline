@@ -59,7 +59,7 @@ export class SidebarService {
 
 		this.change.emit({
 			isOpen: this.isOpen,
-			pageId: 'test2',
+			pageId: 'test2',		// TODO: remove hard-coded value
 			character: character
 		});
 	}

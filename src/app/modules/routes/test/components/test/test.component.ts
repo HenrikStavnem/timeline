@@ -51,7 +51,7 @@ export class TestComponent implements OnInit {
 		});
 		*/
 
-		this.timelineService.getMonths(this.timelineId).subscribe((result:any) => {
+		this.timelineService.getEventInputDate(this.timelineId).subscribe((result:any) => {
 			console.log(result);
 			this.types = result.types;
 			this.eras = result.eras;
@@ -145,7 +145,7 @@ export class TestComponent implements OnInit {
 		console.log('change');
 		this.timelineId = this.form.get('Timeline').value;
 
-		this.timelineService.getMonths(this.timelineId).subscribe((result:any) => {
+		this.timelineService.getEventInputDate(this.timelineId).subscribe((result:any) => {
 			console.log(result);
 			this.types = result.types;
 			this.eras = result.eras;
@@ -153,6 +153,7 @@ export class TestComponent implements OnInit {
 			this.characters = result.characters;
 			this.seasons = result.seasons;
 
+			
 			// Select first era to have default value
 			this.form.get('Era').setValue(result.eras[0].id);
 		});

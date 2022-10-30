@@ -116,6 +116,8 @@ export class TimelineMapper {
 			actor: IActor,
 			referenceSettings: IActorSettings;
 
+		console.log(settingsRawString[1]);
+
 		if (settingsRawString[1]) {
 			referenceSettings = this.extractCharacterSettings(settingsRawString[1]);
 		}

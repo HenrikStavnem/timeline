@@ -11,6 +11,7 @@ import { TimelineService } from 'src/app/services/timeline.service';
 })
 export class CharactersComponent implements OnInit {
 	characterCards: IActor[];
+	timelineSlug: string;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -20,9 +21,9 @@ export class CharactersComponent implements OnInit {
 
 	ngOnInit(): void {
 
-		let timelineSlug = this.route.snapshot.params.id;
+		this.timelineSlug = this.route.snapshot.params.id;
 		
-		this.timelineService.getCharactersByTimeline(timelineSlug, '').subscribe((characters: any) => {
+		this.timelineService.getCharactersByTimeline(this.timelineSlug, '').subscribe((characters: any) => {
 			console.log('characters', characters);
 
 			this.characterCards = characters.characters;
@@ -30,14 +31,19 @@ export class CharactersComponent implements OnInit {
 		error => {
 			console.error('api error', error);
 		}
+
+		this.sidebarService.change.subscribe((eventData: any) => {
+			if (eventData.isOpen === false) {
+				this.characterCards.forEach(card => {
+					card.isBeingEdited = false;
+				});
+			}
+		});
 	}
 
 	onEditCharacterClick(character: IActor) {
-		console.log('character', character);
-
 		character.isBeingEdited = true;
 
-		//this.sidebarService.openSidebarPage('test2');
 		this.sidebarService.openCharacterPage(character);
 	}
 

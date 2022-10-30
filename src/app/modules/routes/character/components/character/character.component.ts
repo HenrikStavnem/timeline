@@ -11,6 +11,7 @@ import { TimelineService } from 'src/app/services/timeline.service';
 })
 export class CharacterComponent implements OnInit {
 	character: IActor;
+	timelineSlug: string;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -21,7 +22,7 @@ export class CharacterComponent implements OnInit {
 	ngOnInit(): void {
 		let characterSlug: string;
 		this.route.paramMap.subscribe(params => {
-			console.log('params', params, params.get('id2'));
+			this.timelineSlug = params.get('id');
 			characterSlug = params.get('id2');
 		});
 

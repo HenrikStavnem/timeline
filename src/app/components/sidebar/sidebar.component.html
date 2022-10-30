@@ -16,6 +16,8 @@
 
 				<button (click)="onAsideBOpenClick('era-create')">Eras</button>
 
+				<button (click)="onAsideBOpenClick('months')">Months</button>
+
 				<button (click)="onAsideBOpenClick('event-edit')">Edit event</button>
 
 				<hr>
@@ -36,6 +38,10 @@
 
 			<ng-container *ngIf="page === 'era-create'">
 				<eras-sidebar-page [routeParamId]="routeParamId"></eras-sidebar-page>
+			</ng-container>
+
+			<ng-container *ngIf="page === 'months'">
+				<months-sidebar-page [routeParamId]="routeParamId"></months-sidebar-page>
 			</ng-container>
 
 			<ng-container *ngIf="page=='event-edit'">

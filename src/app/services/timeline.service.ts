@@ -32,7 +32,6 @@ export class TimelineService {
 
 	getCharacter(slug: string) {
 		return this.http.get('http://localhost:80/timeline/api/character/get.php?characterSlug='+slug);
-		return this.http.get('http://localhost:80/timeline/api/getCharacter?characterSlug='+slug);
 	}
 
 	getCharacters(timelineId: number, query: string) {
@@ -40,7 +39,6 @@ export class TimelineService {
 	}
 
 	getCharactersByTimeline(timelineSlug: string, query: string) {
-		console.log('timelineService getCharactersByTimeline');
 		return this.http.get(`http://localhost:80/timeline/api/getCharactersByTimeline?timeline=${timelineSlug}&query=${query}`);
 	}
 
@@ -53,7 +51,7 @@ export class TimelineService {
 	}
 
 	updateTimeline(id: number, title: string, description: string) {
-		var obj = JSON.stringify({'id': id, 'title': title, 'description': description});
+		let obj = JSON.stringify({'id': id, 'title': title, 'description': description});
 
 		console.log('http://localhost:80/timeline/api/updateTimeline?obj='+obj);
 
@@ -69,7 +67,7 @@ export class TimelineService {
 	createEvent(era: number, exactness: string, year: number, month: number, day: number, type: number, description: string) {
 		console.log("createEvent in service");
 
-		var obj = JSON.stringify({
+		let obj = JSON.stringify({
 			'type': type,
 			'description': description,
 			'era': era,
@@ -85,7 +83,7 @@ export class TimelineService {
 	}
 
 	createCharacter(timelineId: number, firstName: string, lastName: string, description: string, imageUrl: string, coverImageUrl: string, slug: string) {
-		var obj = JSON.stringify({
+		let obj = JSON.stringify({
 			'timelineId': timelineId,
 			'firstName': firstName,
 			'lastName': lastName,
@@ -95,11 +93,13 @@ export class TimelineService {
 			'slug': slug
 		});
 
+		console.log('obj', obj);
+
 		return this.http.get('http://localhost:80/timeline/api/character/create.php?obj='+obj);
 	}
 
 	updateCharacter(characterId: number, firstName: string, lastName: string, description: string, imageUrl: string, coverImageUrl: string, slug: string) {
-		var obj = JSON.stringify({
+		let obj = JSON.stringify({
 			'characterId': characterId,
 			'firstName': firstName,
 			'lastName': lastName,
@@ -112,7 +112,7 @@ export class TimelineService {
 		return this.http.get('http://localhost:80/timeline/api/character/update.php?obj='+obj);
 	}
 
-	getMonths(timelineId: number) {
+	getEventInputDate(timelineId: number) {
 		return this.http.get('http://localhost:80/timeline/api/getEventInputs?timeline='+timelineId);
 	}
 
@@ -122,5 +122,19 @@ export class TimelineService {
 
 	getEras(timelineId: number) {
 		return this.http.get(`http://localhost:80/timeline/api/eras/get?timeline=${timelineId}`);
+	}
+
+	getMonths(timelineId: number) {
+		return this.http.get(`http://localhost:80/timeline/api/months/get?timeline=${timelineId}`);
+	}
+
+	updateMonths(timelineId: number, months: any[]) {
+		console.log('months', months);
+
+		return this.http.get(`http://localhost:80/timeline/api/months/get?timeline=${timelineId}`);
+	}
+
+	getPlayer(slug: string) {
+		return this.http.get(`http://localhost/timeline/api/player/get?slug=${slug}`);
 	}
 }

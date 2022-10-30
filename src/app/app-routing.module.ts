@@ -9,6 +9,11 @@ const routes: Routes = [
 		data: {pageType: 'index'}
 	},
 	{
+		path: 'player/:id',
+		loadChildren: () => import('src/app/modules/routes/player/player.module').then(module => module.PlayerModule),
+		data: {pageType: 'test'}
+	},
+	{
 		path: 'timeline/:id',
 		loadChildren: () => import('src/app/modules/routes/timeline/timeline.module').then(module => module.TimelineModule),
 		data: {pageType: 'timeline'}

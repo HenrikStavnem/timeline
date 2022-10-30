@@ -1,0 +1,78 @@
+@import "../../../../../styles.scss";
+
+$animation-swap-duration: .25s;
+$animation-swap-horizontal-amount: 50px;
+$animation-swap-vertical-amount: 42px;//61px;
+
+@keyframes anim-swap-down {
+	0% {
+		left: 0px;
+		top: 0px;
+	}
+	50% {
+		left: $animation-swap-horizontal-amount;
+	}
+	100% {
+		left: 0px;
+		top: $animation-swap-vertical-amount;
+	}
+}
+
+@keyframes anim-swap-up {
+	0% {
+		left: 0px;
+		top: 0px;
+	}
+	50% {
+		left: -$animation-swap-horizontal-amount;
+	}
+	100% {
+		left: 0px;
+		top: -$animation-swap-vertical-amount;
+	}
+}
+
+.animate-down {
+	position: relative;
+	animation-name: anim-swap-down;
+	animation-duration: $animation-swap-duration;
+	animation-fill-mode: forwards;
+}
+
+.animate-up {
+	position: relative;
+	animation-name: anim-swap-up;
+	animation-duration: $animation-swap-duration;
+	animation-fill-mode: forwards;
+}
+
+.padding {
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.month-container {
+	display: flex;
+	justify-content: space-between;
+
+	background-color: $color-gray-dark;
+	border-color: $color-black;
+	border-style: solid;
+	border-width: 1px;
+	transition: background-color $animation-swap-duration linear, border-color $animation-swap-duration linear;
+
+	&.just-moved {
+		border-color: $color-yellow;
+		background-color: $color-gray;
+		transition: background-color $animation-swap-duration linear, border-color $animation-swap-duration linear;
+	}
+
+	.order-btn-container {
+		display: flex;
+		align-items: stretch;
+	}
+
+	input[type="text"] {
+		font-size: 30px;
+	}
+}

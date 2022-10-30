@@ -6,8 +6,10 @@
 	</div>
 	<span *ngIf="hasConnection">{{ "navigation.connection.success" | translate }}</span>
 	<span *ngIf="!hasConnection">{{ "navigation.connection.failure" | translate }}</span> 
-	<button mat-raised-button color="accent" (click)="onClickButton('character-edit')">{{ "navigation.buttons.create-character" | translate }}</button>
-	<button mat-raised-button color="accent" (click)="onClickButton('era-edit')">{{ "navigation.buttons.create-era" | translate }}</button>
+	
+	<!-- <button mat-raised-button color="accent" (click)="onClickButton('character-edit')">{{ "navigation.buttons.create-character" | translate }}</button>
+	<button mat-raised-button color="accent" (click)="onClickButton('era-edit')">{{ "navigation.buttons.create-era" | translate }}</button> -->
+	
 	<!--<button mat-raised-button color="accent" (click)="onCreateEventClick()">Create event</button>-->
 	<!--<button mat-raised-button color="accent" (click)="onOpenDialogClick()">Open Dialog</button>-->
 	<img src="https://tcg.dukendor.com/order-dev/res/user-images/red.png" alt="avatar" />

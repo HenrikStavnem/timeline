@@ -17,12 +17,13 @@
 			<div class="container-margin">
 				<ng-container *ngIf="character.dndStats">
 					<div>
-						<p *ngFor="let class of character.classes">{{class.class}} {{class.subclass}} level {{class.level}}</p>
+						<p *ngFor="let class of character.classes">{{class.class}} &bullet; {{class.subclass}} &bullet; level {{class.level}}</p>
 						<!-- <p>Class: {{character.dndStats.class}} level {{character.dndStats.level}}</p> -->
 						<p>Background: {{character.dndStats.background}}</p>
 						<p>Alignment: {{character.dndStats.alignment}}</p>
-						<p>Armor class: {{character.dndStats.armorClass}}, initiative: {{character.dndStats.initiative}}, speed: {{character.dndStats.speed}}</p>
-						<p>Played by {{character.dndStats.playerName}}</p>
+						<p>Armor class: {{character.dndStats.armorClass}}, speed: {{character.dndStats.speed}}</p>
+						<p>Initiative: {{getModifier(character.dndStats.dexterity)}}</p>
+						<p>Played by <a [routerLink]="'//player/' + character.dndStats.playerName">{{character.dndStats.playerName}}</a></p>
 						<br />
 					</div>
 					<div class="grid">
@@ -39,6 +40,8 @@
 					<p>{{character.description ? character.description : "No description"}}</p>
 				</div>
 				<button (click)="onEditClick()">Edit</button>
+
+				<br /><br /><a [routerLink]="'//timeline/' + timelineSlug">Back to timeline</a>
 			</div>
 		</div>
 	</div>
