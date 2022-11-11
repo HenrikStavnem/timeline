@@ -118,8 +118,10 @@ export class TimelineComponent implements OnInit {
 			case 'decade': return `${year.year}s`;
 			case 'year-circa': return `Circa ${year.year}`;
 			case 'year': return `${year.year}`;
+			case 'beforeYear': return `Before ${year.year}`;
+			case 'afterYear': return `After ${year.year}`;
 		}
-		return "TEST";
+		return "year accuracy in showTitle";
 	}
 
 }

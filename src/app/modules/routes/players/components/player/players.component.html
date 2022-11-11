@@ -1,7 +1,7 @@
 <ng-container>
 	<div class="header" [style.background-image]="coverImage ? 'url('+coverImage+')' : 'url(https://cdnb.artstation.com/p/assets/images/images/034/991/557/large/will-murai-barrens-keyart-008.jpg?1613802083)'">
 		<div class="header-content">
-			<h1>{{playerName}}</h1>
+			<h1>List of players</h1>
 			<div *ngIf="image" class="image-wrapper">
 				<div class="image" [style.background-image]="'url(' + image + ')'"></div>
 			</div>
@@ -10,14 +10,10 @@
 	<div class="content-wrapper has-header">
 		<div class="content" [ngClass]="{'has-image' : image}">
 			<div class="container-margin">
-				<h2>Description</h2>
-				<p>{{playerDescription}}</p>
-
-				<h2>List of characters</h2>
 				<div class="character-card-grid">
-					<ng-container *ngFor="let characterCard of characterCards">
+					<ng-container *ngFor="let characterCard of playerCards">
 						<div class="character-card" [ngClass]="characterCard.isBeingEdited ? 'edit-mode' : ''">
-							<a [routerLink]="'//timeline/' + characterCard.timelineSlug + '/' + characterCard.slug">
+							<a [routerLink]="'//player/' + characterCard.slug">
 								<div class="image-container">
 									<img src="{{characterCard.image ? characterCard.image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
 								</div>
@@ -30,7 +26,6 @@
 						</div>
 					</ng-container>
 				</div>
-				<a [routerLink]="'//players'">Back to players</a>
 			</div>
 		</div>
 	</div>

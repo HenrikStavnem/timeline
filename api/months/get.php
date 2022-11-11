@@ -66,7 +66,10 @@
 			array_push($eras, $era);
 		}
 
-		return $eras;
+		$result = new StdClass();
+		$result->months = $eras;
+
+		return $result;
 	}
 
 ?>

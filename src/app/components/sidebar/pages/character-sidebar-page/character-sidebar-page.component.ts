@@ -145,10 +145,7 @@ export class CharacterSidebarPageComponent implements OnInit {
 			era: number = this.form.get('Era').value,
 			slug: string = this.form.get('Url').value;
 
-		console.log('save new', firstName, lastName, description, imageUrl, coverImageUrl, era, slug);
-
 		this.timelineService.createCharacter(this.timelineId, firstName, lastName, description, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
-			console.log(result);
 			this.toastService.updateToast('Character saved');
 		});
 	}
@@ -162,10 +159,7 @@ export class CharacterSidebarPageComponent implements OnInit {
 			era: number = this.form.get('Era').value,
 			slug: string = this.form.get('Url').value;
 
-		console.log('save changes', firstName, lastName, description, imageUrl, coverImageUrl, era, slug);
-
 		this.timelineService.updateCharacter(this.existingCharacter.id, firstName, lastName, description, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
-			console.log(result);
 			this.toastService.updateToast('Changes saved');
 
 			this.timelineService.getCharactersByTimeline(this.routeParamId, '').lift;
@@ -174,9 +168,27 @@ export class CharacterSidebarPageComponent implements OnInit {
 
 	onFirstNameKeyup() {
 		this.firstName = this.form.get('Firstname').value;
+		this.updateSlugSuggestion();
 	}
 
 	onLastNameKeyup() {
 		this.lastName = this.form.get('Lastname').value;
+		this.updateSlugSuggestion();
+	}
+
+	updateSlugSuggestion() {
+		const currentSlug: string = this.existingCharacter?.slug;
+
+		if (!currentSlug || currentSlug === "") {
+			const firstName: string = this.form.get('Firstname').value,
+				lastName: string = this.form.get('Lastname').value;
+
+			let suggestion: string = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
+			if (suggestion.charAt(suggestion.length - 1) === '-') {
+				suggestion = suggestion.slice(0, suggestion.length - 1);
+			}
+
+			this.form.get('Url').setValue(suggestion);
+		}
 	}
 }

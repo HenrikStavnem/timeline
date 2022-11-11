@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { IActor } from 'src/app/interfaces/timeline';
+import { SidebarService } from 'src/app/services/sidebar.service';
 
 @Component({
 	selector: 'player',
@@ -18,6 +20,7 @@ export class PlayerComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
+		private sidebarService: SidebarService,
 		private timelineService: TimelineService,
 		public translate: TranslateService
 	) { }
@@ -34,6 +37,22 @@ export class PlayerComponent implements OnInit {
 			this.characterCards = result.characters;
 			this.image = result.image;
 			this.coverImage = result.coverImage;
+
+			console.log('characters', this.characterCards);
 		});
+
+		this.sidebarService.change.subscribe((eventData: any) => {
+			if (eventData.isOpen === false) {
+				this.characterCards.forEach(card => {
+					card.isBeingEdited = false;
+				});
+			}
+		});
+	}
+
+	onEditCharacterClick(character: IActor) {
+		character.isBeingEdited = true;
+
+		this.sidebarService.openCharacterPage(character);
 	}
 }

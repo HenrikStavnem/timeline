@@ -33,8 +33,8 @@
 	$exactness = $decodeObj['exactness'];
 	$century = null;
 	$year = $decodeObj['year'];
-	$month = $decodeObj['month'];
-	$day = $decodeObj['day'];
+	$month = $decodeObj['month'] != "" ? $decodeObj['month'] : null;
+	$day = $decodeObj['day'] != "" ? $decodeObj['day'] : null;
 	$type = $decodeObj['type'];
 	$description = $decodeObj['description'];
 

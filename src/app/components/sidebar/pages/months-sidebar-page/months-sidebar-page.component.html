@@ -13,7 +13,7 @@
 				[ngClass]="{'animate-up' : month.animateUp}"
 				[ngClass]="{'just-moved' : month.justMoved}"
 			>
-				<input type="text" [value]="month.title">
+				<input type="text" [value]="month.title" (input)="onMonthChange($event, i)">
 				<div class="order-btn-container">
 					<button (click)="onMoveUpClick(i)" [disabled]="isFirst || month.animateDown || month.animateUp">↑</button>
 					<button (click)="onMoveDownClick(i)" [disabled]="isLast || month.animateDown || month.animateUp">↓</button>
@@ -21,6 +21,7 @@
 			</div>
 			<button (click)="onResetClick()">Reset</button>
 			<button (click)="onSaveChangesClick()">Save changes</button>
+			<button (click)="onAddClick()">Add</button>
 		</div>
 	</div>
 </div>

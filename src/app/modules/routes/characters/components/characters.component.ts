@@ -39,6 +39,20 @@ export class CharactersComponent implements OnInit {
 				});
 			}
 		});
+
+		this.timelineService.change.subscribe((eventData: any) => {
+			console.log('must update?', eventData.charactersUpdated);
+			if (eventData.charactersUpdated) {
+				this.timelineService.getCharactersByTimeline(this.timelineSlug, '').subscribe((characters: any) => {
+					console.log('characters', characters);
+		
+					this.characterCards = characters.characters;
+				}),
+				error => {
+					console.error('api error', error);
+				}
+			}
+		});
 	}
 
 	onEditCharacterClick(character: IActor) {

@@ -1,18 +1,20 @@
-.character-card-grid {
+@import "../../../../../../styles.scss";
+
+.location-card-grid {
 	display: grid;
 	width: 100%;
 	gap: 1rem;
 	grid-template-columns: 1fr;
 
-	@include breakpoint('medium') {
-		grid-template-columns: 1fr 1fr;
-	}
+	// @include breakpoint('medium') {
+	// 	grid-template-columns: 1fr 1fr;
+	// }
 
 	@include breakpoint('large') {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr;
 	}
 	
-	.character-card {
+	.location-card {
 		display: flex;
 		position: relative;
 		flex-direction: column;
@@ -54,14 +56,14 @@
 		.image-container {
 			//height: 100px;
 			width: auto;
-			aspect-ratio: 2/3;
+			aspect-ratio: 3 / 2; //2/3;
 			object-fit: cover;
 			overflow: hidden;
 
 			img {
 				width: 100%;
 				object-fit: cover;
-				aspect-ratio: 2/3;
+				aspect-ratio: 3 / 2; //2/3;
 				scale: 1.05;
 				transition: scale .5s ease, filter .5s ease;
 			}

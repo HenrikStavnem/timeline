@@ -14,8 +14,8 @@ import { ToastService } from 'src/app/services/toast.service';
 export class MonthsSidebarPageComponent implements OnInit {
 	@Input() routeParamId: string;
 
-	months: any[];
-	dirtyMonths: any[];
+	months: any[] = new Array;
+	dirtyMonths: any[] = new Array;
 	timelineId: number = null;
 
 	isAsideOpen: boolean = false;
@@ -35,18 +35,38 @@ export class MonthsSidebarPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		let timelineSlug: string = this.routeParamId;
+		let arr = [];
 
 		this.timelineService.getTimelineId(timelineSlug).subscribe((result: number) => {
 			this.timelineId = result;
 
 			this.timelineService.getMonths(this.timelineId).subscribe((result: any) => {
-				this.months = result;
-				this.dirtyMonths = result;
+				console.log('service call...', result);
+				// this.dirtyMonths = [];
+				// this.months = [];
+				// this.dirtyMonths = result;
+				// this.months = result;
+				// arr = result;
+				// this.callback(arr);
+
+				// this.dirtyMonths = result.months;
+				// this.months = result.months;
+
+				this.months.push(...result.months);
+				this.dirtyMonths.push(...result.months);
 			});
 		});
 	}
 
-	onMoveUpClick(index) {
+	callback(arr): void {
+		console.log('cb');
+		this.dirtyMonths = arr;
+		this.months = arr;
+
+		// FIXME: these two arrays are 'bound' to each other, somehow. Changing one changes the other. That is not intended. 
+	}
+
+	onMoveUpClick(index: number): void {
 		const minValue: number = 0,
 			desiredIndex: number = (index) !== minValue ? index - 1 : minValue;
 
@@ -55,7 +75,7 @@ export class MonthsSidebarPageComponent implements OnInit {
 		}
 	}
 	
-	onMoveDownClick(index) {
+	onMoveDownClick(index): void {
 		const maxValue: number = this.dirtyMonths.length,
 			desiredIndex: number = (index + 1) !== maxValue ? index + 1 : maxValue;
 
@@ -64,21 +84,39 @@ export class MonthsSidebarPageComponent implements OnInit {
 		}
 	}
 
-	onResetClick() {
-		this.toastService.updateToast('Reset');
-
-		this.dirtyMonths = this.months;
-		this.cd.detectChanges();
+	onMonthChange(event: InputEvent, index: number): void {
+		const target: HTMLInputElement = event.target as HTMLInputElement,
+			value: string = target.value;
+		console.log('clean before', this.months[index].title);
+		this.dirtyMonths[index].title = value;
+		console.log('clean after', this.months[index].title);
 	}
 
-	onSaveChangesClick() {
+	onResetClick(): void {
+		this.toastService.updateToast('Reset');
+		console.log(this.dirtyMonths, this.months);
+
+		//this.dirtyMonths = this.months;
+		//this.cd.detectChanges();
+
+		// this.dirtyMonths[0].title = "maybe";
+	}
+
+	onSaveChangesClick(): void {
 		this.toastService.updateToast('Not implemented yet');
 
 		console.log('dirty months', this.dirtyMonths);
 
-		this.timelineService.updateMonths(this.timelineId, this.dirtyMonths).subscribe((result: any) => {
+		// this.timelineService.updateMonths(this.timelineId, this.dirtyMonths).subscribe((result: any) => {
 
-		});
+		// });
+	}
+
+	onAddClick(): void {
+		this.dirtyMonths[this.dirtyMonths.length] = {
+			title: 'Added',
+			month: this.dirtyMonths.length
+		}
 	}
 
 	// onEraClick(month) {
@@ -110,17 +148,6 @@ export class MonthsSidebarPageComponent implements OnInit {
 			delete(array[item2].animateUp);
 
 			this.swapPosition(array, item1, item2);
-			
-			// array[item2].justMoved = true;
-			
-			// setTimeout(() => {
-			// 	delete(array[item2].justMoved);
-
-			// 	setTimeout(() => {
-			// 		this.swapPosition(array, item1, item2);
-			// 	}, 500);
-			// }, 1000);
-
 		}, duration);
 
 	}

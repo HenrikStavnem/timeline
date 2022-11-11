@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core'
 
 import { Timeline } from '../classes/timeline';
 import { Observable } from 'rxjs';
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TimelineService {
+	@Output() change: EventEmitter<Object> = new EventEmitter();
 
 	constructor(private http: HttpClient) {
 		let url: string = "http://localhost:80/timeline/api/updateTimelineInfo",
@@ -15,7 +16,12 @@ export class TimelineService {
 			};
 
 		this.http.post(url, msg);
+
+		// this.change.emit({
+		// 	charactersUpdated: this.charactersUpdated
+		// });
 	}
+
 
 	getTimeline(slug?: string) {
 		if (slug !== undefined) {
@@ -95,6 +101,10 @@ export class TimelineService {
 
 		console.log('obj', obj);
 
+		this.change.emit({
+			charactersUpdated: true
+		});
+
 		return this.http.get('http://localhost:80/timeline/api/character/create.php?obj='+obj);
 	}
 
@@ -107,6 +117,10 @@ export class TimelineService {
 			'imageUrl': imageUrl,
 			'coverImageUrl': coverImageUrl,
 			'slug': slug
+		});
+
+		this.change.emit({
+			charactersUpdated: true
 		});
 
 		return this.http.get('http://localhost:80/timeline/api/character/update.php?obj='+obj);
@@ -136,5 +150,13 @@ export class TimelineService {
 
 	getPlayer(slug: string) {
 		return this.http.get(`http://localhost/timeline/api/player/get?slug=${slug}`);
+	}
+
+	getPlayers() {
+		return this.http.get(`http://localhost/timeline/api/players/get`);
+	}
+
+	getLocations(timelineSlug: string) {
+		return this.http.get(`http://localhost/timeline/api/locations/get?timeline=${timelineSlug}`);
 	}
 }

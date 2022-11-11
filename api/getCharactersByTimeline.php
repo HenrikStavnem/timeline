@@ -24,7 +24,7 @@
 		die("Connection failed: " . $connection->connect_error);
 	}
 
-	$timelineId = 2;
+	$timelineId = 2; //TODO: Remove
 
 	$timelineSlug = 'test';
 	if (isset($_GET["timeline"])) {

@@ -270,7 +270,7 @@ function fetchEraEvents($connection, $timelineId, $era) {
 		LEFT JOIN tl_seasons
 			ON tl_events.season = tl_seasons.id AND tl_seasons.timeline = $timelineId
 		WHERE era=$eraId
-		ORDER BY era, year, yearExactness, season, month, day, eventOrder, exactness, id";
+		ORDER BY era, year, exactness, season, month, day, eventOrder, id";
 
 	$query = $connection->query($sql);
 
@@ -643,7 +643,7 @@ function getExistingDayIndex($days, $dbEvent) {
 }
 
 function getValidYearTypes() {
-	return ['millennium', 'century', 'decade', 'year-circa', 'year'];
+	return ['millennium', 'century', 'decade', 'year-circa', 'year', 'beforeYear', 'afterYear'];
 }
 
 function getValidMonthTypes() {

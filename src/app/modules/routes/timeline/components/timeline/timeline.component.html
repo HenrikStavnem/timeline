@@ -15,7 +15,10 @@
 				<h1>{{timeline.title}}</h1>
 				<h2>By {{timeline.authorName}}</h2>
 				<p>{{timeline.description}}</p>
+
 				<a [routerLink]="'characters'">Characters</a>
+				<a [routerLink]="'locations'">Locations</a>
+				<a [routerLink]="'//players'">Players</a>
 			</ng-container>
 			<ng-container *ngIf="isEditingHeader">
 				<form [formGroup]="headerForm">
@@ -30,7 +33,7 @@
 
 	<div class="content-wrapper has-header no-padding">
 		<div *ngFor="let era of timeline.eras">
-			<ng-container *ngIf="era.years.length > 0">
+			<ng-container *ngIf="era.years.length > 0 || era.unknownBefore.length > 0 || era.unknownAfter.length > 0">
 				<div class="era" [style.background-image]="'url(' + era.image + ')'">
 					<h1>{{era.title}}</h1>
 					<p>{{era.description}}</p>
