@@ -9,9 +9,14 @@ const routes: Routes = [
 		data: {pageType: 'index'}
 	},
 	{
+		path: 'timeline/:id/locations/:id2',
+		loadChildren: () => import('src/app/modules/routes/location/location.module').then(module => module.LocationModule),
+		data: {pageType: 'timeline/:id/location/:id2'}
+	},
+	{
 		path: 'timeline/:id/locations',
 		loadChildren: () => import('src/app/modules/routes/locations/locations.module').then(module => module.LocationsModule),
-		data: {pageType: 'timeline/:id/locations'}
+		data: {pageType: 'locations'}
 	},
 	{
 		path: 'player/:id',

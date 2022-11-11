@@ -1,0 +1,17 @@
+<ng-container>
+	<div class="header" [style.background-image]="coverImage ? 'url('+coverImage+')' : 'url(https://cdnb.artstation.com/p/assets/images/images/034/991/557/large/will-murai-barrens-keyart-008.jpg?1613802083)'">
+		<div class="header-content">
+			<h1>{{name}}</h1>
+		</div>
+	</div>
+	<div class="content-wrapper has-header">
+		<div class="content">
+			<div class="container-margin">
+				<h2>Description</h2>
+				<p *ngIf="description && description !== ''">{{description}}</p>
+				<br /><br />
+				<a [routerLink]="'//timeline/' + timelineSlug + '/locations'">Back to locations</a>
+			</div>
+		</div>
+	</div>
+</ng-container>

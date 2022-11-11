@@ -37,4 +37,13 @@
 	input {
 		font-family: $font-secondary;
 	}
+
+	.header-links {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+
+		margin-top: 2rem;
+		text-shadow: 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
+	}
 }

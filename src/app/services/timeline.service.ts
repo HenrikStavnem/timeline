@@ -156,6 +156,10 @@ export class TimelineService {
 		return this.http.get(`http://localhost/timeline/api/players/get`);
 	}
 
+	getLocation(timelineSlug: string, slug: string) {
+		return this.http.get(`http://localhost/timeline/api/location/get?timeline=${timelineSlug}&slug=${slug}`);
+	}
+
 	getLocations(timelineSlug: string) {
 		return this.http.get(`http://localhost/timeline/api/locations/get?timeline=${timelineSlug}`);
 	}
