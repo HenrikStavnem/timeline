@@ -108,12 +108,15 @@ export class TimelineService {
 		return this.http.get('http://localhost:80/timeline/api/character/create.php?obj='+obj);
 	}
 
-	updateCharacter(characterId: number, firstName: string, lastName: string, description: string, imageUrl: string, coverImageUrl: string, slug: string) {
+	updateCharacter(characterId: number, firstName: string, lastName: string, description: string, birthDay: number, birthMonth: number, birthYear: number, imageUrl: string, coverImageUrl: string, slug: string) {
 		let obj = JSON.stringify({
 			'characterId': characterId,
 			'firstName': firstName,
 			'lastName': lastName,
 			'description': description,
+			'birthDay': birthDay,
+			'birthMonth': birthMonth,
+			'birthYear': birthYear,
 			'imageUrl': imageUrl,
 			'coverImageUrl': coverImageUrl,
 			'slug': slug

@@ -14,32 +14,64 @@
 </div>
 
 <div class="padding">
-	<form [formGroup]="form">
+	<form [formGroup]="form" class="custom-input-styling">
 		
-		<label>First name</label>
-		<input type="text" formControlName="Firstname" name="Firstname" (keyup)="onFirstNameKeyup()" /><br />
+		<div class="input-box">
+			<label>First name</label>
+			<input type="text" formControlName="Firstname" name="Firstname" (keyup)="onFirstNameKeyup()" placeholder=" " />
+		</div>
 
-		<label>Last name</label>
-		<input type="text" formControlName="Lastname" name="Lastname"  (keyup)="onLastNameKeyup()" /><br />
+		<div class="input-box">
+			<label>Last name</label>
+			<input type="text" formControlName="Lastname" name="Lastname"  (keyup)="onLastNameKeyup()" placeholder=" " />
+		</div>
 
-		<label>Era</label>
-		<select formControlName="Era">
-			<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
-		</select><br />
+		<div class="input-box">
+			<!-- <label>Era</label> -->
+			<select formControlName="Era">
+				<option *ngFor="let era of eras" [ngValue]="era.id">{{era.title}}</option>
+			</select>
+		</div>
 
-		<label>Description</label>
-		<textarea formControlName="Description" name="Description"></textarea><br />
+		<div class="input-box">
+			<label>Date of Birth</label>
+			<input type="number" formControlName="BirthDay" placeholder=" " />
+		</div>
 
-		<label>Image URL</label>
-		<input type="text" formControlName="ImageUrl" name="ImageUrl" />
-		<button (click)="setImageClick()">Set image</button><br />
+		<div class="input-box">
+			<label>Birth month</label>
+			<select formControlName="BirthMonth">
+				<option value="0">Unknown</option>
+				<option *ngFor="let month of months" [ngValue]="month.id">{{month.title}} {{month.id}}</option>
+			</select>
+		</div>
 
-		<label>Cover image URL</label>
-		<input type="text" formControlName="CoverImageUrl" name="CoverImageUrl" />
-		<button (click)="setCoverImageClick()">Set image</button><br />
+		<div class="input-box">
+			<label>Birth year</label>
+			<input type="number" formControlName="BirthYear" placeholder=" " />
+		</div>
 
-		<label>URL</label>
-		<input type="text" formControlName="Url" name="Url" /><br />
+		<div class="input-box----1">
+			<label>Description</label>
+			<textarea formControlName="Description" name="Description"></textarea>
+		</div>
+
+		<div class="input-box">
+			<label>Image URL</label>
+			<input type="text" formControlName="ImageUrl" name="ImageUrl" placeholder=" " />
+			<!-- <button (click)="setImageClick()">Set image</button> -->
+		</div>
+
+		<div class="input-box">
+			<label>Cover image URL</label>
+			<input type="text" formControlName="CoverImageUrl" name="CoverImageUrl" placeholder=" " />
+			<button (click)="setCoverImageClick()">Set image</button>
+		</div>
+
+		<div class="input-box">
+			<label>URL</label>
+			<input type="text" formControlName="Url" name="Url" />
+		</div>
 
 		<br /><br />
 		<button  *ngIf="existingCharacter === null" type="submit" (click)="saveCharacterClick()">Save new</button>

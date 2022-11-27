@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { IActor, IEra } from 'src/app/interfaces/timeline';
+import { IActor, IEra, IMonth } from 'src/app/interfaces/timeline';
 import { SidebarService } from 'src/app/services/sidebar.service';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -27,6 +27,7 @@ export class CharacterSidebarPageComponent implements OnInit {
 	page: string = "";
 
 	eras: IEra[];
+	months: IMonth[];
 
 	portraitImage: string = "https://tokens.dukendor.com/graphics/avatars/visitor.png";
 	coverImage: string;
@@ -41,6 +42,11 @@ export class CharacterSidebarPageComponent implements OnInit {
 			Validators.minLength(1)
 		]),
 		Era: new UntypedFormControl('', [
+		]),
+		BirthDay: new UntypedFormControl('', [
+		]),
+		BirthMonth: new UntypedFormControl(null),
+		BirthYear: new UntypedFormControl('', [
 		]),
 		Description: new UntypedFormControl('', [
 		]),
@@ -94,7 +100,7 @@ export class CharacterSidebarPageComponent implements OnInit {
 			this.timelineService.getEventInputDate(this.timelineId).subscribe((result: any) => {
 				// this.types = result.types;
 				this.eras = result.eras;
-				// this.months = result.months;
+				this.months = result.months;
 				// this.characters = result.characters;
 				// this.seasons = result.seasons;
 			});
@@ -110,6 +116,12 @@ export class CharacterSidebarPageComponent implements OnInit {
 		this.form.get('CoverImageUrl').setValue(this.existingCharacter.coverImage);
 		this.form.get('ImageUrl').setValue(this.existingCharacter.image);
 		this.form.get('Url').setValue(this.existingCharacter.slug);
+
+		this.form.get('BirthDay').setValue(this.existingCharacter.birthDate.day);
+		this.form.get('BirthMonth').setValue(this.existingCharacter.birthDate.month);
+		this.form.get('BirthYear').setValue(this.existingCharacter.birthDate.year);
+
+		console.log('month', this.existingCharacter.birthDate.month);
 
 		this.setImage();
 		this.setCoverImage();
@@ -157,9 +169,12 @@ export class CharacterSidebarPageComponent implements OnInit {
 			imageUrl: string = this.form.get('ImageUrl').value,
 			coverImageUrl: string = this.form.get('CoverImageUrl').value,
 			era: number = this.form.get('Era').value,
-			slug: string = this.form.get('Url').value;
+			slug: string = this.form.get('Url').value,
+			birthDay: number = this.form.get('BirthDay').value,
+			birthMonth: number = this.form.get('BirthMonth').value,
+			birthYear: number = this.form.get('BirthYear').value;
 
-		this.timelineService.updateCharacter(this.existingCharacter.id, firstName, lastName, description, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
+		this.timelineService.updateCharacter(this.existingCharacter.id, firstName, lastName, description, birthDay, birthMonth, birthYear, imageUrl, coverImageUrl, slug).subscribe((result: any) => {
 			this.toastService.updateToast('Changes saved');
 
 			this.timelineService.getCharactersByTimeline(this.routeParamId, '').lift;

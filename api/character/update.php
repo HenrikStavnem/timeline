@@ -33,12 +33,15 @@
 	$firstName = $decodeObj['firstName'];
 	$lastName = $decodeObj['lastName'];
 	$description = $decodeObj['description'];
+	$birthDay = $decodeObj['birthDay'];
+	$birthMonth = $decodeObj['birthMonth'];
+	$birthYear = $decodeObj['birthYear'];
 	$imageUrl = $decodeObj['imageUrl'];
 	$coverImageUrl = $decodeObj['coverImageUrl'];
 	$slug = $decodeObj['slug'];
 
-	$stmt = $connection->prepare("UPDATE `tl_characters` SET `firstname`=?, `lastname`=?, `description`=?, `image`=?,  `coverImage`=?, `slug`=? WHERE `id` = ?");
-	$stmt->bind_param('ssssssi', $firstName, $lastName, $description, $imageUrl, $coverImageUrl, $slug, $characterId);
+	$stmt = $connection->prepare("UPDATE `tl_characters` SET `firstname`=?, `lastname`=?, `description`=?, `birthDay`=?, `birthMonth`=?, `birthYear`=?, `image`=?, `coverImage`=?, `slug`=? WHERE `id` = ?");
+	$stmt->bind_param('sssiiisssi', $firstName, $lastName, $description, $birthDay, $birthMonth, $birthYear, $imageUrl, $coverImageUrl, $slug, $characterId);
 	$stmt->execute();
 
 	http_response_code(200);
