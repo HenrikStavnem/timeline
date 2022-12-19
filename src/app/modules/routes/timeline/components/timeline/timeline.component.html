@@ -43,7 +43,7 @@
 				</div>
 
 				<div *ngFor="let event of era.unknownBefore" class="container-margin">
-					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: null, month: null, day: null}" [isBeingReordered]="false"></entry>
+					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [locations]="timeline.locations" [date]="{era: era.era, year: null, month: null, day: null}" [isBeingReordered]="false"></entry>
 				</div>
 
 				<div *ngFor="let year of era.years" class="container-margin">

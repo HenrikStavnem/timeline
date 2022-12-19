@@ -14,6 +14,7 @@ import { SidebarService } from 'src/app/services/sidebar.service';
 export class EntryComponent implements OnInit {
 	@Input() item: IEntry;
 	@Input() references: IActors;//Array<Reference>;
+	@Input() locations;
 	@Input() date: IDate;
 	@Input() timelineSlug: string;
 	@Input() isBeingReordered: boolean = false;
@@ -131,6 +132,8 @@ export class EntryComponent implements OnInit {
 				actor = references.find(x => x.id == referenceIndex);
 				//actor.settings = referenceSettings;
 				break;
+			case 'location': 
+				console.warn('Locations not supported yet');
 		}
 		return actor;
 	}

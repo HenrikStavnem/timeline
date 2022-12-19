@@ -1,35 +1,45 @@
 <div class="entry" [ngClass]="{'edit-mode' : isBeingEdited}">
 	<div class="entry-icon" [style.background-image]="'url(' + item.eventTypeImage + ')'"></div>
 	<div class="entry-text">
-		<!--<p [outerHTML]="item.description | entryDescription : references : date"></p>-->
-		<!--<p [outerHTML]="item.description"></p>-->
-		<!--<span *ngFor="let element of item.elements">{{element.description}}</span>-->
-		<span style="color: lightgray;">({{item.eventOrder}})</span>
+		<p>
+			<!--<p [outerHTML]="item.description | entryDescription : references : date"></p>-->
+			<!--<p [outerHTML]="item.description"></p>-->
+			<!--<span *ngFor="let element of item.elements">{{element.description}}</span>-->
+			<span style="color: lightgray;">({{item.eventOrder}})</span>
 
-		<ng-container *ngFor="let element of elements">
+			<ng-container *ngFor="let element of elements">
 
-			<ng-container *ngIf="element.type ==='text'">
-				{{element.description}}
+				<ng-container *ngIf="element.type ==='text'">
+					{{element.description}}
+				</ng-container>
+
+				<ng-container *ngIf="element.type ==='character'">
+					<a [routerLink]="element.url">
+						<i *ngIf="element.title">{{element.title}}</i>
+						{{element.name}}
+						<span class="tooltip">
+							<card
+								[image]="element.image"
+								[title]="element.name"
+								[subtitle]="element.age"
+								[shape]="'portrait'"
+								[url]="element.url"
+							></card>
+							<!-- <div *ngIf="element.coverImage" class="cover-image" [style.background-image]="'url(' + element.coverImage + ')'">
+								<div *ngIf="element.image" class="image" [style.background-image]="'url(' + element.image + ')'"></div>
+							</div>
+							<div [classList]="'name ' + element.type">{{element.title}} {{element.name}}</div>
+							<div>{{element.age}}</div>
+							<div>{{element.description}}</div>
+							-->
+						</span>
+					</a>
+					<!-- Age -->
+					<!-- <span *ngIf="element.showAge" class="gray">&nbsp;({{element.age}})</span> -->
+				</ng-container>
+
 			</ng-container>
-
-			<ng-container *ngIf="element.type ==='character'">
-				<a [routerLink]="element.url">
-					<i *ngIf="element.title">{{element.title}}</i>
-					{{element.name}}
-					<span class="tooltip">
-						<div *ngIf="element.coverImage" class="cover-image" [style.background-image]="'url(' + element.coverImage + ')'">
-							<div *ngIf="element.image" class="image" [style.background-image]="'url(' + element.image + ')'"></div>
-						</div>
-						<div [classList]="'name ' + element.type">{{element.title}} {{element.name}}</div>
-						<div>{{element.age}}</div>
-						<div>{{element.description}}</div>
-					</span>
-				</a>
-				<!-- Age -->
-				<!-- <span *ngIf="element.showAge" class="gray">&nbsp;({{element.age}})</span> -->
-			</ng-container>
-
-		</ng-container>
+		</p>
 
 		<div class="button-container">
 			<button *ngIf="isBeingReordered">Up</button>

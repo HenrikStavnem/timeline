@@ -6,6 +6,7 @@ mb_http_output('UTF-8');
 mb_http_input('UTF-8');
 
 $charactersIndexList = array();
+$locationsIndexList = array();
 $itemsIndexList = array();
 
 init();
@@ -174,6 +175,7 @@ function testData() {
 
 function init() {
 	global $charactersIndexList;
+	global $locationsIndexList;
 	//testData();
 
 	$connection = getConnection();
@@ -183,9 +185,11 @@ function init() {
 	$eras = fetchEras($connection, $timeline->id);
 
 	$characters = getCharacters($connection);
+	$locations = getLocations($connection);
 
 	$timeline->eras = $eras;
 	$timeline->characters = $characters;
+	$timeline->locations = $locations;
 
 	echo json_encode($timeline);
 }
@@ -277,7 +281,7 @@ function fetchEraEvents($connection, $timelineId, $era) {
 	$events = array();
 
 	while($row = $query->fetch_assoc()) {
-		$dbEvent = new RawEvent($row['description'], $row['exactness'], $row['eventType'], $row['eventTypeImage'], 8, $row['century'], 835, $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day'], $row['eventOrder']);	// TODO: db changes needed for hardcoded values
+		$dbEvent = new RawEvent($row['description'], $row['exactness'], $row['eventType'], $row['eventTypeImage'], 8, $row['century'], $row['decade'], $row['year'], $row['season'], $row['seasonTitle'], $row['month'], $row['monthTitle'], $row['day'], $row['eventOrder']);	// TODO: db changes needed for hardcoded values
 
 		$era = mapEvent($dbEvent, $era);
 
@@ -374,6 +378,34 @@ function getCharacters($connection) {
 	}
 
 	return $characters;
+}
+
+function getLocations($connection) {
+	global $locationsIndexList;
+
+	$locations = array();
+
+	if (count($locationsIndexList) > 0) {
+		sort ($locationsIndexList);
+
+		$ids = join(',', $locationsIndexList);
+		$sql = "SELECT id, name, description, coverImage, slug FROM tl_locations WHERE id IN ($ids)";
+
+		$query = $connection->query($sql);
+
+		while($row = $query->fetch_assoc()) {
+			$location = new StdClass();
+			$location->id = $row['id'];
+			$location->name = $row['name'];
+			$location->description = $row['description'];
+			$location->coverImage = $row['coverImage'];
+			$location->slug = $row['slug'];
+
+			array_push($locations, $location);
+		}
+	}
+
+	return $locations;
 }
 
 function mapEvent($dbEvent, $result) {

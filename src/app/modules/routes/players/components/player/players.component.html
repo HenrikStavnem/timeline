@@ -11,7 +11,12 @@
 		<div class="content" [ngClass]="{'has-image' : image}">
 			<div class="container-margin">
 				<div class="character-card-grid">
-					<ng-container *ngFor="let characterCard of playerCards">
+					<card *ngFor="let player of playerCards"
+						[title]="player.name"
+						[image]="player.image"
+						[url]="'player/' + player.slug"
+					></card>
+					<!-- <ng-container *ngFor="let characterCard of playerCards">
 						<div class="character-card" [ngClass]="characterCard.isBeingEdited ? 'edit-mode' : ''">
 							<a [routerLink]="'//player/' + characterCard.slug">
 								<div class="image-container">
@@ -24,7 +29,7 @@
 							</a>
 							<button class="edit-btn" (click)="onEditCharacterClick(characterCard)">Edit</button>
 						</div>
-					</ng-container>
+					</ng-container> -->
 				</div>
 			</div>
 		</div>

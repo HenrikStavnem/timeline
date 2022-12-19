@@ -45,7 +45,7 @@ export class TimelineComponent implements OnInit {
 
 			this.timeline = timeline;
 
-			//console.log('timeline',timeline);
+			console.log('timeline yeah',timeline);
 
 			this.headerForm = new UntypedFormGroup({
 				Title: new UntypedFormControl(this.timeline?.title, [

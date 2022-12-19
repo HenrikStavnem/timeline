@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CardComponent } from 'src/app/components/card/card.component';
 import { IActor } from 'src/app/interfaces/timeline';
 import { SidebarService } from 'src/app/services/sidebar.service';
 import { TimelineService } from 'src/app/services/timeline.service';
@@ -56,8 +57,10 @@ export class CharactersComponent implements OnInit {
 	}
 
 	onEditCharacterClick(character: IActor) {
+		if (!character) {
+			return; 
+		}
 		character.isBeingEdited = true;
-
 		this.sidebarService.openCharacterPage(character);
 	}
 

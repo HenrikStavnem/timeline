@@ -7,6 +7,7 @@ import { EntryComponent} from './components/timeline/entry/entry.component'
 import { CenturyPipe } from 'src/app/pipes/century.pipe'
 import { EntryDescriptionPipe } from 'src/app/pipes/entry-description.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardComponent } from 'src/app/components/card/card.component';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		CommonModule,
 		TimelineRoutingModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		CardComponent
 	]
 })
 export class TimelineModule { }

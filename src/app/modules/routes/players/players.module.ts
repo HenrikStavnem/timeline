@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PlayersRoutingModule } from './players-routing.module';
 import { PlayersComponent } from './components/player/players.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardComponent } from 'src/app/components/card/card.component';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 	],
 	imports: [
 		CommonModule,
+		CardComponent,
 		PlayersRoutingModule,
 		TranslateModule.forChild()
 	],

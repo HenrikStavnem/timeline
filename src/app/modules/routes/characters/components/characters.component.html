@@ -7,7 +7,17 @@
 
 		<div class="character-card-grid">
 			<ng-container *ngFor="let characterCard of characterCards">
-				<div class="character-card" [ngClass]="characterCard.isBeingEdited ? 'edit-mode' : ''">
+				<card
+					[image]="characterCard.image"
+					[title]="(characterCard.firstName ?? '') + ' ' + (characterCard.lastName ?? '')"
+					[subtitle]="characterCard.birthDate.year || characterCard.deathDate.year ? (characterCard.birthDate.year ?? '') + '—' + (characterCard.deathDate.year ?? '') : ''"
+					[canEdit]="true"
+					[isBeingEdited]="characterCard.isBeingEdited"
+					[url]="'//timeline/' + timelineSlug + '/' + characterCard.slug"
+					[onClickCallback]="onEditCharacterClick.bind(this, characterCard)"
+				></card>
+				
+				<!-- <div class="character-card" [ngClass]="characterCard.isBeingEdited ? 'edit-mode' : ''">
 					<a [routerLink]="'//timeline/' + timelineSlug + '/' + characterCard.slug">
 						<div class="image-container">
 							<img src="{{characterCard.image ? characterCard.image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
@@ -17,8 +27,8 @@
 							<p *ngIf="characterCard.birthDate.year || characterCard.deathDate.year">{{characterCard.birthDate.year}}—{{characterCard.deathDate.year}}</p>
 						</div>
 					</a>
-					<button class="edit-btn" (click)="onEditCharacterClick(characterCard)">Edit</button>
-				</div>
+					<button class="edit-btn" (click)="onEditCharacterClick">Edit</button>
+				</div> -->
 			</ng-container>
 		</div>
 	</div>

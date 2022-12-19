@@ -56,6 +56,10 @@ h2 {
 		//margin: 10px;
 		padding: 10px 50px 10px 20px;
 
+		p {
+			line-height: 1.5rem;
+		}
+
 		.gray {
 			color: $color-gray;
 		}
@@ -100,11 +104,30 @@ a {
 	&:hover {
 		.tooltip {
 			visibility: visible;
+			translate: 0 0;
+			opacity: 1;
+			filter: unset;
 		}
 	}
 }
 
 .tooltip {
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 25px);
+	margin-left: -100px;
+	visibility: hidden;
+	transition: all .25s ease-in-out;
+	translate: 0 50px;
+	opacity: 0;
+	filter: blur(10px);
+	
+	display: grid;
+	grid-template-columns: 1fr;
+	width: 250px;
+}
+
+.tooltip-old {
 	display: flex;
 	flex-direction: column;
 	visibility: hidden;
@@ -117,6 +140,10 @@ a {
 	left: 50%;
 	bottom: 100%;
 	margin-left: -100px;
+	transition: all .25s ease-in-out;
+	translate: 0 50px;
+	opacity: 0;
+	filter: blur(10px);
 
 	.cover-image {
 		display: flex;
