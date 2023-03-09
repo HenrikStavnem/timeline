@@ -66,7 +66,7 @@
 		array_push($months, $month);
 	}
 
-	$sqlEras = "SELECT id, title FROM tl_eras WHERE timeline=$timelineId ORDER BY era";
+	$sqlEras = "SELECT id, title FROM tl_eras WHERE timeline=$timelineId ORDER BY eraOrder";
 	$queryEras = $connection->query($sqlEras);
 
 	$eras = array();

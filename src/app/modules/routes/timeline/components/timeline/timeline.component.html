@@ -42,9 +42,13 @@
 					<div class="image-fade"></div>
 				</div>
 
-				<div *ngFor="let event of era.unknownBefore" class="container-margin">
-					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [locations]="timeline.locations" [date]="{era: era.era, year: null, month: null, day: null}" [isBeingReordered]="false"></entry>
+				<div class="container-margin">
+					<entry-list [entries]="era.unknownBefore" [references]="timeline.characters" [locations]="timeline.locations" [date]="{era: era.era, year: null, month: null, day: null}" [timelineSlug]="timeline.slug"></entry-list>
 				</div>
+
+				<!-- <div *ngFor="let event of era.unknownBefore" class="container-margin">
+					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [locations]="timeline.locations" [date]="{era: era.era, year: null, month: null, day: null}" [isBeingReordered]="false"></entry>
+				</div> -->
 
 				<div *ngFor="let year of era.years" class="container-margin">
 					
@@ -61,9 +65,10 @@
 					<!-- <h2>{{year.year}} ({{year.accuracy}})</h2> -->
 					<h2>{{showTitle(year)}}</h2>
 
-					<div *ngFor="let event of year.events">
+					<entry-list [entries]="year.events" [references]="timeline.characters" [locations]="timeline.locations" [date]="{era: era.era, year: year.year, month: null, day: null}" [timelineSlug]="timeline.slug"></entry-list>
+					<!-- <div *ngFor="let event of year.events">
 						<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: null, day: null}" [isBeingReordered]="false"></entry>
-					</div>
+					</div> -->
 
 					<div *ngFor="let season of year.seasons">
 						<h3>{{season.title}}</h3>

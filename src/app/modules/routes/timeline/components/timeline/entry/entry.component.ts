@@ -17,7 +17,7 @@ export class EntryComponent implements OnInit {
 	@Input() locations;
 	@Input() date: IDate;
 	@Input() timelineSlug: string;
-	@Input() isBeingReordered: boolean = false;
+	@Input() isBeingReordered: boolean;
 
 	elements: any[];
 	isBeingEdited: boolean = false;

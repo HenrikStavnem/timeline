@@ -36,7 +36,8 @@ const routes: Routes = [
 	{
 		path: 'timeline/:id/characters',
 		loadChildren: () => import('src/app/modules/routes/characters/characters.module').then(module => module.CharactersModule),
-		data: {pageType: 'character-list'}
+		data: {pageType: 'character-list'},
+		title: 'Characters'
 	},
 	{
 		path: 'timeline/:id/:id2',

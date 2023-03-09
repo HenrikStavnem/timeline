@@ -1,0 +1,8 @@
+<div *ngIf="entries.length > 0">
+	<button (click)="onReorderBtnClick()">Reorder</button>
+	<span *ngIf="isBeingReordered">Re-order</span>
+	<span *ngIf="!isBeingReordered">Click it</span>
+</div>
+
+<entry *ngFor="let entry of entries" [item]="entry" [timelineSlug]="timelineSlug" [references]="references" [date]="{era: date.era, year: null, month: null, day: null}" [isBeingReordered]="isBeingReordered"></entry>
+<!-- [locations]="timeline.locations" -->

@@ -1,0 +1,178 @@
+@import "../../../../../../../styles.scss";
+
+h2 {
+	font-family: $font-secondary, $font-hoefler, sans-serif;
+}
+
+.entry {
+	box-sizing: border-box;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	height: auto;
+	background-color: #3b270e;
+	background-image: url('../../../../../../../assets/images/Parchment.jpg');
+	//background-image: url('https://media.istockphoto.com/photos/closeup-of-abstract-handmade-black-and-brown-texture-background-picture-id1049704720?k=20&m=1049704720&s=612x612&w=0&h=o4Al9XRsTsGkX7u4nBfw1XEtcyET8jJbkStlJWKEatQ=');
+	//background-image: url('https://i.pinimg.com/736x/dc/d0/fb/dcd0fb16281e934b741f39eaea59eb4f.jpg');
+	background-size: cover;
+	color: $color-white;
+	font-family: $font-primary;
+	margin-bottom: 10px;
+
+	border: 1px solid #000000;
+	border-radius: 10px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 1), 0 0 80px rgba(0, 0, 0, 0.5) inset;
+	visibility: visible;
+	transition: border .15s ease-in-out, box-shadow .15s ease-in-out;
+
+	&.edit-mode {		
+		border: 1px solid gold;
+		box-shadow: 0 0 4px gold, 0 0 80px rgba(0, 0, 0, 0.5) inset;
+		z-index: 25;
+		pointer-events: visible;
+	}
+
+	.entry-icon {
+		min-width: 100px;
+		height: auto;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		background-size: cover;
+		background-position: center center;
+
+		&.combat {
+			background-color: red;
+		}
+
+		&.death {
+			background-color: $color-black;
+		}
+
+		&.travel {
+			background-color: yellowgreen;
+		}
+	}
+	.entry-text {
+		//margin: 10px;
+		padding: 10px 50px 10px 20px;
+
+		p {
+			line-height: 1.5rem;
+		}
+
+		.gray {
+			color: $color-gray;
+		}
+	}
+
+	.button-container {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+	}
+}
+
+span.small {
+	padding-left: 10px;
+	color: $color-gray;
+	text-transform: uppercase;
+	font-size: small;
+	font-family: sans-serif;
+}
+
+p {
+	color: $color-white;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+	margin-block-start: 0;
+	margin-block-end: 0;
+
+	img {
+		width: 16px;
+		top: 5px;
+	}
+
+	span.gray {
+		color: $color-gray;
+	}
+}
+
+a {
+	position: relative;
+	color: $color-yellow;
+	text-decoration: none;
+
+	&:hover {
+		.tooltip {
+			visibility: visible;
+			translate: 0 0;
+			opacity: 1;
+			filter: unset;
+		}
+	}
+}
+
+.tooltip {
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 25px);
+	margin-left: -100px;
+	visibility: hidden;
+	transition: all .25s ease-in-out;
+	translate: 0 50px;
+	opacity: 0;
+	filter: blur(10px);
+	
+	display: grid;
+	grid-template-columns: 1fr;
+	width: 250px;
+}
+
+.tooltip-old {
+	display: flex;
+	flex-direction: column;
+	visibility: hidden;
+	background-color: $color-black;
+	color: $color-white;
+	width: 300px;
+	padding: 5px;
+	position: absolute;
+	text-align: center;
+	left: 50%;
+	bottom: 100%;
+	margin-left: -100px;
+	transition: all .25s ease-in-out;
+	translate: 0 50px;
+	opacity: 0;
+	filter: blur(10px);
+
+	.cover-image {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		height: 100px;
+		max-height: 200px;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.image {
+		width: 100px;
+		height: 100px;
+		max-height: 200px;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.name {
+		margin: 5px 0;
+		font-family: $font-secondary;
+
+		&.character {
+			color: $color-yellow;
+		}
+
+		&.location {
+			color: $color-green;
+		}
+	}
+}

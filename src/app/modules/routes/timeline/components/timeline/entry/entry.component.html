@@ -43,7 +43,8 @@
 
 		<div class="button-container">
 			<button *ngIf="isBeingReordered">Up</button>
-			<button (click)="onEditBtnClick()">Edit</button>
+			<button *ngIf="isBeingReordered">Down</button>
+			<button *ngIf="!isBeingReordered" (click)="onEditBtnClick()">Edit</button>
 		</div>
 	</div>
 </div>

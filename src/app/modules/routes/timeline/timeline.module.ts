@@ -8,6 +8,7 @@ import { CenturyPipe } from 'src/app/pipes/century.pipe'
 import { EntryDescriptionPipe } from 'src/app/pipes/entry-description.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from 'src/app/components/card/card.component';
+import { EntryListComponent } from './components/timeline/entry-list/entry-list.component';
 
 @NgModule({
 	declarations: [
@@ -15,6 +16,7 @@ import { CardComponent } from 'src/app/components/card/card.component';
 		ManageTimelineComponent,
 		EntryComponent,
 		EntryDescriptionPipe,
+		EntryListComponent,
 		CenturyPipe
 	],
 	imports: [
