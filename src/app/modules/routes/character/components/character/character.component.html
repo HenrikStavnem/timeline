@@ -39,7 +39,8 @@
 					<h3>Description</h3>
 					<p>{{character.description ? character.description : "No description"}}</p>
 				</div>
-				<button (click)="onEditClick()">Edit</button>
+				<br /><br />
+				<custombutton [text]="'Edit'" [onClickCallback]="onEditClick.bind(this)"></custombutton>
 
 				<br /><br /><a [routerLink]="'//timeline/' + timelineSlug">Back to timeline</a>
 			</div>

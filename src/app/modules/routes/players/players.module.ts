@@ -4,6 +4,7 @@ import { PlayersRoutingModule } from './players-routing.module';
 import { PlayersComponent } from './components/player/players.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardComponent } from 'src/app/components/card/card.component';
+import { CustomButton } from 'src/app/components/custombutton/custombutton.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { CardComponent } from 'src/app/components/card/card.component';
 	imports: [
 		CommonModule,
 		CardComponent,
+		CustomButton,
 		PlayersRoutingModule,
 		TranslateModule.forChild()
 	],

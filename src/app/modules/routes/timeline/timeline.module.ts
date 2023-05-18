@@ -9,6 +9,7 @@ import { EntryDescriptionPipe } from 'src/app/pipes/entry-description.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { EntryListComponent } from './components/timeline/entry-list/entry-list.component';
+import { CustomButton } from 'src/app/components/custombutton/custombutton.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { EntryListComponent } from './components/timeline/entry-list/entry-list.
 		TimelineRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
-		CardComponent
+		CardComponent,
+		CustomButton
 	]
 })
 export class TimelineModule { }

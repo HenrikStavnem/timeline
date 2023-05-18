@@ -37,6 +37,10 @@ export class SidebarComponent implements OnInit {
 				this.page = eventData.pageId;
 				this.isAsideBOpen = true;
 			}
+			else {
+				this.page = "";
+				this.isAsideBOpen = false;
+			}
 
 			if (eventData.character) {
 				this.character = eventData.character;

@@ -46,6 +46,7 @@ export class MenuComponent implements OnInit {
 	}
 
 	onToggleSidebarClick() {
+		this.sidebarService.openSidebarPage('');
 		this.sidebarService.toggle();
 	}
 

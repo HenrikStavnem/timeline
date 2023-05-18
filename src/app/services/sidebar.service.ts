@@ -38,7 +38,11 @@ export class SidebarService {
 
 	openSidebarPage(pageId: string) {
 		if (!pageId) {
-			console.error('pageId is empty');
+			this.change.emit({
+				isOpen: this.isOpen,
+				pageId: ''
+			})
+
 			return;
 		}
 
@@ -52,10 +56,8 @@ export class SidebarService {
 		this.setBodySidebarData();
 	}
 
-	openCharacterPage(character: IActor) {
-		console.log('openCharacterPage', character);
-		
-		this.isOpen = true;
+	openCharacterPage(character: IActor) {		
+		this.isOpen = !this.isOpen;
 
 		this.change.emit({
 			isOpen: this.isOpen,
