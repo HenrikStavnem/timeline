@@ -21,14 +21,11 @@
 		filter: drop-shadow(0px 0px 2px black);
 
 		.image-container img {
-			//scale: 1.1;
 			scale: 1;
-			//filter: brightness(1.5) saturate(1.5);
 			filter: brightness(1.1);
 		}
 
 		.name-container {
-			//height: 300px;
 			background-position-y: 0px;
 			transition-delay: .5s;
 		}
@@ -46,7 +43,6 @@
 	}
 
 	.image-container {
-		//height: 100px;
 		width: auto;
 		aspect-ratio: 2/3;
 		object-fit: cover;
@@ -69,7 +65,6 @@
 		width: 100%;
 		background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
 		background-position-y: 0px;
-		// background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
 		// background-position-y: 90px; // Re-enable for more space on hover
 		background-repeat: no-repeat;
 		height: 200px;
@@ -91,10 +86,27 @@
 		}
 	}
 
-	.edit-btn {
+	.card-top {
 		position: absolute;
-		right: 1rem;
-		top: 1rem;
+		top: 0;
+		left: 0;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		padding: .5rem;
+		box-sizing: border-box;
+		align-items: center;
+
+		.icon-container{
+			color: $color-white;
+
+			.icon {
+				display: block;
+				width: 30px;
+				height: 30px;
+				filter: drop-shadow($shadow-small);
+			}
+		}
 	}
 
 }

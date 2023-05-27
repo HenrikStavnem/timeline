@@ -12,29 +12,8 @@ import { CardComponent } from '../card/card.component';
 		`svg {
 			width: 20px;
 			height: 20px;
-			padding-right: 5px;
 		}`
 	]
-	// templateUrl: './custombutton.component.html',
-	// styleUrls: ['./custombutton.component.scss']
 })
-export class EditIcon implements OnInit {
-	// @Input() image?: string;
-	// @Input() title?: string;
-	// @Input() subtitle?: string;
-	// @Input() isBeingEdited?: boolean;
-	// @Input() canEdit?: boolean;
-	// @Input() url?: string;
-	// @Input() shape?: string = 'portrait';
-	@ContentChildren('icon') icon = CardComponent;
-	
-	@Input() text: string = "";
-	@Input() onClickCallback? = () => {};
-
-
-	constructor() {
-	}
-
-	ngOnInit(): void {
-	}
+export class EditIcon {
 }

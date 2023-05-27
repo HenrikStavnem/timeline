@@ -38,7 +38,7 @@
 			<input type="number" formControlName="BirthDay" placeholder=" " />
 		</div>
 
-		<div class="input-box">
+		<div class="input-box" *ngIf="months?.length > 0">
 			<label>Birth month</label>
 			<select formControlName="BirthMonth">
 				<option value="0">Unknown</option>

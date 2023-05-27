@@ -44,7 +44,7 @@
 
 	
 	$sqlCharacter = "SELECT
-			id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, slug, class, level, background, alignment, playerName, armorClass, initiative, speed, strength, dexterity, constitution, intelligence, wisdom, charisma
+			id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, slug, playable, background, alignment, playerName, armorClass, initiative, speed, strength, dexterity, constitution, intelligence, wisdom, charisma
 		FROM tl_characters
 		LEFT JOIN tl_character_dnd_stats
 			ON tl_characters.id = tl_character_dnd_stats.characterId
@@ -74,8 +74,7 @@
 		}
 
 		if ($row['strength'] !== null) { // TODO: Needs better check
-			$class = $row['class'];
-			$level = $row['level'];
+			$playable = !!$row['playable'];
 			$background = $row['background'];
 			$alignment = $row['alignment'];
 			$armorClass = $row['armorClass'];
@@ -89,8 +88,7 @@
 			$wisdom = $row['wisdom'] ? $row['wisdom'] : 10;
 			$charisma = $row['charisma'] ? $row['charisma'] : 10;
 
-			// TODO: Replace static D&D stats with data from db
-			$dndStats = new CharacterDndStats($class, $level, $background, $playerName, $alignment, $armorClass, $initiative, $speed,
+			$dndStats = new CharacterDndStats($background, $playable, $playerName, $alignment, $armorClass, $initiative, $speed,
 			$strength, $dexterity, $constitution, $intelligence, $wisdom, $charisma);
 		}
 		else {
@@ -109,8 +107,6 @@
 		while ($classRow = $queryCharacterClasses->fetch_assoc()) {
 			array_push($classes, new DnDClass($classRow['class'], $classRow['subclass'], $classRow['level']));
 		}
-
-		//$dndStats = new CharacterDndStats("Wizard", 3, "Scholar", "Red", "Neutral Good", 12, 2, 30, 10, 10, 10, 10, 10, 10);
 
 		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $row['slug'], $dndStats);
 		$character->titles = $titles;

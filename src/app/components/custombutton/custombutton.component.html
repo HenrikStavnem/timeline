@@ -1,4 +1,6 @@
-<button class="btn" (click)="(onClickCallback())">
+<button class="btn" (click)="(onClickCallback())" [class.clear]="variation === 'clear'">
 	<EditIcon></EditIcon>
-	{{text}}
+	<p *ngIf="text">
+		{{text}}
+	</p>
 </button>

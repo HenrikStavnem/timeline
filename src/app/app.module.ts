@@ -16,13 +16,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { WindowComponent } from './components/modal/window/window.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-
-// import {MatButtonModule} from '@angular/material/button';
-// import {MatDialogModule} from '@angular/material/dialog';
-// import {MatTabsModule} from '@angular/material/tabs';
-// import {MatInputModule} from '@angular/material/input';
 
 import { TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
 import { TimelineService } from './services/timeline.service';
@@ -31,7 +26,6 @@ import { CharacterSidebarPageComponent } from './components/sidebar/pages/charac
 import { EraSidebarPageComponent } from './components/sidebar/pages/era-sidebar-page/era-sidebar-page.component';
 import { ErasSidebarPageComponent } from './components/sidebar/pages/eras-sidebar-page copy/eras-sidebar-page.component';
 import { MonthsSidebarPageComponent } from './components/sidebar/pages/months-sidebar-page/months-sidebar-page.component';
-import { EditIcon } from './components/icons/Edit.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http);
@@ -61,12 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        // MatButtonModule,
-        // MatDialogModule,
-        // MatTabsModule,
-        // MatInputModule,
         ReactiveFormsModule,
-		EditIcon,
 		TranslateModule.forRoot({
 			defaultLanguage: 'en',
             loader: {

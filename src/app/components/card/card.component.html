@@ -1,8 +1,5 @@
 <div class="card" [class.edit-mode]="isBeingEdited" [class.landscape]="shape === 'landscape'">
-<!-- <div class="card"> -->
-	<!-- <a [routerLink]="'//timeline/' + 'duke' + '/' + url"> -->
 	<a [routerLink]="url ? '/' + url : ''">
-	<!-- <a> -->
 		<div class="image-container">
 			<img src="{{image ? image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
 		</div>
@@ -11,5 +8,11 @@
 			<p *ngIf="subtitle">{{subtitle}}</p>
 		</div>
 	</a>
-	<button *ngIf="canEdit" class="edit-btn" (click)="(onClickCallback())">Edit</button>
+	<div class="card-top">
+		<div class="icon-container">
+			<HexagonPlayerIcon class="icon" *ngIf="isRpg && isPlayable" title="A playable character"></HexagonPlayerIcon>
+			<HexagonIcon class="icon" *ngIf="isRpg && !isPlayable" title="A non-playable character"></HexagonIcon>
+		</div>
+		<custombutton *ngIf="canEdit" [text]="" [onClickCallback]="onClickCallback.bind(this)"></custombutton>
+	</div>
 </div>

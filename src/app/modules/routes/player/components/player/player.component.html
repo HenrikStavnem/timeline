@@ -10,25 +10,18 @@
 	<div class="content-wrapper has-header">
 		<div class="content" [ngClass]="{'has-image' : image}">
 			<div class="container-margin">
-				<h2>Description</h2>
+				<h2 *ngIf="playerDescription">Description</h2>
 				<p>{{playerDescription}}</p>
 
 				<h2>List of characters</h2>
 				<div class="character-card-grid">
-					<ng-container *ngFor="let characterCard of characterCards">
-						<div class="character-card" [ngClass]="characterCard.isBeingEdited ? 'edit-mode' : ''">
-							<a [routerLink]="'//timeline/' + characterCard.timelineSlug + '/' + characterCard.slug">
-								<div class="image-container">
-									<img src="{{characterCard.image ? characterCard.image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
-								</div>
-								<div class="name-container">
-									<h3>{{characterCard.firstName}} {{characterCard.lastName}}</h3>
-									<p *ngIf="characterCard.level">Level {{characterCard.level}}</p>
-								</div>
-							</a>
-							<button class="edit-btn" (click)="onEditCharacterClick(characterCard)">Edit</button>
-						</div>
-					</ng-container>
+					<card *ngFor="let character of characterCards"
+						[title]="character.firstName + ' ' + character.lastName"
+						[image]="character.image"
+						[url]="'//timeline/' + timelineSlug + '/' + character.slug"
+						[canEdit]="true"
+						[onClickCallback]="onEditCharacterClick.bind(this, character)"
+					></card>
 				</div>
 				<a [routerLink]="'//players'">Back to players</a>
 			</div>

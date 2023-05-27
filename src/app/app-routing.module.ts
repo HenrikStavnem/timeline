@@ -11,7 +11,7 @@ const routes: Routes = [
 	{
 		path: 'timeline/:id/locations/:id2',
 		loadChildren: () => import('src/app/modules/routes/location/location.module').then(module => module.LocationModule),
-		data: {pageType: 'timeline/:id/location/:id2'}
+		data: {pageType: 'location'}
 	},
 	{
 		path: 'timeline/:id/locations',

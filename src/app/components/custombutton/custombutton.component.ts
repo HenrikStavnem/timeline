@@ -7,28 +7,15 @@ import { EditIcon } from '../icons/Edit.component';
 @Component({
 	selector: 'custombutton[text]',
 	// imports: [CommonModule, RouterModule],
-	imports: [EditIcon],
+	imports: [CommonModule, EditIcon],
 	standalone: true,
 	templateUrl: './custombutton.component.html',
 	styleUrls: ['./custombutton.component.scss']
 })
-export class CustomButton implements OnInit {
-	// @Input() image?: string;
-	// @Input() title?: string;
-	// @Input() subtitle?: string;
-	// @Input() isBeingEdited?: boolean;
-	// @Input() canEdit?: boolean;
-	// @Input() url?: string;
-	// @Input() shape?: string = 'portrait';
+export class CustomButton {
 	@ContentChildren('widget') icon = CardComponent;
 	
 	@Input() text: string = "";
+	@Input() variation?: string = "solid" || "clear";
 	@Input() onClickCallback? = () => {};
-
-
-	constructor() {
-	}
-
-	ngOnInit(): void {
-	}
 }

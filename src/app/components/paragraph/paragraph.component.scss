@@ -1,0 +1,34 @@
+@import "../../../styles.scss";
+
+a {
+	position: relative;
+	color: $color-yellow;
+	text-decoration: none;
+
+	&:hover {
+		cursor: pointer;
+		
+		.tooltip {
+			visibility: visible;
+			translate: 0 0;
+			opacity: 1;
+			filter: unset;
+		}
+	}
+}
+
+.tooltip {
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 25px);
+	margin-left: -100px;
+	visibility: hidden;
+	transition: all .25s ease-in-out;
+	translate: 0 50px;
+	opacity: 0;
+	filter: blur(10px);
+	
+	display: grid;
+	grid-template-columns: 1fr;
+	width: 250px;
+}

@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CustomButton } from '../custombutton/custombutton.component';
+import { HexagonPlayerIcon } from '../icons/HexagonPlayer.components';
+import { HexagonIcon } from '../icons/Hexagon.components';
 
 @Component({
 	selector: 'card',
-	imports: [CommonModule, RouterModule],
+	imports: [CommonModule, RouterModule, CustomButton, HexagonIcon, HexagonPlayerIcon],
 	standalone: true,
 	templateUrl: './card.component.html',
 	styleUrls: ['./card.component.scss']
@@ -16,7 +19,9 @@ export class CardComponent implements OnInit {
 	@Input() isBeingEdited?: boolean;
 	@Input() canEdit?: boolean;
 	@Input() url?: string;
-	@Input() shape?: string = 'portrait';
+	@Input() shape?: 'portrait' | 'landscape' = 'portrait';
+	@Input() isRpg?: boolean;
+	@Input() isPlayable?: boolean;
 	@Input() onClickCallback? = () => {};
 
 	constructor() {

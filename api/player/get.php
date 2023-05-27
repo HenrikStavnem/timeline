@@ -64,14 +64,14 @@
 
 	function fetchCharacters($connection, $id) {
 		$sql = "SELECT
-			characterId as id, class, firstname, lastname, tl_characters.image, tl_characters.slug, tl_timelines.url as timelineSlug
-			FROM tl_character_dnd_stats
+			characterId as id, firstname, lastname, tl_characters.image, tl_characters.slug, tl_timelines.url as timelineSlug
+			FROM tl_character_dnd_stats 
 			LEFT JOIN tl_characters
 			ON tl_character_dnd_stats.characterId = tl_characters.id
 			LEFT JOIN tl_timelines
 			ON tl_characters.timelineId = tl_timelines.id
 			WHERE player='$id'
-			ORDER BY firstname, lastname, class, level
+			ORDER BY firstname, lastname
 		";
 
 		$query = $connection->query($sql);

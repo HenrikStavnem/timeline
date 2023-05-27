@@ -4,7 +4,7 @@ import { Location } from '../../classes/location';
 import { OnInit, Directive } from '@angular/core';
 
 @Directive()
-export class Entry implements OnInit {
+export class Entry {
 	public id: number;
 	public titles: Array<any>;
 	public description: string;
@@ -12,42 +12,6 @@ export class Entry implements OnInit {
 	public date: number;
 
 	public portraitUrl: string = "http://common.dukendor.com/avatars/visitor.png";
-	//public description: string = "";
-
-	constructor() {
-		console.log("Entry constructor");
-	}
-
-	/*
-	constructor (public id: number, public title: string, description: string, public eventType: string, public date: number) {
-		this.description = this.handleDescription(description);
-	}
-	*/
-	ngOnInit(): void {
-		console.log("Entry onInit");
-		//this.description = this.handleDescription(this.description);
-	}
-
-	/*
-	private handleDescription(description: string) {
-		let references = [
-				new Person(0, "Ganes", "", "", 9781, 9830),
-				new Person(0, "Imena", "", "", 9782, 9808),
-				new Person(0, "Bendic", "", "", 9783, 10000),
-				new Person(0, "Thaed", "", "", 9800, 1000),
-				new Person(0, "Shade", "", "", 9815, 10000),
-				new Person(0, "Gylaw", "", "", 9770, 10000),
-				new Person(0, "", "Wendrill", "Lord", 9800, 1000),
-				new Location(0, "Wendrill Hall"),
-				new Location(0, "Applehaven"),
-				new Location(0, "Dewmoor"),
-				new Person(0, "Florinda", "", "Priestess", 9810, 10000),
-				new Location(0, "Purecider Inn"),
-			],
-			text = this.transformReferences(description, references);
-		return text;
-	}
-	*/
 
 	private transformReferences(text: string, references: Array<Reference>) {
 		var me = this;

@@ -23,7 +23,12 @@
 						<p>Alignment: {{character.dndStats.alignment}}</p>
 						<p>Armor class: {{character.dndStats.armorClass}}, speed: {{character.dndStats.speed}}</p>
 						<p>Initiative: {{getModifier(character.dndStats.dexterity)}}</p>
-						<p>Played by <a [routerLink]="'//player/' + character.dndStats.playerName">{{character.dndStats.playerName}}</a></p>
+						<ng-container *ngIf="character.dndStats.playable">
+							<p>Played by <a [routerLink]="'//player/' + character.dndStats.playerName">{{character.dndStats.playerName}}</a></p>
+						</ng-container>
+						<ng-container *ngIf="!character.dndStats.playable">
+							<p>NPC</p>
+						</ng-container>
 						<br />
 					</div>
 					<div class="grid">
@@ -39,10 +44,18 @@
 					<h3>Description</h3>
 					<p>{{character.description ? character.description : "No description"}}</p>
 				</div>
+				
 				<br /><br />
+				
 				<custombutton [text]="'Edit'" [onClickCallback]="onEditClick.bind(this)"></custombutton>
 
-				<br /><br /><a [routerLink]="'//timeline/' + timelineSlug">Back to timeline</a>
+				<br /><br />
+				<a [routerLink]="'//timeline/' + timelineSlug">Back to timeline</a>
+
+				<div>
+					<h3>New description, test only</h3>
+					<paragraph [textElements]="description"></paragraph>
+				</div>
 			</div>
 		</div>
 	</div>

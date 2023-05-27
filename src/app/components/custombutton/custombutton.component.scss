@@ -9,14 +9,18 @@
 	padding: 5px 10px;
 	color: $color-black;
 	border-radius: $border-radius-small;
+	filter: drop-shadow($shadow-small);
 
 	&:hover {
 		background-color: $color-white;
+		cursor: pointer;
 	}
 
-	// svg {
-	// 	width: 20px;
-	// 	height: 20px;
-	// 	padding-right: 5px;
-	// }
+	&.clear {
+		background-color: transparent;
+	}
+
+	editicon:not(:last-child) {
+		padding-right: 5px;
+	}
 }

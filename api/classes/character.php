@@ -15,9 +15,8 @@
 	}
 
 	class CharacterDndStats {
-		public function __construct($class, $level, $background, $playerName, $alignment, $armorClass, $initiative, $speed, $strength, $dexterity, $constitution, $intelligence, $wisdom, $charisma) {
-			$this->class = $class;
-			$this->level = $level;
+		public function __construct($background, $playable, $playerName, $alignment, $armorClass, $initiative, $speed, $strength, $dexterity, $constitution, $intelligence, $wisdom, $charisma) {
+			$this->playable = $playable;
 			$this->background = $background;
 			$this->playerName = $playerName;
 			$this->alignment = $alignment;

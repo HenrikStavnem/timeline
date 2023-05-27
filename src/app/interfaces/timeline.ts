@@ -97,6 +97,8 @@ export interface IActor {
 	slug: string,
 	shield: string,	// TODO: will be changed to an array
 	dndStats?: IActorDndStats,
+	isRpg?: boolean;
+	playable?: boolean,
 	settings?: IActorSettings,
 	isBeingEdited?: boolean // TODO: remove when characters module uses CharacterCard interface
 }
@@ -126,6 +128,7 @@ export interface IActorDndStats {
 	class: string,		// TODO: Might be changed to an array
 	level: number,		// TODO: Might be changed to an array
 	background: string,
+	playable: boolean,
 	playerName: string,	// TODO: Might be a user/player interface
 	alignment: string,	// TODO: Might be two props
 	armorClass: number,
