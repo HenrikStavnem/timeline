@@ -77,6 +77,8 @@
 		<button  *ngIf="existingCharacter === null" type="submit" (click)="saveCharacterClick()">Save new</button>
 		<button *ngIf="existingCharacter !== null" type="submit" (click)="saveCharacterChangesClick()">Save changes</button>
 
+		<!-- <dateinput [title]="'Date'" [eras]="eras" [months]="months" (newDateEvent)="setStartDate($event)"></dateinput> -->
+
 		<br /><br />
 		<br /><br />
 	</form>

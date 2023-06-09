@@ -139,7 +139,6 @@ export class CharacterComponent implements OnInit {
 				"type": "text"
 			},
 			{
-				// "insert":"\nA longer, more intricate text\nwith line breaks\nand more!\n",
 				"type": "character", //TODO: "character" or "reference"??
 				"character": {
 					"name": "Worrec",

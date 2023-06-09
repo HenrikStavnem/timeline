@@ -12,6 +12,7 @@
 			<div class="container-margin">
 				<h2 *ngIf="playerDescription">Description</h2>
 				<p>{{playerDescription}}</p>
+				<paragraph [text]="playerDescription"></paragraph>
 
 				<h2>List of characters</h2>
 				<div class="character-card-grid">

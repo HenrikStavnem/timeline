@@ -18,6 +18,15 @@ export class PlayerComponent implements OnInit {
 	image: string;
 	coverImage: string;
 
+	description: any[] = [{
+		type: 'text',
+		text: 'Yes',
+		attributes: {
+			bold: true,
+			italic: true
+		}
+	}];
+
 	constructor(
 		private route: ActivatedRoute,
 		private sidebarService: SidebarService,
@@ -37,8 +46,6 @@ export class PlayerComponent implements OnInit {
 			this.characterCards = result.characters;
 			this.image = result.image;
 			this.coverImage = result.coverImage;
-
-			console.log('characters', this.characterCards);
 		});
 
 		this.sidebarService.change.subscribe((eventData: any) => {

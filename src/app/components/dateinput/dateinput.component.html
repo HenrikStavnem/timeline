@@ -1,0 +1,35 @@
+<div class="dateinput-wrapper">
+	<h2>{{title}}</h2>
+
+	<div class="input-box">
+		<label>Exactness (NYI)</label>
+		<select formControlName="Exactness" (change)="onExactnessChange($event)">
+			<option *ngFor="let extactness of exactnessTypes" [value]="extactness">{{extactness}}</option>
+		</select>
+	</div>
+	
+	<div class="input-box" *ngIf="eras?.length > 0">
+		<label>Era</label>
+		<select formControlName="Era" (change)="onValueChange('era', $event)">
+			<option *ngFor="let era of eras" [value]="era.id">{{era.title}}</option>
+		</select>
+	</div>
+	
+	<div class="input-box" *ngIf="showYearInput">
+		<label>Year</label>
+		<input type="number" formControlName="Year" placeholder=" " (input)="onValueChange('year', $event)" />
+	</div>
+
+	<div class="input-box" *ngIf="months?.length > 0 && showMonthInput">
+		<label>Month</label>
+		<select formControlName="Month" (change)="onValueChange('month', $event)">
+			<option value="0">Unknown</option>
+			<option *ngFor="let month of months" [value]="month.id">{{month.title}}</option>
+		</select>
+	</div>
+	
+	<div class="input-box" *ngIf="showDayInput">
+		<label>Day</label>
+		<input type="number" formControlName="Day" placeholder=" " (input)="onValueChange('day', $event)" />
+	</div>
+</div>

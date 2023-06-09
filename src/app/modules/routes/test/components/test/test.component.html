@@ -50,6 +50,9 @@
 			<input type="number" formControlName="Day" />
 			<br />
 
+			<dateinput [title]="'Date'" [eras]="eras" [months]="months" (newDateEvent)="setStartDate($event)"></dateinput>
+			<!-- <dateinput [title]="'End date'" [eras]="eras" [months]="months" (newDateEvent)="setStartDate($event)"></dateinput> -->
+
 			<br /><br />
 			<label>New description</label>
 			<div class="mention-component">

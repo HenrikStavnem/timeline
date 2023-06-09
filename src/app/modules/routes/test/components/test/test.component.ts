@@ -1,7 +1,6 @@
-import { Target } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { IActor, IEra, IMonth, ISeason, ITimeline } from 'src/app/interfaces/timeline';
+import { IActor, IEra, IMonth, ISeason } from 'src/app/interfaces/timeline';
 import { ITimelineCard, ITimelineCards } from 'src/app/interfaces/timelinecard';
 import { TimelineService } from 'src/app/services/timeline.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -142,11 +141,9 @@ export class TestComponent implements OnInit {
 	}
 
 	onTimelineChange(): void {
-		console.log('change');
 		this.timelineId = this.form.get('Timeline').value;
 
 		this.timelineService.getEventInputDate(this.timelineId).subscribe((result:any) => {
-			console.log(result);
 			this.types = result.types;
 			this.eras = result.eras;
 			this.months = result.months;
@@ -155,6 +152,11 @@ export class TestComponent implements OnInit {
 
 			
 			// Select first era to have default value
+			if (!result.eras[0]) {
+				this.toastService.updateToast('This timeline contains no eras.');
+				return;
+			}
+
 			this.form.get('Era').setValue(result.eras[0].id);
 		});
 	}
@@ -163,7 +165,6 @@ export class TestComponent implements OnInit {
 	 * CreateEventBtnClick
 	 */
 	createEventBtnClick(): void {
-		//console.log("createEventBtnClick");
 		let el: ElementRef = this.descriptionEditor,
 			description: string = this.encodeHtmlToDbString(el);
 
@@ -188,12 +189,11 @@ export class TestComponent implements OnInit {
 		else {
 			console.log(this.form);
 			this.toastService.updateToast('Please fill out every field');
-			//alert("Please fill out every field.");
 		}
 	}
 
 	onMentionSettingsCancelClick(): void {
-		this.closeMentions();
+		this.showMentionEditor = false;
 	}
 
 	onMentionSettingsSaveClick(): void {
@@ -204,8 +204,6 @@ export class TestComponent implements OnInit {
 		el.value = overrideName;
 
 		this.showMentionEditor = false;
-		//this.toastService.updateToast('Override not saved');
-		
 		this.editMentionTarget = null;
 	}
 
@@ -471,6 +469,10 @@ export class TestComponent implements OnInit {
 		}
 
 		return caretOffset;
+	}
+
+	setStartDate(stuff: string) {
+		console.log('date from component', stuff);
 	}
 
 }

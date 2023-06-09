@@ -16,7 +16,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { WindowComponent } from './components/modal/window/window.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 import { TestDialogComponent } from './components/dialogs/test-dialog/test-dialog.component';
@@ -56,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         HttpClientModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
+		FormsModule,
 		TranslateModule.forRoot({
 			defaultLanguage: 'en',
             loader: {

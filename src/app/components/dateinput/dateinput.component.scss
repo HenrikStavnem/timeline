@@ -1,0 +1,56 @@
+@import "../../../styles.scss";
+
+.dateinput-wrapper {
+	background-color: $color-gray-dark;
+	border: 2px solid $color-gray-light;
+	border-radius: $border-radius-large;
+	color: $color-black;
+	margin-top: 20px;
+	padding: 20px;
+	position: relative;
+
+	h2 {
+		color: $color-gray-light;
+		margin-block-end: 0;
+		margin-block-start: 0;
+		position: absolute;
+		top: -16px;
+		background-color: inherit;
+		padding: 0 10px;
+	}
+
+	.input-box {
+		position: relative;
+		
+		input[type='number'], input[type='text'], select {
+			border-color: lightgray;
+			border-radius: 3px;
+			border-width: 1px;
+			font-family: $font-primary;
+			font-size: 24px;
+			line-height: 2rem;
+			padding: 1.5rem 1rem 1rem 1rem;
+			width: 100%;
+			box-sizing: border-box;
+	
+			&:focus, &:focus-within {
+				border: $color-gray;
+			}
+		}
+	
+		label {
+			position: absolute;
+			top: calc(50% - 1rem);
+			left: 1rem;
+			transition: all .15s ease-in-out;
+			pointer-events: none;
+			transform-origin: top left;
+			font-size: 24px;
+	
+			&:has(+ input:focus), &:has(+ input:not(:placeholder-shown)), &:has(+ select) {
+				translate: 0 -0.75rem;
+				scale: 0.6;
+			}
+		}
+	}
+}
