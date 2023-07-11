@@ -65,7 +65,7 @@
 					<!-- <h2>{{year.year}} ({{year.accuracy}})</h2> -->
 					<h2>{{showTitle(year)}}</h2>
 
-					<entry-list [entries]="year.events" [references]="timeline.characters" [locations]="timeline.locations" [date]="{era: era.era, year: year.year, month: null, day: null}" [timelineSlug]="timeline.slug"></entry-list>
+					<entry-list [entries]="year.events" [references]="timeline.characters" [locations]="timeline.locations" [date]="{era: era.id, year: year.year, month: null, day: null}" [timelineSlug]="timeline.slug"></entry-list>
 					<!-- <div *ngFor="let event of year.events">
 						<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: null, day: null}" [isBeingReordered]="false"></entry>
 					</div> -->
@@ -73,7 +73,7 @@
 					<div *ngFor="let season of year.seasons">
 						<h3>{{season.title}}</h3>
 						<div *ngFor="let event of season.events">
-							<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: null, day: null}" [isBeingReordered]="false"></entry>
+							<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.id, year: year.year, month: null, day: null}" [isBeingReordered]="false"></entry>
 						</div>
 					</div>
 
@@ -81,14 +81,14 @@
 						<h3>{{month.title}}</h3>
 						
 						<div *ngFor="let event of month.events">
-							<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: month.month, day: null}"></entry>
+							<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.id, year: year.year, month: month.month, day: null}"></entry>
 						</div>
 
 						<div *ngFor="let day of month.days">
 							<h4>Day {{day.day}}</h4>
 
 							<div *ngFor="let event of day.events">
-								<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
+								<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.id, year: year.year, month: month.month, day: day.day}"></entry>
 							</div>
 						</div>
 					</div>
@@ -96,103 +96,9 @@
 				</div>
 
 				<div *ngFor="let event of era.unknownAfter" class="container-margin">
-					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.era, year: null, month: null, day: null}"></entry>
-				</div>
-			</ng-container>
-		</div>
-	</div>
-
-
-</ng-container>
-
-<!--
-	<ng-container *ngIf="timeline">
-	<div class="header" [style.background-image]="'url(' + timeline.image + ')'">
-		<div class="top-btn-container" *ngIf="canEdit">
-			<ng-container *ngIf="isEditingHeader">
-				<button>Image</button>
-				<button>Settings</button>
-				<button (click)="onHeaderEditClick()">Edit</button>
-			</ng-container>
-			<ng-container *ngIf="!isEditingHeader">
-				<button (click)="onHeaderEditClick()">Edit</button>
-			</ng-container>
-		</div>
-		<div class="header-content">
-			<ng-container *ngIf="!isEditingHeader">
-				<h1>{{timeline.title}}</h1>
-				<h2>By {{timeline.author.name}}</h2>
-				<p>{{timeline.description}}</p>
-			</ng-container>
-			<ng-container *ngIf="isEditingHeader">
-				<form [formGroup]="headerForm">
-					<input formControlName="Title" class="title" type="text">
-					<h2>By {{timeline.author.name}}</h2>
-					<textarea formControlName="Description" placeholder="Write some text here, dude" (input)="onTextAreaInput($event)" maxlength="150">{{timeline.description}}</textarea>
-					<button (click)="onSubmit()" [disabled]="!isFormDirty">Save</button>
-				</form>
-			</ng-container>
-		</div>
-	</div>
-
-	<div class="content-wrapper has-header no-padding">
-		<div *ngFor="let era of timeline.eras">
-			<ng-container *ngIf="era.years.length > 0">
-				<div class="era" [style.background-image]="'url(' + era.image + ')'">
-					<h1>{{era.title}}</h1>
-					<p>{{era.description}}</p>
-					<div class="image-fade"></div>
-				</div>
-
-				<div *ngFor="let year of era.years" class="container-margin">
-					
-					<h2 *ngIf="year.exactness == yearExactnessType.millenia">{{year.year}}<sup>th</sup> millenia</h2>
-					<h2 *ngIf="year.exactness == yearExactnessType.century">{{year.year | century}}<sup>th</sup> century</h2>
-					<h2 *ngIf="year.exactness == yearExactnessType.exact">{{year.year}}</h2>
-					<h2 *ngIf="year.exactness == yearExactnessType.before">Before {{year.year}}</h2>
-					<h2 *ngIf="year.exactness == yearExactnessType.after">After {{year.year}}</h2>
-					<h2 *ngIf="year.exactness == yearExactnessType.circa">Ca. {{year.year}}</h2>
-					<h2 *ngIf="year.exactness == yearExactnessType.decade">The {{year.year}}s</h2>
-					
-
-					<div *ngFor="let season of year.seasons">
-						<i>{{season.title}}</i>
-					</div>
-
-					<div *ngFor="let month of year.months">
-						<ng-container *ngIf="month.days.length == 1">
-							<div *ngFor="let day of month.days">
-								<i *ngIf="year.exactness === yearExactnessType.exact">{{month.title ? month.title : 'Month title not found!'}} {{day.day}}</i>
-
-								<div *ngFor="let entry of day.entries">
-
-									<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
-								</div>
-							</div>
-						</ng-container>
-						<ng-container *ngIf="month.days.length > 1">
-							<b *ngIf="month.exactness=='exact'">{{month.title ? month.title : 'Month title not found!'}}</b>
-							<b *ngIf="month.exactness=='circa'">Ca. Month {{month.month}}: {{month.title}}</b>
-							<b *ngIf="month.exactness=='unknown'">Unknown month</b>
-
-							<div *ngFor="let day of month.days">
-								<i>Day {{day.day}}</i>
-
-								<div *ngFor="let entry of day.entries">
-									<entry [item]="entry" [item]="entry" [references]="timeline.actors" [date]="{era: era.era, year: year.year, month: month.month, day: day.day}"></entry>
-								</div>
-							</div>
-						</ng-container>
-					</div>
+					<entry [item]="event" [timelineSlug]="timeline.slug" [references]="timeline.characters" [date]="{era: era.id, year: null, month: null, day: null}"></entry>
 				</div>
 			</ng-container>
 		</div>
 	</div>
 </ng-container>
-<ng-container *ngIf="!timeline">
-	<div class="content">
-		<h1>Error</h1>
-		<p>Could not load timeline</p>
-	</div>
-</ng-container>
--->

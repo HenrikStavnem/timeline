@@ -54,7 +54,9 @@ export class MonthsSidebarPageComponent implements OnInit {
 
 				this.months.push(...result.months);
 				this.dirtyMonths.push(...result.months);
+				// this.dirtyMonths = {...result.months};
 			});
+
 		});
 	}
 

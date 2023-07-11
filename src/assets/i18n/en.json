@@ -1,24 +1,18 @@
 {
-	"timeline": {
-		"century": "{{value}}th century",
-		"millennium": "{{value}}th millennium"
-	},
 	"dialogs": {
 		"character-edit": {
-			"title": "Create new character",
-			"save-btn": "Save character",
+			"components": {
+				"genders": "Genders",
+				"names": "Names"
+			},
 			"headlines": {
 				"create-character": "Create character",
 				"description": "Description"
 			},
-			"components": {
-				"genders": "Genders",
-				"names": "Names"
-			}
+			"save-btn": "Save character",
+			"title": "Create new character"
 		},
 		"names-edit": {
-			"title": "Edit names",
-			"date-restriction": "If you add another name, you may set date restrictions.",
 			"buttons": {
 				"add-name": "Add another name",
 				"delete": "Delete",
@@ -26,17 +20,18 @@
 				"save": "Save",
 				"save-names": "Save name(s)"
 			},
+			"date-restriction": "If you add another name, you may set date restrictions.",
 			"headlines": {
 				"edit-names": "Edit names"
 			},
 			"inputs": {
 				"first-name": "First name",
 				"last-name": "Last name"
-			}
+			},
+			"title": "Edit names"
 		}
 	},
 	"navigation": {
-		"title": "HOME",
 		"buttons": {
 			"create-character": "Create character",
 			"create-era": "Create era",
@@ -45,11 +40,17 @@
 		"connection": {
 			"failure": "Connection failed",
 			"success": "Has connection to service"
-		}
+		},
+		"title": "HOME"
 	},
 	"routes": {
 		"index": {
 			"title": "Index"
 		}
+	},
+	"timeline": {
+		"century": "{{value}}th century",
+		"circa": "Circa {{value}}",
+		"millennium": "{{value}}th millennium"
 	}
 }

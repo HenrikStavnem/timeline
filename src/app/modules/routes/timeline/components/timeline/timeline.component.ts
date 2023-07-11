@@ -109,14 +109,13 @@ export class TimelineComponent implements OnInit {
 		return null;
 	}
 
-	showTitle(year) {
+	showTitle(year): string {
 		// TODO: Add i18n and expand to include all types
-
 		switch (year.accuracy) {
 			case 'millennium': return this.translate.instant('timeline.millennium', {value: year.year});
 			case 'century': return this.translate.instant('timeline.century', {value: year.year});
 			case 'decade': return `${year.year}s`;
-			case 'year-circa': return `Circa ${year.year}`;
+			case 'year-circa': return this.translate.instant('timeline.circa', {value: year.year});
 			case 'year': return `${year.year}`;
 			case 'beforeYear': return `Before ${year.year}`;
 			case 'afterYear': return `After ${year.year}`;

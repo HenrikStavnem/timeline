@@ -39,7 +39,6 @@ export class EntryComponent implements OnInit {
 
 	private mapDescription() {
 		let description: string = this.item.description;
-
 		let currentDate: IDate = {
 			era: this.date.era,
 			year: this.date.year,
@@ -161,9 +160,6 @@ export class EntryComponent implements OnInit {
 			}
 			*/
 		});
-
-		//result = 'No valid name for date found';
-
 		return result;
 		//return "No valid name for date found";
 		//return `${names[0]?.firstName} ${names[0]?.lastName}`;
@@ -188,7 +184,8 @@ export class EntryComponent implements OnInit {
 			return "Age unknown";
 		}
 
-		if (currentDate.id == birthDate.id) {
+		// if (currentDate.id == birthDate.id) {
+		if (currentDate.era === birthDate.era) {
 			ageInYears = (currentDate.year - birthDate.year);
 		}
 		return ageInYears + " years old";
