@@ -29,6 +29,11 @@ const routes: Routes = [
 		data: {pageType: 'players'}
 	},
 	{
+		path: 'races',
+		loadChildren: () => import('src/app/modules/routes/races/races.module').then(module => module.RacesModule),
+		data: {pageType: 'races'}
+	},
+	{
 		path: 'timeline/:id',
 		loadChildren: () => import('src/app/modules/routes/timeline/timeline.module').then(module => module.TimelineModule),
 		data: {pageType: 'timeline'}

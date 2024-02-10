@@ -1,0 +1,23 @@
+<ng-container>
+	<div class="header" [style.background-image]="coverImage ? 'url('+coverImage+')' : 'url(https://cdnb.artstation.com/p/assets/images/images/034/991/557/large/will-murai-barrens-keyart-008.jpg?1613802083)'">
+		<div class="header-content">
+			<h1>List of races</h1>
+			<!-- <div *ngIf="image" class="image-wrapper">
+				<div class="image" [style.background-image]="'url(' + image + ')'"></div>
+			</div> -->
+		</div>
+	</div>
+	<div class="content-wrapper has-header">
+		<div class="content" [ngClass]="{'has-image' : image}">
+			<div class="container-margin">
+				<div class="character-card-grid">
+					<card *ngFor="let race of races"
+						[title]="race.title"
+						[image]="race.image"
+						[canEdit]="false"
+					></card>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>
