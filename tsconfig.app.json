@@ -3,7 +3,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+	"paths": {
+		"@portal-app/*": [ "./src/app" ]
+	  },
   },
   "files": [
     "src/main.ts",
@@ -12,9 +15,6 @@
   "include": [
     "src/**/*.d.ts"
   ],
-  "paths": {
-	"@portal-app/*": [ "./src/app" ]
-  },
   "angularCompilerOptions": {
     "strictTemplates": false,
     "enableIvy": true

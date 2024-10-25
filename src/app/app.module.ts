@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,47 +31,41 @@ export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http);
 }
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppComponent,
         AsideComponent,
         CharacterEditComponent,
         CharacterEditGendersComponent,
         CharacterEditNamesComponent,
-		CharacterSidebarPageComponent,
+        CharacterSidebarPageComponent,
         EraEditComponent,
-		EraSidebarPageComponent,
-		ErasSidebarPageComponent,
-		MonthsSidebarPageComponent,
+        EraSidebarPageComponent,
+        ErasSidebarPageComponent,
+        MonthsSidebarPageComponent,
         MenuComponent,
         ModalComponent,
-		SidebarComponent,
+        SidebarComponent,
         ToastComponent,
         WindowComponent,
         TestDialogComponent
     ],
-    imports: [
-        BrowserModule,
+    exports: [
+        ReactiveFormsModule
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
-        HttpClientModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-		FormsModule,
-		TranslateModule.forRoot({
-			defaultLanguage: 'en',
+        FormsModule,
+        TranslateModule.forRoot({
+            defaultLanguage: 'en',
             loader: {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
             }
-        })
-    ],
-    exports: [
-        ReactiveFormsModule
-    ],
-    providers: [
-        TimelineService
-    ],
-    bootstrap: [AppComponent]
-})
+        })], providers: [
+        TimelineService,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }

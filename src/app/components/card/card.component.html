@@ -18,6 +18,7 @@
 			<HexagonPlayerIcon class="icon" *ngIf="isRpg && isPlayable" title="A playable character"></HexagonPlayerIcon>
 			<HexagonIcon class="icon" *ngIf="isRpg && !isPlayable" title="A non-playable character"></HexagonIcon>
 		</div>
-		<custombutton *ngIf="canEdit" [text]="" [onClickCallback]="onClickCallback.bind(this)"></custombutton>
+		<!-- This breaks in angular 18 -->
+		<!-- <custombutton *ngIf="canEdit" [text]="" [onClickCallback]="onClickCallback.bind(this)"></custombutton> -->
 	</div>
 </div>
