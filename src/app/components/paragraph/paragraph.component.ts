@@ -16,7 +16,13 @@ export class Paragraph implements OnInit {
 	timelineSlug: string = "mirror";
 
 	ngOnInit(): void {
+	}
+
+	ngOnChanges() {
 		this.mapDescription();
+	}
+
+	constructor() {
 	}
 
 	mapDescription(): void {
@@ -32,7 +38,12 @@ export class Paragraph implements OnInit {
 			attributes?: any //Attribues,
 		}
 
-		console.log('text:::', this.text);
+		console.log(this.text);
+
+		if (!this.text) {
+			console.error('text is undefined...');
+			return;
+		}
 
 		try {
 			const json = JSON.parse(this.text);
@@ -72,7 +83,6 @@ export class Paragraph implements OnInit {
 				}
 			});
 	
-			console.log('hmm', this.textElements);
 		} catch (error) {
 			console.error(error);
 			// const json = {"ops":[

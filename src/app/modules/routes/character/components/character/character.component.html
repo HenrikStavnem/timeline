@@ -5,15 +5,29 @@
 			<h1>{{character.firstName}} {{character.lastName}}</h1>
 			<p *ngIf="character.birthDate.year || character.deathDate.year">{{character.birthDate.year}}—{{character.deathDate.year}}</p>
 
-			<div *ngIf="character.image" class="image-wrapper">
+			<!-- <div *ngIf="character.image" class="image-wrapper">
 				<div class="image" [style.background-image]="'url(' + character.image + ')'"></div>
-			</div>
+			</div> -->
 		</div>
 	</div>
+
 	<div class="content-wrapper has-header">
+		<section class="article-header">
+			<!-- <div class="image" [style.background-image]="'url(' + character.image + ')'"></div> -->
+			 <img [src]="character.image" alt="" class="image">
+			<div class="title-wrapper">
+				<span class="title" *ngIf="character.titles">{{character.titles[character.titles.length - 1]}}</span>
+				<h2>{{character.firstName}} {{character.lastName}}</h2>
+				<p *ngIf="character.birthDate.year || character.deathDate.year">{{character.birthDate.year}}—{{character.deathDate.year}}</p>
+			</div>
+		</section>
+	</div>
 
+	<br /><br />
 
-		<div class="content" [ngClass]="{'has-image' : character.image}">
+	<div class="content-wrapper has-header">
+		<!-- <div class="content" [ngClass]="{'has-image' : character.image}"> -->
+		<div class="content">
 			<div class="container-margin">
 				<ng-container *ngIf="character.dndStats">
 					<div>
@@ -43,6 +57,7 @@
 				<div>
 					<h3>Description</h3>
 					<p>{{character.description ? character.description : "No description"}}</p>
+					<paragraph [text]="character.descriptionNew"></paragraph>
 				</div>
 				
 				<br /><br />

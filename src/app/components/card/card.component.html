@@ -1,7 +1,12 @@
 <div class="card" [class.edit-mode]="isBeingEdited" [class.landscape]="shape === 'landscape'">
 	<a [routerLink]="url ? '/' + url : ''">
 		<div class="image-container">
-			<img src="{{image ? image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}" alt="" />
+			<img
+				src="{{image ? image : 'https://tokens.dukendor.com/graphics/avatars/visitor.png'}}"
+				alt="" (error)="onImageError()"
+				loading="lazy"
+				role="presentation"
+			/>
 		</div>
 		<div class="name-container">
 			<h3>{{title}}</h3>

@@ -39,7 +39,7 @@
 	
 	$sqlCharacter = "
 		SELECT
-			id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, playable, strength, slug from tl_characters
+			id, type, firstname, lastname, birthEra, birthYear, birthMonth, birthDay, deathEra, deathYear, deathMonth, deathDay, image, coverImage, description, descriptionNew, playable, strength, slug from tl_characters
 		LEFT JOIN tl_character_dnd_stats
 			ON tl_characters.id = tl_character_dnd_stats.characterId
 		WHERE
@@ -55,7 +55,7 @@
 		$birthDate = new Date($row['birthEra'], $row['birthYear'], $row['birthMonth'], $row['birthDay']);
 		$deathDate = new Date($row['deathEra'], $row['deathYear'], $row['deathMonth'], $row['deathDay']);
 
-		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $row['slug'], null);
+		$character = new Character($row['id'], $row['firstname'], $row['lastname'], $birthDate, $deathDate, $row['image'], $row['coverImage'], $row['description'], $row['descriptionNew'], $row['slug'], null);
 		$character->slug = $row['slug'];
 		$character->isRpg = $row['strength'] ? true : false; // TODO: Find better check!
 		$character->playable = !!$row['playable'];

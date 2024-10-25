@@ -47,7 +47,7 @@
 	function fetchPlayers($connection) {
 		$players = [];
 
-		$sql = "SELECT id, name, description, image, coverImage, slug FROM tl_players";
+		$sql = "SELECT id, name, description, image, coverImage, slug FROM tl_players ORDER BY name";
 
 		$query = $connection->query($sql);
 		while ($row = $query->fetch_assoc()) {

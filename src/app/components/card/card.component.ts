@@ -29,4 +29,9 @@ export class CardComponent implements OnInit {
 
 	ngOnInit(): void {
 	}
+
+	onImageError(): void {
+		this.image = "https://tokens.dukendor.com/graphics/avatars/visitor.png";
+		this.image = "/assets/images/image-fails.png";
+	}
 }
