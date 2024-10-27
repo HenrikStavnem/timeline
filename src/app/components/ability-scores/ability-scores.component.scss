@@ -1,0 +1,23 @@
+@import "../../../styles.scss";
+
+.grid {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+
+	.tile {
+		border-radius: 3px;
+		background-color: $color-gray;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		color: $color-black;
+		font-family: $font-secondary;
+		transition: all 0.5s ease-in;
+	
+		&:hover {
+			background-color: $color-black;
+			color: $color-gray-lighter;
+		}
+	}
+}

@@ -193,6 +193,11 @@ export interface ActorTitle {
 
 }
 
+export interface AbilityScore {
+	title: string,
+	score: number
+}
+
 // Old implementation
 export interface Timeline {
 	title: string

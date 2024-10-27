@@ -1,0 +1,3 @@
+<div class="grid">
+	<div *ngFor="let abilityScore of abilitieScores" class="tile">{{abilityScore.title}}: {{abilityScore.score}} ({{getModifier(abilityScore.score)}})</div>
+</div>
