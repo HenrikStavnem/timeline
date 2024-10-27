@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ContentChildren, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CardComponent } from '../card/card.component';
+// import { CardComponent } from '../card/card.component';
 import { EditIcon } from '../icons/Edit.component';
 
 @Component({
@@ -13,9 +13,9 @@ import { EditIcon } from '../icons/Edit.component';
 	styleUrls: ['./custombutton.component.scss']
 })
 export class CustomButton {
-	@ContentChildren('widget') icon = CardComponent;
+	@ContentChildren('widget') icon = EditIcon;
 	
 	@Input() text: string = "";
-	@Input() variation?: string = "solid" || "clear";
+	@Input() variation?: string = "solid";// || "clear";
 	@Input() onClickCallback? = () => {};
 }

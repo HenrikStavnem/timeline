@@ -55,6 +55,12 @@ const routes: Routes = [
 		data: {pageType: 'test'}
 	},
 	{
+		path: 'all-components',
+		loadChildren: () => import('src/app/modules/routes/all-components/all-components.module').then(module => module.AllComponentsModule),
+		data: {pageType: 'all-components'},
+		title: 'All Components'
+	},
+	{
 		path: '**',
 		redirectTo: '',
 		pathMatch: 'full'

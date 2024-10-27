@@ -6,9 +6,9 @@ import { HexagonPlayerIcon } from '../icons/HexagonPlayer.components';
 import { HexagonIcon } from '../icons/Hexagon.components';
 
 @Component({
+	standalone: true,
 	selector: 'card',
 	imports: [CommonModule, RouterModule, CustomButton, HexagonIcon, HexagonPlayerIcon],
-	standalone: true,
 	templateUrl: './card.component.html',
 	styleUrls: ['./card.component.scss']
 })
