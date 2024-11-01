@@ -7,17 +7,7 @@ import { RouterModule } from '@angular/router';
 	imports: [CommonModule, RouterModule],
 	standalone: true,
 	template: `<div class="icon"></div>`,
-	styles: [
-		`
-		.icon {
-			display: flex;
-			align-items: center;
-		}
-		svg {
-			width: 30px;
-			height: 30px;
-		}`
-	]
+	styleUrl: './_Base.component.scss',
 })
 export class BaseIcon {
 	@Input() size: any[]  = [];
