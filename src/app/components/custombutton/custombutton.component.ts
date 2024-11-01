@@ -16,6 +16,6 @@ export class CustomButton {
 	@ContentChildren('widget') icon = EditIcon;
 	
 	@Input() text: string = "";
-	@Input() variation?: string = "solid";// || "clear";
+	@Input() variation?: string = "solid";// | "clear";
 	@Input() onClickCallback? = () => {};
 }

@@ -1,17 +1,30 @@
 <div class="content-wrapper">
 	<div class="container-margin">
 		<h1>All Components</h1>
-		<p>This page will contain all standalone components</p>
-		<br />
+		<p>This page will contain all standalone components, listed alphabetically.</p>
 
-		<ability-scores [abilitieScores]="abilitieScores" />
+		<Headline [text]="'Ability Score'" [size]="'h2'" />
+		<AbilityScores [abilitieScores]="abilitieScores" />
 
-		<br />
+		<Headline [text]="'Button'" [size]="'h2'" />
+		<custombutton [text]="'Button Text'" />
 
+		<Headline [text]="'Card'" [size]="'h2'" />
+		<Headline [text]="'Portrait'" [size]="'h3'" />
 		<div class="character-card-grid">
 			<card />
-			<card />
-			<card />
+			<card [isRpg]="true" />
+			<card [isRpg]="true" [isPlayable]="true" />
 		</div>
+		<Headline [text]="'Landscape'" [size]="'h3'" />
+		<div class="character-card-grid">
+			<card [shape]="'landscape'" />
+		</div>
+
+		<Headline [text]="'Icons'" [size]="'h2'" />
+		<EditIcon />
+		<HexagonIcon />
+		<HexagonPlayerIcon />
+
 	</div>
 </div>

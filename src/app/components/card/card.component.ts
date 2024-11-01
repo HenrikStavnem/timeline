@@ -19,7 +19,7 @@ export class CardComponent implements OnInit {
 	@Input() isBeingEdited?: boolean;
 	@Input() canEdit?: boolean;
 	@Input() url?: string;
-	@Input() shape?: 'portrait' | 'landscape' = 'portrait';
+	@Input() shape?: string; //'portrait' | 'landscape' = 'portrait';
 	@Input() isRpg?: boolean;
 	@Input() isPlayable?: boolean;
 	@Input() onClickCallback? = () => {};

@@ -19,7 +19,7 @@ export class AllComponentsComponent implements OnInit {
 			{title: 'Constitution', score: 12},
 			{title: 'Wisdom', score: 14},
 			{title: 'Intelligence', score: 20},
-			{title: 'Charisma', score: 5}
+			{title: 'Charisma', score: 30}
 		];
 	}
 }

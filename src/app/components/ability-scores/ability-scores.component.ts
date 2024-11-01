@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbilityScore } from 'src/app/interfaces/timeline';
 
 @Component({
-  selector: 'ability-scores',
+  selector: 'AbilityScores',
   standalone: true,
   imports: [NgFor],
   templateUrl: './ability-scores.component.html',

@@ -2,7 +2,8 @@
 	<button (click)="onToggleSidebarClick()">Sidebar Toggle</button>
 	<div>
 		<a routerLink="/">{{ "navigation.title" | translate }}</a> ● 
-		<a routerLink="/test">{{ "navigation.buttons.new-event" | translate }}</a>
+		<a routerLink="/test">{{ "navigation.buttons.new-event" | translate }}</a> ● 
+		<a routerLink="/all-components">All</a>
 	</div>
 	<span *ngIf="hasConnection">{{ "navigation.connection.success" | translate }}</span>
 	<span *ngIf="!hasConnection">{{ "navigation.connection.failure" | translate }}</span> 
