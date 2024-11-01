@@ -35,7 +35,7 @@ export class Paragraph implements OnInit {
 			character?: any,
 			insert?: string
 			location?: any,
-			attributes?: any //Attribues,
+			attributes?: Attribues,
 		}
 
 		console.log(this.text);

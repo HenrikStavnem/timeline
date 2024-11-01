@@ -9,6 +9,7 @@ import { CustomButton } from 'src/app/components/custombutton/custombutton.compo
 import { EditIcon } from 'src/app/components/icons/Edit.component';
 import { HexagonIcon } from 'src/app/components/icons/Hexagon.components';
 import { HexagonPlayerIcon } from 'src/app/components/icons/HexagonPlayer.components';
+import { Paragraph } from 'src/app/components/paragraph/paragraph.component';
 
 @NgModule({
 	declarations: [
@@ -23,6 +24,7 @@ import { HexagonPlayerIcon } from 'src/app/components/icons/HexagonPlayer.compon
 		HexagonIcon,
 		HexagonPlayerIcon,
 		HeadlineComponent,
+		Paragraph,
 		AllComponentsRoutingModule,
 	]
 })
