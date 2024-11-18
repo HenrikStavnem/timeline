@@ -1,8 +1,11 @@
-<div class="content-wrapper">
+<Hero
+	bgImage="https://cdna.artstation.com/p/assets/images/images/080/619/234/4k/grafit-studio-day.jpg?1728045948"
+	title="All components"
+	byLine="By Henrik Stavnem"
+	description="This page will contain all standalone components, listed alphabetically."
+/>
+<div class="content-wrapper has-header">
 	<div class="container-margin">
-		<h1>All Components</h1>
-		<p>This page will contain all standalone components, listed alphabetically.</p>
-
 		<Headline [text]="'Ability Score'" [size]="'h2'" />
 		<AbilityScores [abilitieScores]="abilitieScores" />
 
@@ -28,8 +31,11 @@
 			<HexagonPlayerIcon />
 		</div>
 
-		<Headline [text]="'Paragraph (JSON not working!)'" [size]="'h2'" />
+		<Headline [text]="'Paragraph'" [size]="'h2'" />
 		<paragraph [text]="playerDescription" />
+
+		<Headline [text]="'Quote'" [size]="'h2'" />
+		<Quote [text]="quoteText" />
 
 	</div>
 </div>

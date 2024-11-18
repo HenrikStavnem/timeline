@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { EntryListComponent } from './components/timeline/entry-list/entry-list.component';
 import { CustomButton } from 'src/app/components/custombutton/custombutton.component';
+import { HeroComponent } from 'src/app/components/hero/hero.component';
 
 @NgModule({
 	declarations: [
@@ -26,7 +27,8 @@ import { CustomButton } from 'src/app/components/custombutton/custombutton.compo
 		FormsModule,
 		ReactiveFormsModule,
 		CardComponent,
-		CustomButton
+		CustomButton,
+		HeroComponent
 	]
 })
 export class TimelineModule { }

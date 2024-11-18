@@ -8,7 +8,12 @@ import { AbilityScore } from 'src/app/interfaces/timeline';
 })
 export class AllComponentsComponent implements OnInit {
 	abilitieScores: AbilityScore[];
-	playerDescription: string = `{"ops":[{"attributes":{"bold":true},"insert":"Treasure.","type":"text"},{"insert":"\nThe owner of whatever card destroys this card draws a Treasure card\n","type":"text"},{"insert":"Bold","type":"text","attributes":{"bold":true}},{"insert":"Italic","type":"text","attributes":{"italic":true}},{"insert":"Bold AND Italic","type":"text","attributes":{"bold":true,"italic":true}}]}`;
+
+	introDescription: string = `{"ops":[{"insert":"This page will contain all standalone components, listed alphabetically.","type":"text"}]}`;
+
+	playerDescription: string = `{"ops":[{"attributes":{"bold":true},"insert":"Treasure.","type":"text"},{"insert":"\nThe owner of whatever card destroys this card draws a Treasure card","type":"text"},{"insert":"\nBold","type":"text","attributes":{"bold":true}},{"insert":"Italic","type":"text","attributes":{"italic":true}},{"insert":"Bold AND Italic","type":"text","attributes":{"bold":true,"italic":true}}]}`;
+
+	quoteText: string = `{"ops":[{"insert":"This page will contain all standalone components, listed alphabetically.","type":"text"}]}`;
 
 	constructor(
 	) { }

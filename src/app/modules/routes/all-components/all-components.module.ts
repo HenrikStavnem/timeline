@@ -10,6 +10,8 @@ import { EditIcon } from 'src/app/components/icons/Edit.component';
 import { HexagonIcon } from 'src/app/components/icons/Hexagon.components';
 import { HexagonPlayerIcon } from 'src/app/components/icons/HexagonPlayer.components';
 import { Paragraph } from 'src/app/components/paragraph/paragraph.component';
+import { HeroComponent } from 'src/app/components/hero/hero.component';
+import { QuoteComponent } from 'src/app/components/quote/quote.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +26,9 @@ import { Paragraph } from 'src/app/components/paragraph/paragraph.component';
 		HexagonIcon,
 		HexagonPlayerIcon,
 		HeadlineComponent,
+		HeroComponent,
 		Paragraph,
+		QuoteComponent,
 		AllComponentsRoutingModule,
 	]
 })

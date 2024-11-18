@@ -1,5 +1,12 @@
 <ng-container *ngIf="timeline">
-	<div class="header" [style.background-image]="'url(' + timeline.image + ')'">
+	<Hero
+		[bgImage]="timeline.image"
+		[title]="timeline.title"
+		[byLine]="timeline.authorName"
+		[description]="timeline.description"
+		[links]="links"
+	/>
+	<!-- <div class="header" [style.background-image]="'url(' + timeline.image + ')'">
 		<div class="top-btn-container" *ngIf="canEdit">
 			<ng-container *ngIf="isEditingHeader">
 				<button>Image</button>
@@ -32,7 +39,7 @@
 				</form>
 			</ng-container>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="content-wrapper has-header no-padding">
 		<div *ngFor="let era of timeline.eras">

@@ -22,6 +22,8 @@ export class TimelineComponent implements OnInit {
 
 	yearExactnessType = YearExactnessType;
 
+	links: {url: string, title: string}[];
+
 	constructor(
 		private timelineService: TimelineService,
 		private route: ActivatedRoute,
@@ -33,6 +35,13 @@ export class TimelineComponent implements OnInit {
 		this.route.paramMap.subscribe(params => {
 			slug = params.get('id');
 		});
+
+		this.links = [
+			{url: 'characters', title: 'Characters'},
+			{url: 'locations', title: 'Locations'},
+			{url: '//players', title: 'Players'},
+			{url: '//races', title: 'Races'}
+		];
 
 		this.timelineService.getTimeline(slug ? slug : undefined).subscribe((timeline: ITimeline) => {
 

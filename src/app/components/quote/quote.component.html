@@ -1,0 +1,54 @@
+<article>
+	<paragraph [text]="text" />
+</article>
+
+<!-- <ng-container *ngFor="let part of textElements">
+	<ng-container *ngIf="part.type==='character'">
+		<a [routerLink]="part.character.url">
+			{{part.character.name}}
+			<span class="tooltip">
+				<card
+					[image]="part.character.image"
+					[title]="part.character.name"
+					[shape]="'portrait'"
+					[url]="part.character.url"
+				></card>
+			</span>
+		</a>
+	</ng-container>
+	<ng-container *ngIf="part.type==='location'">
+		<a [routerLink]="part.location.url">
+			{{part.location.name}}
+			<span class="tooltip">
+				<card
+					[image]="part.location.image"
+					[title]="part.location.name"
+					[shape]="'landscape'"
+					[url]="part.location.url"
+				></card>
+			</span>
+		</a>
+	</ng-container>
+	<ng-container *ngIf="part.type==='text'">
+		<ng-container *ngIf="part.attributes?.bold && !part.attributes?.italic; then boldBlock"></ng-container>
+		<ng-container *ngIf="part.attributes?.italic && !part.attributes?.bold; then italicBlock"></ng-container>
+		<ng-container *ngIf="part.attributes?.bold && part.attributes?.italic; then boldItalicBlock"></ng-container>
+		<ng-container *ngIf="!part.attributes?.bold && !part.attributes?.italic; then plainBlock"></ng-container>
+
+		<ng-template #boldBlock>
+			<b><span [innerHtml]="part.text"></span></b>
+		</ng-template>
+
+		<ng-template #italicBlock>
+			<i><span [innerHtml]="part.text"></span></i>
+		</ng-template>
+
+		<ng-template #boldItalicBlock>
+			<b><i><span [innerHtml]="part.text"></span></i></b>
+		</ng-template>
+
+		<ng-template #plainBlock>
+			<span [innerHtml]="part.text"></span>
+		</ng-template>
+	</ng-container>
+</ng-container> -->

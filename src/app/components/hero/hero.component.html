@@ -1,0 +1,16 @@
+<div class="header" [style.background-image]="'url(' + bgImage + ')'">
+	<div class="header-content">
+		<!-- <span class="title" *ngIf="character.titles">{{character.titles[character.titles.length - 1]}}</span> -->
+		<h1>{{title}}</h1>
+		<p class="byLine">{{byLine}}</p>
+		<p>{{description}}</p>
+
+		<div class="header-links">
+			<a *ngFor="let link of links" [routerLink]="link.url">{{link.title}}</a>
+			<!-- <a [routerLink]="'characters'">Characters</a>
+			<a [routerLink]="'locations'">Locations</a>
+			<a [routerLink]="'//players'">Players</a>
+			<a [routerLink]="'//races'">Races</a> -->
+		</div>
+	</div>
+</div>

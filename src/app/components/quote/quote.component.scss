@@ -1,0 +1,12 @@
+@import "../../../styles.scss";
+
+paragraph {
+	&::before {
+		content: "\"";
+		// font-size: 4rem;
+		// padding-right: 1rem;
+	}
+	&::after {
+		content: "\"";
+	}
+}

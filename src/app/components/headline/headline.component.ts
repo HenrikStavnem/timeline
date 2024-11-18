@@ -10,5 +10,5 @@ import { Component, Input } from '@angular/core';
 })
 export class HeadlineComponent {
 	@Input() text: string;
-	@Input() size?: 'h2' | 'h3' = 'h2';
+	@Input() size?: 'h1' | 'h2' | 'h3' = 'h2';
 }
